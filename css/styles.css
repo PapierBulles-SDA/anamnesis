@@ -1,0 +1,5377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+.container {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    min-height: calc(100vh - 20px);
+}
+
+/* Header - visible uniquement sur page d'accueil */
+.header {
+    transition: opacity 0.3s, height 0.3s;
+}
+
+.header.hidden {
+    display: none;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: #f8f9fa;
+    padding: 12px 8px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #667eea;
+    display: block;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: #666;
+    margin-top: 3px;
+    display: block;
+}
+
+/* Onglet Statistiques */
+.stats-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.stats-section h2 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat-card {
+    background: white;
+    padding: 15px 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.stat-card-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #667eea;
+    display: block;
+}
+
+.stat-card-label {
+    font-size: 11px;
+    color: #666;
+    margin-top: 5px;
+    display: block;
+}
+
+.mode-stats-card {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.mode-stats-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mode-stats-icon {
+    font-size: 20px;
+}
+
+.mode-stats-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mode-stats-body {
+    display: flex;
+    padding: 15px;
+    justify-content: space-around;
+}
+
+.mode-stat {
+    text-align: center;
+}
+
+.mode-stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #667eea;
+    display: block;
+}
+
+.mode-stat-label {
+    font-size: 10px;
+    color: #888;
+    margin-top: 3px;
+    display: block;
+}
+
+/* Page d'accueil */
+.home-page {
+    display: block;
+}
+
+.home-page.hidden {
+    display: none;
+}
+
+.welcome-text {
+    text-align: center;
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Menus déroulants */
+.dropdown-group {
+    margin-bottom: 15px;
+}
+
+.dropdown-label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23667eea" d="M1 1l5 5 5-5"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 35px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #5568d3;
+}
+
+/* Onglets */
+.tabs-container {
+    display: flex;
+    margin-bottom: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 4px;
+    gap: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.tabs-container::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    flex: 0 0 auto;
+    min-width: fit-content;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.tab-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Page Explorer */
+.search-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.search-box h2 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.search-input-container {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 45px 14px 15px;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #5568d3;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+}
+
+.search-mode {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.search-mode label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+}
+
+.search-mode input[type="radio"] {
+    accent-color: #667eea;
+}
+
+.filter-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-row select {
+    flex: 1;
+}
+
+.search-btn {
+    width: 100%;
+    padding: 14px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: #5568d3;
+}
+
+/* Actions rapides */
+.quick-actions {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.quick-actions h2 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    flex: 1;
+    min-width: 90px;
+    padding: 12px 10px;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #667eea;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.action-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.action-btn .icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+/* Résultats */
+.results-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    display: none;
+}
+
+.results-container.visible {
+    display: block;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.results-header h2 {
+    font-size: 15px;
+    color: #333;
+    margin: 0;
+}
+
+.results-count {
+    background: #667eea;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.results-summary {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.results-summary h3 {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.distribution-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+.distribution-item:last-child {
+    border-bottom: none;
+}
+
+.distribution-item .livre {
+    color: #333;
+}
+
+.distribution-item .count {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.toggle-verses-btn {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background 0.2s;
+}
+
+.toggle-verses-btn:hover {
+    background: #5568d3;
+}
+
+.verses-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.verses-list.visible {
+    display: block;
+}
+
+/* Résultats de recherche */
+.result-verse {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid #667eea;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.result-verse:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.result-ref {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.result-text {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.result-text mark {
+    background: #fff3cd;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.no-results {
+    text-align: center;
+    color: #666;
+    padding: 30px;
+    font-size: 15px;
+}
+
+.results-more {
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+    padding: 15px;
+    font-style: italic;
+}
+
+.results-summary-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.results-by-book {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.book-badge {
+    background: #e8ecff;
+    color: #667eea;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.book-badge:hover {
+    background: #667eea;
+    color: white;
+}
+
+.book-badge strong {
+    font-weight: 700;
+}
+
+.filter-active {
+    background: #e8ecff;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.clear-filter-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.clear-filter-btn:hover {
+    background: #5568d3;
+}
+
+.copied-message {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    animation: fadeInOut 1.5s ease;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Word cloud */
+.word-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 15px;
+}
+
+.word-item {
+    color: #667eea;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.word-item:hover {
+    background: #e8ecff;
+    transform: scale(1.1);
+}
+
+/* Stats chart */
+.stats-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-label {
+    min-width: 120px;
+    font-size: 13px;
+    color: #333;
+}
+
+.stat-bar-container {
+    flex: 1;
+    height: 20px;
+    background: #e8ecff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.stat-value {
+    min-width: 80px;
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+}
+
+.verse-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.verse-item .verse-ref {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.verse-item .verse-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.highlight {
+    background: linear-gradient(120deg, #ffd54f 0%, #ffecb3 100%);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* Stats affichage */
+.stats-display {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.stats-display h3 {
+    font-size: 14px;
+    color: #667eea;
+    margin-bottom: 12px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-row .label {
+    color: #666;
+}
+
+.stat-row .value {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Mots fréquents */
+.words-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.word-tag {
+    background: #e8eaf6;
+    color: #667eea;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.word-tag .word-count {
+    background: #667eea;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+    font-size: 10px;
+}
+
+/* Zone de lecture */
+.lecture-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.lecture-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.lecture-header h2 {
+    font-size: 20px;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.lecture-header .livre-info {
+    font-size: 13px;
+    color: #888;
+}
+
+.lecture-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.lecture-placeholder {
+    text-align: center;
+    color: #999;
+    padding: 40px 20px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.lecture-verset {
+    margin-bottom: 12px;
+    line-height: 1.7;
+    font-size: 15px;
+    color: #333;
+}
+
+.lecture-verset .verset-num {
+    display: inline-block;
+    font-weight: 700;
+    color: #667eea;
+    font-size: 12px;
+    margin-right: 6px;
+    vertical-align: super;
+}
+
+.lecture-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.lecture-nav button {
+    flex: 1;
+    padding: 12px 15px;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #667eea;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lecture-nav button:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+}
+
+.lecture-nav button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Onglet Méditer */
+.meditation-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+}
+
+.meditation-periode {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.meditation-verset {
+    background: rgba(255,255,255,0.15);
+    padding: 25px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.meditation-text {
+    font-size: 18px;
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.meditation-reference {
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.btn-nouveau-verset {
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.5);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-nouveau-verset:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.journal-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.journal-section h2 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.journal-hint {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 12px;
+}
+
+.journal-section textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 12px;
+}
+
+.journal-section textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.journal-section .btn-primary {
+    width: 100%;
+}
+
+.journal-saved-msg {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 8px;
+    display: none;
+}
+
+.journal-saved-msg.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.journal-saved-msg.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.historique-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.historique-section h2 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.historique-toggle {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.historique-toggle .btn-secondary {
+    flex: 1;
+}
+
+.historique-list {
+    display: none;
+    margin-top: 15px;
+}
+
+.historique-list.visible {
+    display: block;
+}
+
+.no-history {
+    text-align: center;
+    color: #888;
+    padding: 30px 20px;
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* Carte de méditation dans l'historique */
+.meditation-item {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #e8ecff;
+}
+
+.meditation-item:hover {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+    border-color: #667eea;
+}
+
+.meditation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 15px 12px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border-bottom: 1px solid #e8ecff;
+}
+
+.meditation-datetime {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.meditation-date {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    text-transform: capitalize;
+}
+
+.meditation-time {
+    font-size: 11px;
+    color: #888;
+}
+
+.meditation-delete {
+    background: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.meditation-delete:hover {
+    opacity: 1;
+}
+
+.meditation-ref {
+    padding: 12px 15px 8px;
+    font-weight: 700;
+    color: #667eea;
+    font-size: 14px;
+}
+
+.meditation-verse-full {
+    padding: 0 15px 15px;
+    font-style: italic;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.7;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.meditation-notes-section {
+    padding: 15px;
+    background: #fafbfc;
+}
+
+.meditation-notes-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.meditation-notes-content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.btn-danger-small {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-danger-small:hover {
+    background: #c82333;
+}
+
+/* Calendrier liturgique */
+.liturgie-calendar {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* Réduire le calendrier sur tablette et ordinateur */
+@media (min-width: 768px) {
+    .liturgie-calendar {
+        max-width: 320px;
+        padding: 12px;
+        margin: 0 auto 20px auto;
+    }
+    
+    .calendar-header {
+        margin-bottom: 10px;
+    }
+    
+    .cal-month-title {
+        font-size: 14px;
+    }
+    
+    .cal-nav-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .calendar-weekdays {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+    
+    .calendar-days {
+        gap: 2px;
+    }
+    
+    .calendar-day {
+        font-size: 11px;
+    }
+    
+    .liturgie-content iframe {
+        height: 450px !important;
+    }
+}
+
+/* Encore plus petit sur grand écran */
+@media (min-width: 1024px) {
+    .liturgie-calendar {
+        max-width: 280px;
+        padding: 10px;
+    }
+    
+    .cal-month-title {
+        font-size: 13px;
+    }
+    
+    .cal-nav-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+    
+    .calendar-weekdays {
+        font-size: 9px;
+    }
+    
+    .calendar-day {
+        font-size: 10px;
+    }
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.cal-month-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    text-transform: capitalize;
+}
+
+.cal-nav-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.calendar-day:hover {
+    background: #e0e0e0;
+}
+
+.calendar-day.today {
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+}
+
+.calendar-day.selected {
+    background: #764ba2;
+    color: white;
+}
+
+.calendar-day.sunday {
+    color: #dc3545;
+}
+
+.calendar-day.other-month {
+    color: #ccc;
+}
+
+.liturgie-content {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.liturgie-date {
+    font-weight: 600;
+    font-size: 14px;
+    color: #667eea;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.liturgie-frame-container {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.credits {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin-top: 20px;
+    padding: 15px;
+    line-height: 1.6;
+}
+
+/* Checkbox indice première lettre */
+.hint-checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    padding: 10px;
+    background: #f0f4ff;
+    border-radius: 10px;
+}
+
+.hint-checkbox-container input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    accent-color: #667eea;
+    cursor: pointer;
+}
+
+.hint-checkbox-container label {
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    user-select: none;
+}
+
+.first-letter-hint {
+    color: #667eea;
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 2px;
+}
+
+.config-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.config-section h2 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* Grille des modes d'exercice */
+.mode-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.mode-grid .mode-btn:last-child {
+    grid-column: span 2;
+}
+
+.mode-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mode-btn:hover {
+    border-color: #667eea;
+}
+
+.mode-btn.active {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.mode-btn .mode-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.mode-btn .mode-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.mode-btn .mode-desc {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.mode-btn.active .mode-desc {
+    opacity: 0.9;
+}
+
+/* Mode Reconstitution - Drag & Drop */
+.reconstitution-zone {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.reconstitution-zone h3 {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.drop-zone {
+    min-height: 80px;
+    background: #f8f9fa;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+}
+
+.drop-zone.drag-over {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.word-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #667eea;
+    color: white;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: grab;
+    user-select: none;
+    transition: all 0.2s;
+    margin: 4px;
+    touch-action: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.word-chip.block-chip {
+    border-radius: 12px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    font-size: 13px;
+    line-height: 1.4;
+    max-width: 100%;
+    text-align: center;
+}
+
+.word-chip:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+}
+
+.word-chip.placed {
+    background: #4caf50;
+}
+
+.word-chip.block-chip.placed {
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+}
+
+.word-chip.fixed {
+    background: #9e9e9e;
+    cursor: default;
+}
+
+.word-chip.wrong {
+    background: #f44336;
+    animation: shake 0.3s;
+}
+
+.word-chip.block-chip.wrong {
+    background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+}
+
+.word-chip.selected {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px #667eea;
+    animation: pulse 0.5s infinite alternate;
+}
+
+.word-chip.touching {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 0 0 3px #fff, 0 0 0 6px #667eea; }
+    to { box-shadow: 0 0 0 3px #fff, 0 0 0 8px #764ba2; }
+}
+
+.word-chip.touch-ghost {
+    opacity: 0.95 !important;
+    transform: scale(1.08) !important;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5) !important;
+}
+
+.drop-zone {
+    transition: all 0.2s ease;
+}
+
+.drop-zone.drag-over {
+    background: rgba(102, 126, 234, 0.15) !important;
+    border-color: #667eea !important;
+    transform: scale(1.02);
+}
+
+.word-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    height: 36px;
+    background: #e0e0e0;
+    border: 2px dashed #999;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #999;
+}
+
+.word-slot.filled {
+    background: #667eea;
+    border-style: solid;
+    border-color: #667eea;
+    color: white;
+}
+
+.word-slot.correct {
+    background: #4caf50;
+    border-color: #4caf50;
+}
+
+.word-slot.wrong {
+    background: #f44336;
+    border-color: #f44336;
+}
+
+/* Mode Mystère */
+.mystere-verset {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.mystere-verset .verset-text {
+    font-size: 17px;
+    line-height: 1.7;
+    font-style: italic;
+}
+
+.mystere-form {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.mystere-form h3 {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mystere-selects {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mystere-select-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mystere-select-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    min-width: 70px;
+}
+
+.mystere-select-group select {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.mystere-indices {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.mystere-indices-title {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.mystere-indices-btns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.indice-btn {
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.indice-btn:hover:not(:disabled) {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.indice-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.indice-btn.used {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.indice-btn.auto-revealed {
+    background: #6c757d;
+    color: white;
+    border-color: #6c757d;
+    opacity: 0.8;
+}
+
+.indice-btn.auto-revealed::after {
+    content: ' ✓';
+    font-size: 10px;
+}
+
+/* Mode Suite (Quel verset vient après ?) */
+.suite-reference-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.suite-reference-label {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
+.suite-reference-ref {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.suite-reference-text {
+    font-size: 17px;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.suite-question {
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.suite-question-icon {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.suite-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.suite-option {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.suite-option:hover:not(.disabled) {
+    border-color: #667eea;
+    background: #f8f9ff;
+    transform: translateX(5px);
+}
+
+.suite-option:active:not(.disabled) {
+    transform: scale(0.98);
+}
+
+.suite-option.selected {
+    border-color: #667eea;
+    background: #e8edff;
+}
+
+.suite-option.correct {
+    border-color: #4caf50;
+    background: #e8f5e9;
+    cursor: default;
+}
+
+.suite-option.correct::before {
+    content: '✅';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.suite-option.wrong {
+    border-color: #f44336;
+    background: #ffebee;
+    cursor: default;
+}
+
+.suite-option.wrong::before {
+    content: '❌';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.suite-option.disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.suite-option-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.suite-option.correct .suite-option-letter {
+    background: #4caf50;
+}
+
+.suite-option.wrong .suite-option-letter {
+    background: #f44336;
+}
+
+.suite-option-text {
+    display: inline;
+}
+
+.suite-correct-answer {
+    background: #e8f5e9;
+    border: 2px solid #4caf50;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.suite-correct-label {
+    font-size: 13px;
+    color: #2e7d32;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.suite-correct-ref {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1b5e20;
+    margin-bottom: 8px;
+}
+
+.suite-correct-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    font-style: italic;
+}
+
+/* Mode Audio/Dictée */
+.audio-player {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.audio-play-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 3px solid white;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 15px;
+}
+
+.audio-play-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+.audio-play-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.audio-speed {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.speed-btn {
+    padding: 8px 15px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.speed-btn.active {
+    background: white;
+    color: #667eea;
+}
+
+.audio-reference {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+.dictee-zone {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.dictee-zone h3 {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.dictee-textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.dictee-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.dictee-result {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.dictee-result .correct-word {
+    color: #4caf50;
+}
+
+.dictee-result .wrong-word {
+    color: #f44336;
+    text-decoration: line-through;
+}
+
+.dictee-result .missing-word {
+    color: #ff9800;
+    font-weight: 600;
+}
+
+.dictee-score {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.option-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.option-btn {
+    padding: 10px 16px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+}
+
+.option-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.option-btn:active {
+    transform: scale(0.95);
+}
+
+.toggle-section {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.toggle-label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.toggle-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.start-btn {
+    width: 100%;
+    padding: 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 15px;
+}
+
+.start-btn:active {
+    transform: scale(0.98);
+    background: #5568d3;
+}
+
+/* Page de lecture préalable */
+.reading-page {
+    display: none;
+}
+
+.reading-page.active {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Zone de lecture préalable (dans les modes) */
+.reading-preview {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 25px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+}
+
+.reading-preview-title {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.reading-preview-text {
+    background: rgba(255,255,255,0.15);
+    padding: 20px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.reading-preview-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.reading-preview-list .verse-item {
+    background: rgba(255,255,255,0.15);
+    border-left-color: rgba(255,255,255,0.5);
+    color: white;
+    text-align: left;
+}
+
+.reading-preview-list .verse-ref {
+    color: rgba(255,255,255,0.9);
+}
+
+.reading-preview-list .verse-text {
+    color: white;
+}
+
+.reading-preview .btn-primary {
+    background: white;
+    color: #667eea;
+}
+
+.reading-preview .btn-primary:hover {
+    background: #f0f0f0;
+}
+
+/* Styles pour les versets dans reading-preview */
+.reading-verse-item {
+    background: rgba(255,255,255,0.15);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    text-align: left;
+    border-left: 3px solid rgba(255,255,255,0.5);
+}
+
+.reading-verse-ref {
+    font-weight: bold;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 8px;
+}
+
+.reading-verse-text {
+    color: white;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.reading-preview-text {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    text-align: left;
+    color: white;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.reading-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reading-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.reading-header p {
+    font-size: 13px;
+    color: #666;
+}
+
+.verse-list {
+    margin-bottom: 20px;
+}
+
+.verse-item {
+    background: #f8f9fa;
+    padding: 20px 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border-left: 4px solid #667eea;
+}
+
+.verse-ref {
+    font-size: 14px;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 8px;
+}
+
+.verse-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+}
+
+/* Page exercice */
+.exercise-page {
+    display: none;
+}
+
+.exercise-page.active {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+}
+
+.exercise-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.reference {
+    font-size: 16px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+.series-progress {
+    font-size: 12px;
+    color: #999;
+    margin-top: 3px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.5s;
+}
+
+.verse-container {
+    background: #f8f9fa;
+    padding: 20px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    line-height: 2;
+    font-size: 16px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.verse-text {
+    text-align: center;
+}
+
+.word {
+    display: inline;
+}
+
+.blank {
+    display: inline-block;
+    border-bottom: 2px solid #667eea;
+    /* min-width: 70px; */ 
+    height: 32px;
+    margin: 0 3px;
+    vertical-align: bottom;
+}
+
+.blank input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 5px;
+    outline: none;
+}
+
+.blank.correct {
+    border-bottom-color: #28a745;
+    background: #d4edda;
+}
+
+.blank.incorrect,
+.blank.wrong {
+    border-bottom-color: #dc3545;
+    background: #f8d7da;
+}
+
+.hint {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.message {
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    touch-action: manipulation;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:active {
+    background: #5568d3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:active {
+    background: #5a6268;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:active {
+    background: #218838;
+}
+
+/* Page résultats */
+.results-page {
+    display: none;
+    text-align: center;
+}
+
+.results-page.active {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+}
+
+.results-header {
+    margin-bottom: 30px;
+}
+
+.results-header h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.results-score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.results-details {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.result-value {
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Bouton retour accueil */
+.home-btn {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.home-btn button {
+    background: transparent;
+    color: #999;
+    font-size: 13px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+}
+
+.home-btn button:active {
+    background: #f8f9fa;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Desktop responsive */
+@media (min-width: 768px) {
+    body {
+        padding: 30px;
+    }
+
+    .container {
+        padding: 40px;
+        min-height: auto;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .stats {
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .stat {
+        padding: 20px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+    }
+
+    .welcome-text {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .config-section {
+        padding: 25px;
+    }
+
+    .config-section h2 {
+        font-size: 17px;
+    }
+
+    .verse-container {
+        padding: 30px 25px;
+        font-size: 18px;
+        min-height: 220px;
+    }
+
+    .verse-item {
+        padding: 25px 20px;
+    }
+
+    .verse-text {
+        font-size: 16px;
+    }
+
+    .controls {
+        flex-direction: row;
+    }
+
+    .option-btn {
+        font-size: 14px;
+        min-width: 100px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODAL INFO LIVRE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Sélecteur avec bouton info */
+.select-with-info {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.select-with-info select {
+    flex: 1;
+}
+
+.book-info-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-info-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.book-info-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Overlay de la modal */
+.book-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 20px;
+}
+
+.book-modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal */
+.book-modal {
+    background: white;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-modal-overlay.visible .book-modal {
+    transform: scale(1) translateY(0);
+}
+
+/* Bouton fermer */
+.book-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.book-modal-close:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+/* Header de la modal */
+.book-modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px 25px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.book-modal-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.book-modal-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Contenu de la modal */
+.book-modal-content {
+    padding: 25px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Infos rapides */
+.book-info-quick {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.info-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #667eea;
+    min-width: 90px;
+    font-size: 13px;
+}
+
+.info-value {
+    color: #333;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Sections */
+.book-info-section {
+    margin-bottom: 20px;
+}
+
+.book-info-section h3 {
+    font-size: 15px;
+    color: #333;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.book-info-section p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Thèmes */
+.book-themes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.book-theme {
+    background: linear-gradient(135deg, #e8ecff 0%, #f0e8ff 100%);
+    color: #667eea;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Détails dépliables */
+.book-info-details {
+    margin-bottom: 15px;
+    border: 1px solid #e8ecff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.book-info-details summary {
+    padding: 14px 16px;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.book-info-details summary:hover {
+    background: #e8ecff;
+}
+
+.book-info-details[open] summary {
+    border-bottom: 1px solid #e8ecff;
+}
+
+/* Structure du livre */
+.book-structure {
+    padding: 15px;
+}
+
+.structure-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.structure-item:last-child {
+    border-bottom: none;
+}
+
+.structure-chapters {
+    background: #667eea;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+}
+
+.structure-title {
+    color: #333;
+    font-size: 13px;
+}
+
+/* Versets clés */
+.book-key-verses {
+    padding: 15px;
+}
+
+.key-verse {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid #667eea;
+}
+
+.key-verse:last-child {
+    margin-bottom: 0;
+}
+
+.key-verse:hover {
+    background: #e8ecff;
+    transform: translateX(5px);
+}
+
+.key-verse-ref {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 13px;
+    min-width: 100px;
+}
+
+.key-verse-title {
+    color: #555;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .book-modal {
+        max-height: 90vh;
+        border-radius: 15px;
+    }
+
+    .book-modal-header {
+        padding: 25px 20px;
+    }
+
+    .book-modal-title {
+        font-size: 24px;
+    }
+
+    .book-modal-content {
+        padding: 20px;
+    }
+
+    .info-item {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .info-label {
+        min-width: auto;
+    }
+
+    .key-verse {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .key-verse-ref {
+        min-width: auto;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ONGLET PRIÈRE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Bouton retour */
+.prayer-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: #667eea;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 0;
+    margin-bottom: 15px;
+}
+
+.prayer-back-btn:hover {
+    color: #764ba2;
+}
+
+/* Grille de navigation */
+.prayer-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.prayer-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+    background: white;
+    border: 2px solid #e8ecff;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.prayer-nav-btn:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+}
+
+.prayer-nav-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.prayer-nav-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.prayer-nav-desc {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.prayer-nav-stat {
+    font-size: 11px;
+    color: #667eea;
+    font-weight: 600;
+    background: #f0f4ff;
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+/* Section Louange */
+.louange-section {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #f0e6c0;
+}
+
+.louange-section h3 {
+    font-size: 14px;
+    color: #8b7355;
+    margin-bottom: 12px;
+}
+
+.louange-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.louange-input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #e8dcc0;
+    border-radius: 25px;
+    font-size: 14px;
+    background: white;
+}
+
+.louange-input-group input:focus {
+    outline: none;
+    border-color: #d4c4a0;
+}
+
+.btn-louange {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-louange:hover {
+    transform: scale(1.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHAPELET VISUEL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Page d'accueil chapelet */
+.chapelet-home {
+    padding-bottom: 20px;
+}
+
+.chapelet-home-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.chapelet-home-header h2 {
+    font-size: 22px;
+    color: #333;
+    margin: 0 0 8px;
+}
+
+.chapelet-home-header p {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}
+
+/* Cartes des mystères */
+.mysteres-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.mystere-select-card {
+    position: relative;
+    background: white;
+    border: 2px solid #e8ecff;
+    border-radius: 16px;
+    padding: 20px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+}
+
+.mystere-select-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--mystere-color);
+}
+
+.mystere-select-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border-color: var(--mystere-color);
+}
+
+.mystere-select-card.today {
+    border-color: var(--mystere-color);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(248,249,255,1) 100%);
+}
+
+.mystere-card-inner {
+    text-align: center;
+}
+
+.mystere-select-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.mystere-select-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.mystere-select-day {
+    font-size: 11px;
+    color: #888;
+}
+
+.today-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--mystere-color);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+/* Stats bar */
+.chapelet-stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border-radius: 16px;
+}
+
+.chapelet-stats-bar .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.chapelet-stats-bar .stat-icon {
+    font-size: 24px;
+}
+
+.chapelet-stats-bar .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.chapelet-stats-bar .stat-label {
+    font-size: 11px;
+    color: #888;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHAPELET MODAL VISUEL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.chapelet-visual-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.chapelet-visual-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chapelet-visual {
+    width: 100%;
+    max-width: 420px;
+    max-height: 95vh;
+    background: #1a1a2e;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header mystère */
+.chapelet-visual-header {
+    padding: 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.chapelet-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.chapelet-close:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.mystere-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.chapelet-visual-header h2 {
+    font-size: 20px;
+    margin: 0 0 8px;
+}
+
+.chapelet-visual-header p {
+    font-size: 13px;
+    opacity: 0.9;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Zone du rosaire visuel */
+.rosary-visual {
+    padding: 25px 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.rosary-beads {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rosary-cross {
+    font-size: 32px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Arc de perles */
+.rosary-arc {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 320px;
+}
+
+.dizaine {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 25px;
+    transition: all 0.3s;
+}
+
+.dizaine.current {
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+.dizaine.done {
+    opacity: 0.5;
+}
+
+.small-beads {
+    display: flex;
+    gap: 3px;
+}
+
+/* Perles style bois d'olivier */
+.bead {
+    border-radius: 50%;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.bead.big {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(145deg, #8B7355 0%, #6B5344 50%, #4A3728 100%);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255,255,255,0.2),
+        inset -2px -2px 4px rgba(0,0,0,0.3),
+        0 2px 4px rgba(0,0,0,0.3);
+}
+
+.bead.small {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(145deg, #9B8465 0%, #7B6454 50%, #5A4738 100%);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255,255,255,0.2),
+        inset -1px -1px 2px rgba(0,0,0,0.3),
+        0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Perle active - pulse doré */
+.bead.active {
+    animation: beadPulse 1.5s ease-in-out infinite;
+    box-shadow: 
+        0 0 15px rgba(255,215,0,0.6),
+        0 0 30px rgba(255,215,0,0.3),
+        inset 2px 2px 4px rgba(255,255,255,0.3);
+}
+
+.bead.active.big {
+    background: linear-gradient(145deg, #FFD700 0%, #DAA520 50%, #B8860B 100%);
+}
+
+.bead.active.small {
+    background: linear-gradient(145deg, #FFD700 0%, #DAA520 50%, #B8860B 100%);
+}
+
+@keyframes beadPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 
+            0 0 15px rgba(255,215,0,0.6),
+            0 0 30px rgba(255,215,0,0.3);
+    }
+    50% {
+        transform: scale(1.15);
+        box-shadow: 
+            0 0 25px rgba(255,215,0,0.8),
+            0 0 50px rgba(255,215,0,0.4);
+    }
+}
+
+/* Perle priée - dorée statique */
+.bead.prayed {
+    background: linear-gradient(145deg, #DAA520 0%, #B8860B 50%, #8B6914 100%);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255,255,255,0.2),
+        0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Zone de prière */
+.prayer-zone {
+    background: rgba(255,255,255,0.05);
+    margin: 0 15px;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.prayer-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.prayer-icon {
+    font-size: 24px;
+}
+
+.prayer-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+}
+
+.prayer-counter {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+}
+
+.prayer-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+}
+
+/* Barre de progression */
+.chapelet-progress-bar {
+    margin: 15px;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: white;
+    font-weight: 600;
+}
+
+/* Contrôles */
+.chapelet-controls {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+}
+
+.ctrl-btn {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ctrl-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.ctrl-btn.main-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-weight: 600;
+}
+
+.ctrl-btn.main-btn:hover {
+    transform: scale(1.02);
+}
+
+.ctrl-btn.auto-btn.active {
+    background: #4CAF50;
+}
+
+.ctrl-btn .btn-text {
+    font-size: 15px;
+}
+
+.ctrl-btn .btn-icon {
+    font-size: 14px;
+}
+
+/* Écran de fin */
+.chapelet-complete-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 30px;
+    text-align: center;
+    min-height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.complete-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+.complete-rosary {
+    font-size: 80px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    animation: floatUp 2s ease-in-out infinite;
+}
+
+@keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.chapelet-complete-screen h2 {
+    font-size: 26px;
+    color: white;
+    margin: 0 0 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.complete-mystere-name {
+    color: #FFD700;
+    font-size: 16px;
+    margin: 0 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.complete-blessing {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.complete-stats-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.complete-stat {
+    text-align: center;
+}
+
+.complete-stat .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #FFD700;
+}
+
+.complete-stat .stat-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+}
+
+.complete-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #1a1a2e;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s;
+}
+
+.complete-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LECTIO DIVINA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lectio-container {
+    padding-bottom: 20px;
+}
+
+.lectio-intro {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.lectio-intro h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0 0 10px;
+}
+
+.lectio-intro p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.lectio-steps-preview {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.lectio-step-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+}
+
+.step-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+}
+
+.step-duration {
+    font-size: 10px;
+    color: #888;
+}
+
+.lectio-verse-selection {
+    margin-bottom: 20px;
+}
+
+.lectio-verse-selection h3 {
+    font-size: 14px;
+    color: #333;
+    margin: 0 0 12px;
+}
+
+.verse-options {
+    display: flex;
+    gap: 10px;
+}
+
+.verse-option-btn {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e8ecff;
+    border-radius: 10px;
+    background: white;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.verse-option-btn.active {
+    border-color: #667eea;
+    background: #f0f4ff;
+    color: #667eea;
+}
+
+.btn-start-lectio {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Lectio active */
+.lectio-active {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.lectio-active-header {
+    padding: 25px 20px;
+    color: white;
+    text-align: center;
+}
+
+.lectio-step-info .step-number {
+    font-size: 11px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lectio-step-info h2 {
+    font-size: 24px;
+    margin: 8px 0;
+}
+
+.lectio-step-info p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.lectio-timer {
+    font-size: 36px;
+    font-weight: 700;
+    margin-top: 15px;
+    font-family: monospace;
+}
+
+.lectio-progress {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.4;
+}
+
+.progress-step.active,
+.progress-step.done {
+    opacity: 1;
+}
+
+.progress-step .progress-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--step-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.lectio-verse-display {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.lectio-verse-display .verse-text {
+    font-size: 16px;
+    font-style: italic;
+    color: #333;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.lectio-verse-display .verse-ref {
+    font-size: 13px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+.lectio-instruction {
+    padding: 20px;
+    text-align: center;
+}
+
+.lectio-instruction p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.lectio-notes {
+    padding: 0 20px 20px;
+}
+
+.lectio-notes textarea {
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    border: 2px solid #e8ecff;
+    border-radius: 10px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.lectio-controls {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-lectio-control {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid #e8ecff;
+    border-radius: 10px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-lectio-control.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+/* Lectio complete */
+.lectio-complete {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.lectio-complete .complete-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.lectio-complete h2 {
+    font-size: 22px;
+    color: #333;
+    margin: 0 0 10px;
+}
+
+.lectio-complete > p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.lectio-complete .complete-verse {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.lectio-complete .complete-verse p {
+    font-style: italic;
+    color: #555;
+    margin: 0 0 8px;
+}
+
+.lectio-complete .complete-verse span {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INTENTIONS DE PRIÈRE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.intentions-container {
+    padding-bottom: 20px;
+}
+
+.intentions-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.intention-form {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #e8ecff;
+}
+
+.intention-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.intention-cat-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px;
+    border: 2px solid #e8ecff;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.intention-cat-btn:hover,
+.intention-cat-btn.active {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.intention-cat-btn .cat-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.intention-cat-btn .cat-name {
+    font-size: 10px;
+    color: #666;
+}
+
+.intention-form input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e8ecff;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.intention-form input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-add-intention {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.intentions-list {
+    margin-bottom: 20px;
+}
+
+.no-intentions {
+    text-align: center;
+    color: #888;
+    padding: 30px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.intention-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #e8ecff;
+}
+
+.intention-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.intention-content {
+    flex: 1;
+}
+
+.intention-text {
+    font-size: 14px;
+    color: #333;
+    margin: 0 0 6px;
+    line-height: 1.5;
+}
+
+.intention-date {
+    font-size: 11px;
+    color: #999;
+}
+
+.intention-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.intention-actions button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.intention-actions button:hover {
+    opacity: 1;
+}
+
+/* Mur des grâces */
+.graces-section {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.graces-section h3 {
+    font-size: 16px;
+    color: #2e7d32;
+    margin: 0 0 8px;
+}
+
+.graces-count {
+    font-size: 13px;
+    color: #4caf50;
+    margin: 0 0 15px;
+}
+
+.btn-show-graces {
+    background: white;
+    color: #4caf50;
+    border: 2px solid #4caf50;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COLLECTION DE PRIÈRES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.collection-container {
+    padding-bottom: 20px;
+}
+
+.collection-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.collection-filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-btn {
+    padding: 8px 14px;
+    border: 2px solid #e8ecff;
+    border-radius: 20px;
+    background: white;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.prayers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.prayer-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+    background: white;
+    border: 2px solid #e8ecff;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.prayer-card:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.prayer-card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.prayer-card-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODALES DE PRIÈRE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.prayer-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    padding: 20px;
+}
+
+.prayer-modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.prayer-modal {
+    background: white;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* Modal prière affichage */
+.prayer-display-modal .prayer-modal-header {
+    padding: 25px 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.prayer-modal-header .modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.prayer-modal-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.prayer-modal-header h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.prayer-modal-body {
+    padding: 25px 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.prayer-origine {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.prayer-text-full {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333;
+}
+
+/* Modal chapelet */
+.chapelet-modal {
+    max-width: 450px;
+}
+
+.chapelet-modal-header {
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.chapelet-modal-header h3 {
+    font-size: 16px;
+    margin: 0 0 10px;
+}
+
+.chapelet-progress {
+    display: flex;
+    justify-content: center;
+}
+
+.progress-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.progress-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+}
+
+.progress-dots .dot.active {
+    background: white;
+}
+
+.chapelet-modal-content {
+    padding: 25px 20px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.modal-mystere-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.modal-mystere-verse {
+    font-size: 13px;
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.modal-mystere-med {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.modal-instruction {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.prayer-text-display {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+    text-align: center;
+}
+
+.chapelet-modal-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-modal-secondary {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-modal-primary {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.chapelet-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Chapelet terminé */
+.chapelet-complete {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.chapelet-complete .complete-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.chapelet-complete h3 {
+    font-size: 20px;
+    color: #333;
+    margin: 0 0 10px;
+}
+
+.chapelet-complete p {
+    color: #666;
+    margin: 0 0 20px;
+}
+
+.chapelet-total {
+    font-size: 14px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Modal grâces */
+.graces-modal .graces-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.graces-modal-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.graces-modal-header .modal-close {
+    background: #f0f0f0;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.graces-list {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.grace-card {
+    display: flex;
+    gap: 12px;
+    padding: 15px;
+    background: #f8fff8;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 4px solid #4caf50;
+}
+
+.grace-icon {
+    font-size: 24px;
+}
+
+.grace-content {
+    flex: 1;
+}
+
+.grace-text {
+    font-size: 14px;
+    color: #333;
+    margin: 0 0 8px;
+}
+
+.grace-temoignage {
+    font-size: 13px;
+    color: #4caf50;
+    font-style: italic;
+    margin: 0 0 8px;
+}
+
+.grace-date {
+    font-size: 11px;
+    color: #999;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE PRIÈRE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 400px) {
+    .prayer-nav-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .prayers-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .lectio-steps-preview {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TROUVE TON VERSET - EXPÉRIENCE IMMERSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Overlay principal */
+.verset-quiz-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.verset-quiz-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.verset-quiz-container {
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+}
+
+.quiz-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: rgba(255,255,255,0.7);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+}
+
+.quiz-close-btn:hover {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.quiz-close-btn.light {
+    color: white;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ÉCRAN D'ACCUEIL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.verset-quiz-container.accueil {
+    text-align: center;
+    padding: 40px 30px;
+}
+
+.accueil-content {
+    animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.accueil-icon {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.accueil-icon .icon-main {
+    font-size: 70px;
+    position: relative;
+    z-index: 2;
+    animation: float 3s ease-in-out infinite;
+}
+
+.accueil-icon .icon-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+.accueil-title {
+    font-size: 28px;
+    color: white;
+    margin: 0 0 10px;
+    font-weight: 300;
+}
+
+.accueil-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    margin: 0 0 30px;
+    font-style: italic;
+}
+
+.accueil-text {
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+}
+
+.accueil-text p {
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.accueil-decoration {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 35px;
+}
+
+.accueil-decoration .dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+
+.accueil-decoration .dot:nth-child(3) {
+    background: rgba(255,215,0,0.8);
+    width: 10px;
+    height: 10px;
+}
+
+.btn-start-quiz {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #1a1a2e;
+    border: none;
+    padding: 18px 40px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-start-quiz:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+}
+
+.btn-start-quiz .btn-icon {
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+
+.btn-start-quiz:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ÉCRAN QUESTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.verset-quiz-container.question {
+    padding: 30px 20px;
+}
+
+.verset-quiz-container.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Progression */
+.question-progress {
+    margin-bottom: 40px;
+}
+
+.progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s;
+}
+
+.progress-dot.done {
+    background: #FFD700;
+}
+
+.progress-dot.current {
+    background: white;
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
+/* Contenu question */
+.question-content {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.question-number {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.question-text {
+    font-size: 24px;
+    color: white;
+    font-weight: 300;
+    margin: 0 0 12px;
+    line-height: 1.4;
+}
+
+.question-subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+    margin: 0;
+}
+
+/* Réponses */
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.answer-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 18px 20px;
+    color: white;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.answer-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateX(5px);
+}
+
+.answer-btn.selected {
+    background: linear-gradient(135deg, rgba(255,215,0,0.3) 0%, rgba(255,165,0,0.3) 100%);
+    border-color: #FFD700;
+    transform: scale(1.02);
+}
+
+.answer-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.answer-text {
+    flex: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ÉCRAN TRANSITION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.verset-quiz-container.transition {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+.transition-content {
+    text-align: center;
+}
+
+.transition-icon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: pulseRing 2s ease-out infinite;
+}
+
+.pulse-ring.delay-1 {
+    animation-delay: 0.5s;
+}
+
+.pulse-ring.delay-2 {
+    animation-delay: 1s;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.icon-dove {
+    font-size: 50px;
+    animation: float 2s ease-in-out infinite;
+}
+
+.transition-text {
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+    margin: 0;
+    animation: fadeInUp 1s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ÉCRAN RÉSULTAT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.verset-quiz-container.result {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    animation: resultAppear 0.6s ease;
+}
+
+@keyframes resultAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.result-header {
+    padding: 30px 25px;
+    text-align: center;
+    color: white;
+}
+
+.result-famille {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 18px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.famille-icon {
+    font-size: 20px;
+}
+
+.famille-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.result-intro {
+    font-size: 16px;
+    opacity: 0.9;
+    margin: 0;
+    font-style: italic;
+}
+
+.result-body {
+    padding: 25px;
+}
+
+/* Carte du verset */
+.verset-card {
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+    border-radius: 16px;
+    padding: 30px 25px;
+    margin-bottom: 20px;
+    border: 1px solid #e8ecff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.verset-text-container {
+    position: relative;
+}
+
+.quote-mark {
+    font-size: 40px;
+    color: #ddd;
+    font-family: Georgia, serif;
+    line-height: 1;
+    position: absolute;
+    left: -10px;
+    top: -10px;
+}
+
+.quote-mark.end {
+    left: auto;
+    right: -10px;
+    bottom: 20px;
+    top: auto;
+}
+
+.verset-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    font-style: italic;
+    margin: 0;
+    padding: 0 15px;
+    min-height: 80px;
+}
+
+.verset-reference {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    color: #667eea;
+    margin-top: 15px;
+}
+
+/* Message personnel */
+.message-personnel {
+    background: #fffbeb;
+    border-left: 4px solid #FFD700;
+    padding: 15px 20px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 20px;
+}
+
+.message-personnel p {
+    font-size: 14px;
+    color: #6b5900;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Suggestion de prière */
+.priere-suggestion {
+    margin-bottom: 20px;
+}
+
+.priere-intro {
+    font-size: 13px;
+    color: #888;
+    margin: 0 0 12px;
+}
+
+.priere-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.priere-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.priere-icon {
+    font-size: 28px;
+}
+
+.priere-name {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+}
+
+.priere-arrow {
+    font-size: 18px;
+    color: #888;
+}
+
+/* Actions */
+.result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 25px 25px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.action-btn.secondary {
+    flex: 1;
+    background: #f0f0f0;
+    color: #333;
+}
+
+.action-btn.secondary:hover {
+    background: #e0e0e0;
+}
+
+.action-btn.primary {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.action-btn.primary:hover {
+    transform: scale(1.02);
+}
+
+.action-icon {
+    font-size: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARTE TROUVE TON VERSET (dans accueil Prière)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.trouve-verset-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.trouve-verset-card:hover {
+    transform: translateY(-3px);
+}
+
+.trouve-verset-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+}
+
+.trouve-verset-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.trouve-verset-icon {
+    font-size: 40px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.trouve-verset-text {
+    flex: 1;
+}
+
+.trouve-verset-text h3 {
+    font-size: 18px;
+    margin: 0 0 5px;
+    font-weight: 600;
+}
+
+.trouve-verset-text p {
+    font-size: 13px;
+    margin: 0;
+    opacity: 0.85;
+}
+
+.trouve-verset-arrow {
+    font-size: 24px;
+    opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 380px) {
+    .accueil-title {
+        font-size: 24px;
+    }
+    
+    .question-text {
+        font-size: 20px;
+    }
+    
+    .verset-text {
+        font-size: 16px;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn.secondary {
+        width: 100%;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODAL PRIÈRE PAR-DESSUS LE RÉSULTAT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.priere-over-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    padding: 20px;
+}
+
+.priere-over-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.priere-over-content {
+    background: white;
+    border-radius: 20px;
+    max-width: 440px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.priere-over-header {
+    padding: 25px 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.priere-over-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.priere-over-header h2 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.priere-over-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.priere-over-body {
+    padding: 25px 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.priere-over-origine {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.priere-over-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #333;
+}
+
+.priere-over-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.btn-priere-back {
+    width: 100%;
+    padding: 14px;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-priere-back:hover {
+    background: #eee;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HISTORIQUE DES VERSETS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.history-modal .priere-over-body {
+    padding: 15px;
+}
+
+.history-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-empty {
+    text-align: center;
+    color: #888;
+    padding: 40px 20px;
+    font-size: 14px;
+}
+
+.history-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    border-left: 4px solid #667eea;
+}
+
+.history-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.history-famille {
+    font-size: 13px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.history-date {
+    font-size: 11px;
+    color: #888;
+}
+
+.history-verset {
+    margin-bottom: 8px;
+}
+
+.history-text {
+    font-size: 13px;
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 6px;
+}
+
+.history-ref {
+    font-size: 12px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.history-time {
+    font-size: 10px;
+    color: #aaa;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ACTIONS RÉSULTAT AMÉLIORÉES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+    padding: 0 25px 10px;
+}
+
+.result-actions-row2 {
+    display: flex;
+    gap: 10px;
+    padding: 0 25px 10px;
+}
+
+.result-actions-final {
+    padding: 10px 25px 25px;
+}
+
+.action-btn.outline {
+    flex: 1;
+    background: white;
+    border: 2px solid #e0e0e0;
+    color: #555;
+}
+
+.action-btn.outline:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.action-btn:disabled {
+    opacity: 0.7;
+    cursor: default;
+}
+
+.action-btn:disabled:hover {
+    transform: none;
+}

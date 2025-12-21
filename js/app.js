@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tabsContainer = document.querySelector('.tabs-container');
         if (tabsContainer && tabsContainer.scrollWidth > tabsContainer.clientWidth) {
             // Le menu dépasse, on fait l'animation hint
-            const scrollDistance = 200; // pixels à défiler
+            const scrollDistance = 300; // pixels à défiler
             const duration = 400; // durée en ms
             
             // Scroll vers la droite

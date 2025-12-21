@@ -930,21 +930,11 @@ const TrouveTonVerset = {
             
             .verset-quiz-overlay {
                 align-items: flex-start !important;
-                padding-top: 10px !important;
             }
             
             .verset-quiz-container {
-                margin-top: 10px;
+                margin-top: 20px;
                 margin-bottom: 20px;
-            }
-
-            /* Fix bouton fermeture - centrer la croix */
-            .quiz-close-btn {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                line-height: 1 !important;
-                padding: 0 !important;
             }
 
             /* ═══════════════════════════════════════════════════════════════ */
@@ -953,29 +943,29 @@ const TrouveTonVerset = {
             /* ═══════════════════════════════════════════════════════════════ */
             
             .verset-quiz-container.choix-parcours {
-                padding: 20px 20px 25px;
+                padding: 30px 20px;
             }
 
             .parcours-header {
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
             }
 
             .parcours-icon-main {
-                font-size: 2.5em;
-                margin-bottom: 10px;
+                font-size: 3em;
+                margin-bottom: 15px;
             }
 
             .parcours-title {
-                font-size: 1.6em;
+                font-size: 1.8em;
                 color: white;
-                margin-bottom: 5px;
+                margin-bottom: 8px;
                 font-weight: 300;
             }
 
             .parcours-subtitle {
                 color: rgba(255,255,255,0.6);
-                font-size: 0.95em;
+                font-size: 1em;
             }
 
             .parcours-grid {

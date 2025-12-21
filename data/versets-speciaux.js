@@ -94,7 +94,7 @@ const VersetsSpeciaux = {
             icone: '❤️',
             couleur: '#E91E63',
             couleurLight: '#FCE4EC',
-            priereRecommandee: 'je-vous-salue',
+            priereRecommandee: 'acte-charite',
             message: "Tu es infiniment aimé(e), tel(le) que tu es, avec tes forces et tes fragilités. Rien ni personne ne pourra jamais te séparer de cet amour qui t'a choisi avant même ta naissance."
         },
         esperance: {
@@ -103,7 +103,7 @@ const VersetsSpeciaux = {
             icone: '✨',
             couleur: '#FF9800',
             couleurLight: '#FFF3E0',
-            priereRecommandee: 'magnificat',
+            priereRecommandee: 'therese-avila',
             message: "L'avenir t'inquiète, et c'est humain. Mais Celui qui tient les étoiles dans sa main tient aussi ton histoire. Le meilleur reste à écrire, et Dieu en est l'auteur."
         },
         confiance: {
@@ -112,7 +112,7 @@ const VersetsSpeciaux = {
             icone: '🙏',
             couleur: '#3F51B5',
             couleurLight: '#E8EAF6',
-            priereRecommandee: 'notre-pere',
+            priereRecommandee: 'abandon-foucauld',
             message: "Lâcher prise n'est pas abandonner, c'est remettre entre des mains plus sûres que les tiennes. Dieu veille sur chacun de tes pas, même ceux que tu ne vois pas encore."
         },
         joie: {
@@ -121,7 +121,7 @@ const VersetsSpeciaux = {
             icone: '🎉',
             couleur: '#FFC107',
             couleurLight: '#FFFDE7',
-            priereRecommandee: 'gloire-au-pere',
+            priereRecommandee: 'magnificat',
             message: "La joie n'est pas l'absence de difficultés, mais une source qui jaillit du plus profond, là où Dieu demeure. Aujourd'hui, laisse cette joie te surprendre et te porter."
         },
         sagesse: {
@@ -148,7 +148,7 @@ const VersetsSpeciaux = {
             icone: '🙌',
             couleur: '#00BCD4',
             couleurLight: '#E0F7FA',
-            priereRecommandee: 'notre-pere',
+            priereRecommandee: 'psaume-50',
             message: "Le pardon est un chemin, pas un instant. Que tu aies besoin de pardonner ou d'être pardonné(e), Dieu marche avec toi sur cette route de libération."
         },
         perseverance: {
@@ -157,7 +157,7 @@ const VersetsSpeciaux = {
             icone: '🏃',
             couleur: '#795548',
             couleurLight: '#EFEBE9',
-            priereRecommandee: 'ame-du-christ',
+            priereRecommandee: 'psaume-91',
             message: "La course est longue, mais tu n'es pas disqualifié(e). Chaque pas compte, chaque effort est vu. Continue, un pas après l'autre, les yeux fixés sur Celui qui t'attend."
         }
     },

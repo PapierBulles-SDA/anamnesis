@@ -215,6 +215,87 @@ const UI = {
         }
     },
 
+	/**
+		 * Afficher la modal d'info du livre (pour l'onglet Exercice)
+		 */
+		showExerciseBookInfo() {
+			const selectedLivre = App.config.selectedLivre;
+			if (!selectedLivre || selectedLivre === 'tous') return;
+			
+			const info = window.LivresInfo ? window.LivresInfo[selectedLivre] : null;
+			if (!info) {
+				alert('Informations non disponibles pour ce livre.');
+				return;
+			}
+
+			const overlay = document.getElementById('bookModalOverlay');
+			const badge = document.getElementById('bookModalBadge');
+			const title = document.getElementById('bookModalTitle');
+			const content = document.getElementById('bookModalContent');
+
+			if (!overlay || !content) return;
+
+			if (badge) {
+				badge.textContent = info.partie;
+				badge.style.backgroundColor = info.couleur;
+			}
+			if (title) {
+				title.textContent = selectedLivre;
+			}
+
+			let html = '';
+			html += '<div class="book-info-quick">';
+			html += '<div class="info-item"><span class="info-icon">✍️</span><span class="info-label">Auteur</span><span class="info-value">' + info.auteur + '</span></div>';
+			html += '<div class="info-item"><span class="info-icon">📅</span><span class="info-label">Date</span><span class="info-value">' + info.date + '</span></div>';
+			html += '<div class="info-item"><span class="info-icon">📍</span><span class="info-label">Lieu</span><span class="info-value">' + info.lieu + '</span></div>';
+			html += '<div class="info-item"><span class="info-icon">👥</span><span class="info-label">Destinataires</span><span class="info-value">' + info.destinataires + '</span></div>';
+			html += '<div class="info-item"><span class="info-icon">📖</span><span class="info-label">Chapitres</span><span class="info-value">' + info.chapitres + ' chapitres, ' + info.versets + ' versets</span></div>';
+			html += '</div>';
+
+			html += '<div class="book-info-section">';
+			html += '<h3>📝 Résumé</h3>';
+			html += '<p>' + info.resume + '</p>';
+			html += '</div>';
+
+			html += '<div class="book-info-section">';
+			html += '<h3>🎯 Thèmes clés</h3>';
+			html += '<div class="book-themes">';
+			info.themes.forEach(theme => {
+				html += '<span class="book-theme">' + theme + '</span>';
+			});
+			html += '</div>';
+			html += '</div>';
+
+			html += '<details class="book-info-details">';
+			html += '<summary>📚 Structure du livre</summary>';
+			html += '<div class="book-structure">';
+			info.structure.forEach(s => {
+				html += '<div class="structure-item">';
+				html += '<span class="structure-chapters">' + s.chapitres + '</span>';
+				html += '<span class="structure-title">' + s.section + '</span>';
+				html += '</div>';
+			});
+			html += '</div>';
+			html += '</details>';
+
+			html += '<details class="book-info-details">';
+			html += '<summary>⭐ Versets clés</summary>';
+			html += '<div class="book-key-verses">';
+			info.versetsCles.forEach(v => {
+				html += '<div class="key-verse">';
+				html += '<span class="key-verse-ref">' + selectedLivre + ' ' + v.ref + '</span>';
+				html += '<span class="key-verse-title">' + v.titre + '</span>';
+				html += '</div>';
+			});
+			html += '</div>';
+			html += '</details>';
+
+			content.innerHTML = html;
+			overlay.classList.add('visible');
+			document.body.style.overflow = 'hidden';
+		},
+
+
     /**
      * Initialiser les boutons de mode
      */
@@ -271,15 +352,19 @@ const UI = {
     /**
      * Initialiser les sélecteurs de filtres
      */
-    initFilterSelects() {
+initFilterSelects() {
         const selectPartie = document.getElementById('selectPartie');
         const selectLivre = document.getElementById('selectLivre');
         const selectChapitre = document.getElementById('selectChapitre');
+        const exerciseBookInfoBtn = document.getElementById('exerciseBookInfoBtn');
         
         if (selectPartie) {
             selectPartie.addEventListener('change', () => {
                 App.config.selectedPartie = selectPartie.value;
                 Data.updateLivreDropdown();
+                if (exerciseBookInfoBtn) {
+                    exerciseBookInfoBtn.disabled = true;
+                }
             });
         }
         
@@ -287,12 +372,21 @@ const UI = {
             selectLivre.addEventListener('change', () => {
                 App.config.selectedLivre = selectLivre.value;
                 Data.updateChapitreDropdown();
+                if (exerciseBookInfoBtn) {
+                    exerciseBookInfoBtn.disabled = (selectLivre.value === 'tous');
+                }
             });
         }
         
         if (selectChapitre) {
             selectChapitre.addEventListener('change', () => {
                 App.config.selectedChapitre = selectChapitre.value;
+            });
+        }
+        
+        if (exerciseBookInfoBtn) {
+            exerciseBookInfoBtn.addEventListener('click', () => {
+                this.showExerciseBookInfo();
             });
         }
     },

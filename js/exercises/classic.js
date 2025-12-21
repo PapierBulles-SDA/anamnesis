@@ -127,15 +127,15 @@ const ClassicMode = {
      * @param {Object} verse - Le verset
      * @returns {string} HTML de l'exercice
      */
-    buildExercise(verse) {
+buildExercise(verse) {
         const words = verse.text.split(' ');
         
-        // Filtrer les mots importants
+        // Filtrer les mots importants (on garde l'apostrophe dans le mot)
         const importantWords = words.map((w, i) => ({ word: w, index: i }))
             .filter(w => {
-                const cleanWord = w.word.replace(/[.,;:!?«»""']/g, '');
+                const cleanWord = w.word.replace(/[.,;:!?«»""]/g, '');
                 return cleanWord.length > 3 && 
-                       !App.excludedWords.includes(cleanWord.toLowerCase());
+                       !App.excludedWords.includes(cleanWord.toLowerCase().replace(/[''`]/g, ''));
             });
         
         // Déterminer le nombre de trous
@@ -153,15 +153,17 @@ const ClassicMode = {
             selectedIndices.push(selected.index);
         }
         
-        // Construire le HTML
+// Construire le HTML
         let html = '<div class="verse-text">';
         words.forEach((word, index) => {
             if (selectedIndices.includes(index)) {
-                const cleanWord = word.replace(/[.,;:!?«»""']/g, '');
-                const punctuation = word.replace(cleanWord, '');
+                // Extraire uniquement la ponctuation FINALE (pas l'apostrophe au milieu)
+                const punctMatch = word.match(/[.,;:!?«»""]+$/);
+                const punctuation = punctMatch ? punctMatch[0] : '';
+                const cleanWord = punctuation ? word.slice(0, -punctuation.length) : word;
                 const inputWidth = Math.max(40, cleanWord.length * 10);
                 
-                html += `<span class="blank" data-answer="${cleanWord.toLowerCase()}" style="width: ${inputWidth}px;">
+                html += `<span class="blank" data-answer="${cleanWord}" style="width: ${inputWidth}px;">
                     <input type="text" placeholder="?" autocomplete="off">
                 </span>${punctuation} `;
             } else {
@@ -176,14 +178,23 @@ const ClassicMode = {
     /**
      * Vérifier les réponses
      */
-    check() {
+check() {
         const blanks = document.querySelectorAll('#verseContainer .blank');
         let allCorrect = true;
         
-        blanks.forEach(blank => {
+        // Fonction pour normaliser les réponses (enlever apostrophes et accents pour comparaison)
+        const normalize = (str) => {
+            return str.trim().toLowerCase()
+                .replace(/[''`]/g, '')  // Enlever les apostrophes
+                .replace(/[.,;:!?«»""]/g, '');  // Enlever la ponctuation
+        };
+        
+		blanks.forEach(blank => {
             const input = blank.querySelector('input');
-            const userAnswer = input.value.trim().toLowerCase();
-            const correctAnswer = blank.dataset.answer.toLowerCase();
+            // Normaliser pour comparaison tolérante (ignorer apostrophes et casse)
+            const normalize = (str) => str.trim().toLowerCase().replace(/[''`]/g, '');
+            const userAnswer = normalize(input.value);
+            const correctAnswer = normalize(blank.dataset.answer);
             
             if (userAnswer === correctAnswer) {
                 blank.classList.add('correct');

@@ -131,12 +131,29 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('❌ Erreur Stats:', e);
     }
 
-    // Activer le premier mode par défaut
+// Activer le premier mode par défaut
     UI.updateOptionsVisibility('classique');
 
     console.log('✅ Anamnésis initialisé avec succès !');
-});
 
+    // Animation hint pour montrer que le menu est scrollable (mobile)
+    setTimeout(() => {
+        const tabsContainer = document.querySelector('.tabs-container');
+        if (tabsContainer && tabsContainer.scrollWidth > tabsContainer.clientWidth) {
+            // Le menu dépasse, on fait l'animation hint
+            const scrollDistance = 80; // pixels à défiler
+            const duration = 400; // durée en ms
+            
+            // Scroll vers la droite
+            tabsContainer.scrollTo({ left: scrollDistance, behavior: 'smooth' });
+            
+            // Puis revient à gauche après un délai
+            setTimeout(() => {
+                tabsContainer.scrollTo({ left: 0, behavior: 'smooth' });
+            }, duration + 200);
+        }
+    }, 500); // Délai avant l'animation (laisse le temps à la page de charger)
+});
 /**
  * Gestion des erreurs globales
  */

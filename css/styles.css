@@ -5335,6 +5335,28 @@ button:active {
     color: #aaa;
 }
 
+/* Bouton aide */
+.help-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(139, 115, 85, 0.15);
+    color: #8B7355;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+.help-btn:hover {
+    background: #8B7355;
+    color: white;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    ACTIONS RÉSULTAT AMÉLIORÉES
    ═══════════════════════════════════════════════════════════════════════════ */

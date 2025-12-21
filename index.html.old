@@ -43,9 +43,8 @@
                 <button class="tab-btn" data-tab="priere">🙏 Prière</button>
                 <button class="tab-btn" data-tab="explorer">🔍 Explorer</button>
                 <button class="tab-btn" data-tab="stats">📊 Stats</button>
-				<button class="tab-btn" data-tab="liturgie">⛪ Liturgie</button>
-				<button class="tab-btn" onclick="window.open('aide.html', '_blank')">ℹ️ Aide</button>
-			</div>
+                <button class="tab-btn" data-tab="liturgie">⛪ Liturgie</button>
+            </div>
 
             <!-- Onglet Exercice -->
             <div class="tab-content active" id="tabExercice">
@@ -308,7 +307,7 @@
                             <span class="trouve-verset-icon">✨</span>
                             <div class="trouve-verset-text">
                                 <h3>Trouve ton Verset</h3>
-                                <p>3 parcours pour découvrir la parole qui t'est destinée aujourd'hui</p>
+                                <p>5 questions pour découvrir la parole qui t'est destinée aujourd'hui</p>
                             </div>
                             <span class="trouve-verset-arrow">→</span>
                         </div>

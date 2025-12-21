@@ -547,7 +547,6 @@
                     <li>Indice « première lettre » disponible</li>
                     <li>Bouton « Afficher le verset » si blocage</li>
                     <li>Difficulté = nombre de mots masqués</li>
-                    <li><strong>Tolérance aux fautes :</strong> majuscules/minuscules et accents ignorés, petites fautes d'orthographe tolérées sur les mots longs</li>
                 </ul>
             </div>
 
@@ -676,13 +675,7 @@
 
         <div class="feature-card">
             <h4><span class="icon">✨</span> Trouve ton Verset</h4>
-            <p>Découvrez un verset personnalisé selon votre état d'esprit du moment. Choisissez parmi 3 parcours :</p>
-            <ul>
-                <li><strong>🕊️ Trinité (3 questions)</strong> — Parcours express (~30s), un verset pour l'essentiel</li>
-                <li><strong>✝️ Les Plaies (5 questions)</strong> — Parcours approfondi (~1 min), un verset ciblé</li>
-                <li><strong>✨ Plénitude (7 questions)</strong> — Parcours complet (~1min30), deux versets très personnalisés</li>
-            </ul>
-            <p>L'algorithme de matching intelligent sélectionne le(s) verset(s) les plus adaptés à vos réponses parmi 10 familles spirituelles (paix, force, amour, espérance, confiance, joie, sagesse, réconfort, pardon, persévérance).</p>
+            <p>Un questionnaire de 5 questions pour découvrir un verset personnalisé selon votre état d'esprit du moment. L'algorithme sélectionne un passage adapté à vos réponses.</p>
         </div>
 
         <div class="feature-card">

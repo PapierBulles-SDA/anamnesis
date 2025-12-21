@@ -147,7 +147,7 @@ const TrouveTonVerset = {
                             <p class="parcours-card-symbole">${parcours.trinite.symbolique}</p>
                             <p class="parcours-card-desc">${parcours.trinite.description}</p>
                         </div>
-                        <div class="parcours-card-time">~30s</div>
+                        <div class="parcours-card-time">~1 min</div>
                     </button>
 
                     <button class="parcours-card" data-parcours="plaies">
@@ -158,7 +158,7 @@ const TrouveTonVerset = {
                             <p class="parcours-card-symbole">${parcours.plaies.symbolique}</p>
                             <p class="parcours-card-desc">${parcours.plaies.description}</p>
                         </div>
-                        <div class="parcours-card-time">~1 min</div>
+                        <div class="parcours-card-time">~2 min</div>
                     </button>
 
                     <button class="parcours-card" data-parcours="plenitude">
@@ -169,7 +169,7 @@ const TrouveTonVerset = {
                             <p class="parcours-card-symbole">${parcours.plenitude.symbolique}</p>
                             <p class="parcours-card-desc">${parcours.plenitude.description}</p>
                         </div>
-                        <div class="parcours-card-time">~1min30</div>
+                        <div class="parcours-card-time">~3 min</div>
                     </button>
                 </div>
 
@@ -189,9 +189,6 @@ const TrouveTonVerset = {
                 this.selectParcours(parcoursId);
             });
         });
-
-        // Scroller vers le haut
-        overlay.scrollTop = 0;
     },
 
     selectParcours(parcoursId) {
@@ -255,9 +252,6 @@ const TrouveTonVerset = {
         // Events
         document.getElementById('quizCloseBtn').addEventListener('click', () => this.hideOverlay());
         document.getElementById('startQuizBtn').addEventListener('click', () => this.showQuestion(0));
-
-        // Scroller vers le haut
-        overlay.scrollTop = 0;
     },
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -315,9 +309,6 @@ const TrouveTonVerset = {
                 this.selectAnswer(answerIndex);
             });
         });
-
-        // Scroller vers le haut
-        overlay.scrollTop = 0;
     },
 
     selectAnswer(answerIndex) {
@@ -408,9 +399,6 @@ const TrouveTonVerset = {
                 </div>
             </div>
         `;
-
-        // Scroller vers le haut
-        overlay.scrollTop = 0;
 
         // Calculer le résultat pendant la transition
         setTimeout(() => {
@@ -600,17 +588,6 @@ const TrouveTonVerset = {
             this.hideOverlay();
             this.goToRead();
         });
-
-        // Scroller vers le haut pour voir le résultat complet
-        // Utiliser setTimeout pour s'assurer que le DOM est rendu
-        setTimeout(() => {
-            overlay.scrollTo({ top: 0, behavior: 'instant' });
-            // Alternative : scroller le container dans la vue
-            const container = overlay.querySelector('.verset-quiz-container');
-            if (container) {
-                container.scrollIntoView({ block: 'start', behavior: 'instant' });
-            }
-        }, 100);
     },
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -923,48 +900,29 @@ const TrouveTonVerset = {
         const styles = document.createElement('style');
         styles.id = 'parcours-styles';
         styles.textContent = `
-            /* ═══════════════════════════════════════════════════════════════ */
-            /* FIX CRITICAL: Forcer l'affichage depuis le HAUT                 */
-            /* Override du align-items: center de styles.css                   */
-            /* ═══════════════════════════════════════════════════════════════ */
-            
-            .verset-quiz-overlay {
-                align-items: flex-start !important;
-            }
-            
-            .verset-quiz-container {
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-
-            /* ═══════════════════════════════════════════════════════════════ */
-            /* ÉCRAN CHOIX PARCOURS (NOUVEAU)                                  */
-            /* Adapté au thème sombre existant                                 */
-            /* ═══════════════════════════════════════════════════════════════ */
-            
-            .verset-quiz-container.choix-parcours {
-                padding: 30px 20px;
+            /* Écran choix parcours */
+            .choix-parcours {
+                max-width: 500px;
             }
 
             .parcours-header {
                 text-align: center;
-                margin-bottom: 30px;
+                margin-bottom: 25px;
             }
 
             .parcours-icon-main {
                 font-size: 3em;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
             }
 
             .parcours-title {
                 font-size: 1.8em;
-                color: white;
-                margin-bottom: 8px;
-                font-weight: 300;
+                color: #333;
+                margin-bottom: 5px;
             }
 
             .parcours-subtitle {
-                color: rgba(255,255,255,0.6);
+                color: #666;
                 font-size: 1em;
             }
 
@@ -979,24 +937,23 @@ const TrouveTonVerset = {
                 align-items: center;
                 gap: 15px;
                 padding: 18px;
-                background: rgba(255,255,255,0.05);
-                border: 2px solid rgba(255,255,255,0.1);
-                border-radius: 16px;
+                background: #fff;
+                border: 2px solid #e0e0e0;
+                border-radius: 15px;
                 cursor: pointer;
                 transition: all 0.3s;
                 text-align: left;
-                color: white;
             }
 
             .parcours-card:hover {
-                background: rgba(255,255,255,0.1);
-                border-color: rgba(255,255,255,0.3);
+                border-color: #8B7355;
                 transform: translateX(5px);
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             }
 
             .parcours-card.selected {
-                background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,165,0,0.2) 100%);
-                border-color: #FFD700;
+                border-color: #8B7355;
+                background: #8B735510;
             }
 
             .parcours-card-icon {
@@ -1012,33 +969,33 @@ const TrouveTonVerset = {
             .parcours-card-title {
                 font-size: 1.15em;
                 font-weight: 600;
-                color: white;
+                color: #333;
                 margin-bottom: 2px;
             }
 
             .parcours-card-questions {
                 font-size: 0.85em;
-                color: #FFD700;
+                color: #8B7355;
                 font-weight: 500;
             }
 
             .parcours-card-symbole {
                 font-size: 0.8em;
-                color: rgba(255,255,255,0.5);
+                color: #888;
                 font-style: italic;
                 margin: 3px 0;
             }
 
             .parcours-card-desc {
                 font-size: 0.85em;
-                color: rgba(255,255,255,0.7);
+                color: #666;
             }
 
             .parcours-card-time {
                 font-size: 0.8em;
-                color: rgba(255,255,255,0.6);
+                color: #999;
                 padding: 4px 10px;
-                background: rgba(255,255,255,0.1);
+                background: #f5f5f5;
                 border-radius: 12px;
             }
 
@@ -1046,68 +1003,57 @@ const TrouveTonVerset = {
                 text-align: center;
                 margin-top: 20px;
                 font-size: 0.85em;
-                color: rgba(255,255,255,0.5);
+                color: #888;
                 font-style: italic;
             }
 
-            /* ═══════════════════════════════════════════════════════════════ */
-            /* BADGE PARCOURS (dans accueil et résultat)                       */
-            /* ═══════════════════════════════════════════════════════════════ */
-
+            /* Badge parcours dans accueil */
             .accueil-parcours-badge {
                 display: inline-block;
                 padding: 8px 16px;
-                background: rgba(255,255,255,0.1);
                 border-radius: 20px;
                 font-size: 0.9em;
-                color: rgba(255,255,255,0.8);
                 margin: 15px 0;
             }
 
-            .result-parcours-badge {
-                display: inline-block;
-                padding: 6px 14px;
-                background: rgba(255,255,255,0.2);
-                border-radius: 15px;
-                font-size: 0.85em;
-                color: white;
-                margin-bottom: 12px;
-            }
-
-            /* ═══════════════════════════════════════════════════════════════ */
-            /* RÉSULTAT AVEC 2 VERSETS (parcours Plénitude)                    */
-            /* ═══════════════════════════════════════════════════════════════ */
-
+            /* Résultat avec 2 versets */
             .result.deux-versets .verset-card {
                 margin-bottom: 15px;
             }
 
             .verset-card.compact {
-                padding: 20px;
+                padding: 15px;
             }
 
-            .verset-card.compact .verset-text {
-                font-size: 1.1em;
+            .verset-card.compact .verset-text-container {
+                font-size: 0.95em;
             }
 
             .verset-card-label {
-                font-size: 0.85em;
-                color: #FFD700;
-                margin-bottom: 10px;
+                font-size: 0.8em;
+                color: #8B7355;
+                margin-bottom: 8px;
                 font-weight: 500;
             }
 
-            /* ═══════════════════════════════════════════════════════════════ */
-            /* MODAL HISTORIQUE (superposition)                                */
-            /* ═══════════════════════════════════════════════════════════════ */
+            /* Badge parcours dans résultat */
+            .result-parcours-badge {
+                display: inline-block;
+                padding: 4px 12px;
+                background: rgba(255,255,255,0.2);
+                border-radius: 15px;
+                font-size: 0.8em;
+                margin-bottom: 10px;
+            }
 
+            /* Modal historique */
             .history-over-modal {
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0,0,0,0.7);
+                background: rgba(0,0,0,0.6);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1123,34 +1069,30 @@ const TrouveTonVerset = {
             }
 
             .history-modal-content {
-                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                background: #fff;
                 border-radius: 20px;
                 max-width: 450px;
                 width: 90%;
                 max-height: 80vh;
                 overflow-y: auto;
                 position: relative;
-                border: 1px solid rgba(255,255,255,0.1);
             }
 
             .history-modal-close {
                 position: absolute;
                 top: 15px;
                 right: 15px;
-                background: rgba(255,255,255,0.1);
+                background: none;
                 border: none;
-                font-size: 1.2em;
+                font-size: 1.3em;
                 cursor: pointer;
-                color: rgba(255,255,255,0.7);
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
+                color: #666;
             }
 
             .history-modal-header {
                 padding: 25px;
                 text-align: center;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
+                border-bottom: 1px solid #eee;
             }
 
             .history-modal-icon {
@@ -1161,8 +1103,7 @@ const TrouveTonVerset = {
 
             .history-modal-header h2 {
                 font-size: 1.3em;
-                color: white;
-                font-weight: 300;
+                color: #333;
             }
 
             .history-modal-body {
@@ -1171,52 +1112,48 @@ const TrouveTonVerset = {
 
             .history-empty {
                 text-align: center;
-                color: rgba(255,255,255,0.5);
+                color: #888;
                 padding: 30px;
             }
 
             .history-entry {
                 padding: 15px;
-                background: rgba(255,255,255,0.05);
+                background: #f9f9f9;
                 border-radius: 12px;
                 margin-bottom: 12px;
-                border: 1px solid rgba(255,255,255,0.1);
             }
 
             .history-entry-date {
                 font-size: 0.8em;
-                color: rgba(255,255,255,0.5);
+                color: #888;
             }
 
             .history-entry-parcours {
                 font-size: 0.75em;
-                color: #FFD700;
+                color: #8B7355;
                 margin-top: 2px;
             }
 
             .history-entry-ref {
                 font-weight: 600;
-                color: white;
+                color: #333;
                 margin: 5px 0;
             }
 
             .history-entry-text {
                 font-size: 0.9em;
-                color: rgba(255,255,255,0.7);
+                color: #555;
                 font-style: italic;
             }
 
-            /* ═══════════════════════════════════════════════════════════════ */
-            /* MODAL PRIÈRE (superposition)                                    */
-            /* ═══════════════════════════════════════════════════════════════ */
-
+            /* Modal prière */
             .priere-over-modal {
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0,0,0,0.7);
+                background: rgba(0,0,0,0.6);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1232,34 +1169,30 @@ const TrouveTonVerset = {
             }
 
             .priere-modal-content {
-                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                background: #fff;
                 border-radius: 20px;
                 max-width: 450px;
                 width: 90%;
                 max-height: 80vh;
                 overflow-y: auto;
                 position: relative;
-                border: 1px solid rgba(255,255,255,0.1);
             }
 
             .priere-modal-close {
                 position: absolute;
                 top: 15px;
                 right: 15px;
-                background: rgba(255,255,255,0.1);
+                background: none;
                 border: none;
-                font-size: 1.2em;
+                font-size: 1.3em;
                 cursor: pointer;
-                color: rgba(255,255,255,0.7);
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
+                color: #666;
             }
 
             .priere-modal-header {
                 padding: 25px;
                 text-align: center;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
+                border-bottom: 1px solid #eee;
             }
 
             .priere-modal-icon {
@@ -1270,14 +1203,12 @@ const TrouveTonVerset = {
 
             .priere-modal-header h2 {
                 font-size: 1.3em;
-                color: white;
-                font-weight: 300;
+                color: #333;
             }
 
             .priere-modal-body {
                 padding: 25px;
                 line-height: 1.8;
-                color: rgba(255,255,255,0.9);
             }
 
             .priere-modal-body p {
@@ -1287,7 +1218,7 @@ const TrouveTonVerset = {
             .priere-modal-source {
                 padding: 15px 25px;
                 font-size: 0.85em;
-                color: rgba(255,255,255,0.5);
+                color: #888;
                 text-align: right;
                 font-style: italic;
             }

@@ -48,7 +48,7 @@ const VersetsSpeciaux = {
             icone: '✨',
             questions: 7,
             symbolique: 'Le 7ème jour, repos et perfection divine',
-            description: 'Un verset très personnalisé pour toi',
+            description: 'Un verset ultra-personnalisé pour toi',
             couleur: '#6B5B95'
         }
     },

@@ -1165,6 +1165,11 @@ const TrouveTonVerset = {
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+                padding: 0;
             }
 
             .history-modal-header {
@@ -1274,6 +1279,11 @@ const TrouveTonVerset = {
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+                padding: 0;
             }
 
             .priere-modal-header {

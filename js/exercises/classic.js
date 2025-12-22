@@ -180,7 +180,8 @@ buildExercise(verse) {
      */
 check() {
         const blanks = document.querySelectorAll('#verseContainer .blank');
-        let allCorrect = true;
+        let correctCount = 0;
+        const totalCount = blanks.length;
         
         blanks.forEach(blank => {
             const input = blank.querySelector('input');
@@ -191,6 +192,7 @@ check() {
             if (this.isAnswerAcceptable(userAnswer, correctAnswer)) {
                 blank.classList.add('correct');
                 blank.classList.remove('wrong');
+                correctCount++;
                 // Afficher la bonne réponse si légèrement différente
                 if (this.normalize(userAnswer) !== this.normalize(correctAnswer)) {
                     input.value = correctAnswer;
@@ -198,10 +200,10 @@ check() {
             } else {
                 blank.classList.add('wrong');
                 blank.classList.remove('correct');
-                allCorrect = false;
             }
         });
         
+        const allCorrect = (correctCount === totalCount);
         const verse = App.state.currentSeries[App.state.currentVerseIndex];
         
         // Enregistrer la tentative
@@ -223,7 +225,7 @@ check() {
             App.state.seriesResults.correct++;
             
             if (exerciseMessage) {
-                exerciseMessage.innerHTML = `<div class="message success">${i18n.messages.success}</div>`;
+                exerciseMessage.innerHTML = `<div class="message success">${this.getSuccessMessage()}</div>`;
             }
             if (checkBtn) checkBtn.style.display = 'none';
             if (showBtn) showBtn.style.display = 'block';
@@ -231,10 +233,66 @@ check() {
             if (hintCheckbox) hintCheckbox.style.display = 'none';
         } else {
             if (exerciseMessage) {
-                exerciseMessage.innerHTML = `<div class="message error">${i18n.messages.error} ${i18n.messages.tryAgain}</div>`;
+                const encouragement = this.getEncouragementMessage(correctCount, totalCount);
+                exerciseMessage.innerHTML = `<div class="message error">${encouragement}</div>`;
             }
             if (showBtn) showBtn.style.display = 'block';
         }
+    },
+
+    /**
+     * Messages de succès variés
+     */
+    getSuccessMessage() {
+        const messages = [
+            "✨ Excellent ! Tu as tout bon !",
+            "🌟 Parfait ! Continue comme ça !",
+            "👏 Bravo ! Ta mémoire est au top !",
+            "💪 Super ! Tu maîtrises ce verset !",
+            "🎯 Impeccable ! Bien joué !",
+            "✅ Magnifique ! Pas une seule erreur !"
+        ];
+        return messages[Math.floor(Math.random() * messages.length)];
+    },
+
+    /**
+     * Messages d'encouragement selon le score
+     */
+    getEncouragementMessage(correct, total) {
+        const ratio = correct / total;
+        const scoreText = `<strong>${correct} sur ${total}</strong>`;
+        
+        // Tout faux
+        if (correct === 0) {
+            const messages = [
+                `${scoreText} — Pas de souci, prends ton temps et réessaie ! 🌱`,
+                `${scoreText} — La mémorisation demande de la patience, tu vas y arriver ! 💪`,
+                `${scoreText} — Utilise l'indice "première lettre" si besoin ! 💡`
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
+        // Moins de la moitié
+        if (ratio < 0.5) {
+            const messages = [
+                `${scoreText} — C'est un bon début ! Continue, tu progresses ! 🌿`,
+                `${scoreText} — Tu y es presque, encore un petit effort ! 🔥`,
+                `${scoreText} — Bien essayé ! La Parole s'enracine peu à peu 📖`
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
+        // La moitié ou plus
+        if (ratio < 1) {
+            const messages = [
+                `${scoreText} — Presque ! Tu y es vraiment proche ! ✨`,
+                `${scoreText} — Excellent effort ! Plus qu'un petit pas ! 🎯`,
+                `${scoreText} — Super ! Tu connais bien ce verset, finis en beauté ! 💫`
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
+        return `${scoreText} — Réessaie, tu peux le faire ! 💪`;
     },
 
     /**
@@ -296,7 +354,24 @@ check() {
         // Correspondance exacte (après normalisation)
         if (normalizedUser === normalizedCorrect) return true;
         
+        // ═══════════════════════════════════════════════════════════════
+        // CAS SPÉCIAL : Jésus-Christ et ses variantes
+        // ═══════════════════════════════════════════════════════════════
+        const correctLower = correctAnswer.toLowerCase().replace(/[-\s]/g, '');
+        if (correctLower === 'jésuschrist' || correctLower === 'jesuschrist') {
+            const userLower = userAnswer.toLowerCase().trim()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            // Accepter : jésus, christ, jésus christ, jésus-christ
+            const validVariants = ['jesus', 'christ', 'jesuschrist', 'jesus-christ', 'jesus christ'];
+            if (validVariants.includes(userLower.replace(/[-\s]/g, '')) || 
+                validVariants.includes(userLower)) {
+                return true;
+            }
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
         // Tolérance aux fautes selon la longueur du mot
+        // ═══════════════════════════════════════════════════════════════
         const distance = this.levenshtein(normalizedUser, normalizedCorrect);
         const wordLength = normalizedCorrect.length;
         

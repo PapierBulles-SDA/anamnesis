@@ -188,9 +188,13 @@ const UI = {
             ? i18n.results.questionsSuccess 
             : i18n.results.versesSuccess;
         
+        // Message d'encouragement selon le score
+        const encouragement = this.getResultEncouragement(score, correct, total);
+        
         const details = document.getElementById('resultsDetails');
         if (details) {
             details.innerHTML = `
+                <div class="result-encouragement">${encouragement}</div>
                 <div class="result-item">
                     <span class="result-label">${i18n.results.mode}</span>
                     <span class="result-value">${modeNames[App.config.mode] || App.config.mode}</span>
@@ -211,7 +215,110 @@ const UI = {
                     <span class="result-label">${i18n.results.bestStreak}</span>
                     <span class="result-value">${App.stats.bestStreak} ⭐</span>
                 </div>
+                <div class="result-actions-extra">
+                    <button class="restart-same-btn" id="restartSameBtn">
+                        🔄 Refaire avec les mêmes versets
+                    </button>
+                    <p class="restart-same-hint">Les mots à trouver seront différents</p>
+                </div>
             `;
+            
+            // Attacher l'événement au bouton
+            const restartSameBtn = document.getElementById('restartSameBtn');
+            if (restartSameBtn) {
+                restartSameBtn.addEventListener('click', () => {
+                    this.restartSameVerses();
+                });
+            }
+        }
+    },
+
+    /**
+     * Message d'encouragement selon le score
+     */
+    getResultEncouragement(score, correct, total) {
+        if (score === 100) {
+            const messages = [
+                "🏆 Parfait ! Tu as tout réussi !",
+                "🌟 Excellent ! Mémoire impeccable !",
+                "✨ Magnifique ! Sans aucune erreur !",
+                "👑 Bravo ! Tu maîtrises ces versets !"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
+        if (score >= 80) {
+            const messages = [
+                "🎯 Très bien ! Tu y es presque !",
+                "💪 Super travail ! Continue comme ça !",
+                "🌿 Belle performance ! Tu progresses !"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
+        if (score >= 50) {
+            const messages = [
+                "📖 Bien ! La Parole prend racine en toi",
+                "🌱 Encourageant ! Chaque effort compte",
+                "💫 Tu avances ! Persévère !"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
+        const messages = [
+            "🙏 Pas de découragement ! La mémorisation prend du temps",
+            "💝 Continue ! Chaque essai fortifie ta mémoire",
+            "🕊️ La Parole de Dieu mérite qu'on y revienne"
+        ];
+        return messages[Math.floor(Math.random() * messages.length)];
+    },
+
+    /**
+     * Refaire l'exercice avec les mêmes versets
+     */
+    restartSameVerses() {
+        // Réinitialiser l'état
+        App.state.currentVerseIndex = 0;
+        App.state.seriesResults = {
+            correct: 0,
+            total: App.state.currentSeries.length,
+            attempts: []
+        };
+        
+        // Masquer la page résultats
+        if (App.elements.resultsPage) App.elements.resultsPage.classList.remove('active');
+        
+        // Relancer selon le mode
+        switch(App.config.mode) {
+            case 'classique':
+                if (App.config.readingFirst) {
+                    ClassicMode.showReading();
+                } else {
+                    ClassicMode.showExercise();
+                }
+                break;
+            case 'reconstitution':
+                if (App.config.readingFirst) {
+                    ReconstitutionMode.showReading();
+                } else {
+                    ReconstitutionMode.showExercise();
+                }
+                break;
+            case 'mystere':
+                MysteryMode.showExercise();
+                break;
+            case 'chaine':
+                if (App.config.readingFirst) {
+                    SuiteMode.showReading();
+                } else {
+                    SuiteMode.showExercise();
+                }
+                break;
+            case 'audio':
+                DictationMode.showExercise();
+                break;
+            default:
+                Exercises.startExercise();
         }
     },
 

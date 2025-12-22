@@ -2417,6 +2417,57 @@ button:active {
     font-size: 14px;
 }
 
+/* Message d'encouragement */
+.result-encouragement {
+    text-align: center;
+    font-size: 16px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    color: #333;
+}
+
+/* Bouton refaire avec les mêmes versets */
+.result-actions-extra {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    text-align: center;
+}
+
+.restart-same-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.restart-same-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.restart-same-btn:active {
+    transform: translateY(0);
+}
+
+.restart-same-hint {
+    font-size: 12px;
+    color: #888;
+    margin-top: 8px;
+    font-style: italic;
+}
+
 /* Bouton retour accueil */
 .home-btn {
     text-align: center;
@@ -2622,6 +2673,11 @@ button:active {
     cursor: pointer;
     transition: all 0.2s;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .book-modal-close:hover {
@@ -3188,6 +3244,11 @@ button:active {
     font-size: 18px;
     cursor: pointer;
     transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .chapelet-close:hover {
@@ -4170,6 +4231,11 @@ button:active {
     border-radius: 50%;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .prayer-modal-icon {
@@ -4323,6 +4389,11 @@ button:active {
     height: 32px;
     border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 /* Chapelet terminé */
@@ -4375,6 +4446,11 @@ button:active {
     height: 32px;
     border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .graces-list {
@@ -4487,6 +4563,11 @@ button:active {
     cursor: pointer;
     z-index: 10;
     transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .quiz-close-btn:hover {
@@ -5220,6 +5301,11 @@ button:active {
     border-radius: 50%;
     font-size: 18px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .priere-over-body {

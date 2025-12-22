@@ -199,6 +199,11 @@ const TrouveTonVerset = {
         this.state.parcours = parcoursId;
         this.state.nombreQuestions = parcours.questions;
         
+        // 📊 Analytics : tracker le choix du parcours
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackTrouveTonVerset(parcoursId);
+        }
+        
         // Animation de sélection
         const card = document.querySelector(`[data-parcours="${parcoursId}"]`);
         card.classList.add('selected');
@@ -478,6 +483,11 @@ const TrouveTonVerset = {
         const priere = typeof PrieresData !== 'undefined' 
             ? PrieresData.collection.find(p => p.id === famille.priereRecommandee)
             : null;
+        
+        // 📊 Analytics : tracker le résultat (famille spirituelle)
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackTrouveTonVersetResultat(this.state.dominantFamille);
+        }
         
         // Vérifier si déjà sauvegardé aujourd'hui
         const todayVerset = this.getTodaysVerset();

@@ -57,6 +57,11 @@ const UI = {
                     content.classList.add('active');
                 }
                 
+                // 📊 Analytics : tracker l'onglet visité
+                if (typeof Analytics !== 'undefined') {
+                    Analytics.trackOnglet(tabKey);
+                }
+                
                 // Actions spécifiques par onglet
                 if (tabKey === 'stats') {
                     Stats.updateDisplay();
@@ -172,6 +177,11 @@ const UI = {
         const { correct, total } = App.state.seriesResults;
         const score = Math.round((correct / total) * 100);
         
+        // 📊 Analytics : tracker la fin d'exercice avec le score
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackExerciceComplete(App.config.mode, score);
+        }
+        
         const scoreEl = document.getElementById('resultsScore');
         if (scoreEl) scoreEl.textContent = score + '%';
         
@@ -277,6 +287,11 @@ const UI = {
      * Refaire l'exercice avec les mêmes versets
      */
     restartSameVerses() {
+        // 📊 Analytics : tracker le refaire avec mêmes versets
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackRefaireMemes();
+        }
+        
         // Réinitialiser l'état
         App.state.currentVerseIndex = 0;
         App.state.seriesResults = {

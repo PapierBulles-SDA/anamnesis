@@ -257,6 +257,7 @@
 
                 <!-- Verset à méditer -->
                 <div class="meditation-card" id="meditationCard">
+                    <div class="meditation-periode" id="meditationPeriode"></div>
                     <div class="meditation-verset">
                         <div class="meditation-text" id="meditationText"></div>
                         <div class="meditation-reference" id="meditationReference"></div>
@@ -926,9 +927,11 @@
     <script src="data/livres-info.js"></script>
     <script src="data/prieres.js"></script>
     <script src="data/versets-speciaux.js"></script>
+    <script src="data/versets-meditation.js"></script>
     
     <!-- Configuration et état global -->
     <script src="js/config.js"></script>
+    <script src="js/analytics.js"></script>
     
     <!-- Internationalisation -->
     <script src="js/i18n/fr.js"></script>
@@ -956,5 +959,9 @@
     
     <!-- Application principale (doit être chargé en dernier) -->
     <script src="js/app.js"></script>
+
+    <!-- Analytics (GoatCounter - sans cookies, respectueux vie privée) -->
+	<script data-goatcounter="https://anamnesis.goatcounter.com/count"
+			async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

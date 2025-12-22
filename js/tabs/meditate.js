@@ -31,9 +31,25 @@ const MeditateTab = {
     },
 
     /**
-     * Afficher un verset aléatoire
+     * Afficher un verset adapté à la période liturgique
      */
     showRandomVerse() {
+        // Utiliser les versets adaptés à la période liturgique
+        if (typeof VersetsMeditation !== 'undefined') {
+            const verset = VersetsMeditation.getVersetDuJour();
+            if (verset) {
+                this.currentVerse = verset;
+                this.displayVerse();
+                
+                // 📊 Analytics : tracker le nouveau verset avec sa période
+                if (typeof Analytics !== 'undefined') {
+                    Analytics.trackMeditationNouveau(verset.periode || 'ordinaire');
+                }
+                return;
+            }
+        }
+        
+        // Fallback sur Data.getRandomVerse si VersetsMeditation n'est pas chargé
         const verse = Data.getRandomVerse();
         if (verse) {
             this.currentVerse = verse;
@@ -49,9 +65,21 @@ const MeditateTab = {
 
         const refEl = document.getElementById('meditationReference');
         const textEl = document.getElementById('meditationText');
+        const periodeEl = document.getElementById('meditationPeriode');
 
         if (refEl) refEl.textContent = this.currentVerse.reference;
         if (textEl) textEl.textContent = '« ' + this.currentVerse.text + ' »';
+        
+        // Afficher la période liturgique si disponible
+        if (periodeEl && this.currentVerse.periodeNom) {
+            periodeEl.innerHTML = `
+                <span class="periode-icone">${this.currentVerse.periodeIcone}</span>
+                <span class="periode-nom">${this.currentVerse.periodeNom}</span>
+            `;
+            periodeEl.style.display = 'flex';
+        } else if (periodeEl) {
+            periodeEl.style.display = 'none';
+        }
     },
 
     /**
@@ -99,6 +127,11 @@ const MeditateTab = {
         // Vider le textarea
         const textarea = document.getElementById('journalTextarea');
         if (textarea) textarea.value = '';
+
+        // 📊 Analytics : tracker la méditation sauvegardée
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackMeditationSaved();
+        }
 
         // Confirmation
         this.showMessage('✅ Méditation sauvegardée !', 'success');

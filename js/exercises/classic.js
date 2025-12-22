@@ -59,6 +59,15 @@ const ClassicMode = {
             console.error('exercisePage non trouvé!');
         }
         
+        // 📊 Analytics : tracker le lancement de l'exercice classique
+        if (typeof Analytics !== 'undefined' && App.state.currentVerseIndex === 0) {
+            Analytics.trackExerciceStart(
+                'classique',
+                App.config.difficulty,
+                App.state.currentSeries.length
+            );
+        }
+        
         this.displayVerse();
     },
 

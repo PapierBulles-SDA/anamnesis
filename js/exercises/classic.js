@@ -265,7 +265,7 @@ check() {
         // Tout faux
         if (correct === 0) {
             const messages = [
-                `${scoreText} — Pas de souci, prends ton temps et réessaie ! 🌱`,
+                `${scoreText} — Prends ton temps et réessaie ! 🌱`,
                 `${scoreText} — La mémorisation demande de la patience, tu vas y arriver ! 💪`,
                 `${scoreText} — Utilise l'indice "première lettre" si besoin ! 💡`
             ];

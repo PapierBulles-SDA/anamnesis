@@ -262,13 +262,16 @@
                         <div class="meditation-text" id="meditationText"></div>
                         <div class="meditation-reference" id="meditationReference"></div>
                     </div>
-                    <button class="btn-nouveau-verset" id="nouveauVersetBtn">🔄 Autre verset</button>
+                    <div class="meditation-buttons">
+                        <button class="btn-contexte" id="lireContexteBtn">📖 Lire le contexte</button>
+                        <button class="btn-nouveau-verset" id="nouveauVersetBtn">🔄 Autre verset</button>
+                    </div>
                 </div>
 
                 <!-- Journal de méditation -->
                 <div class="journal-section">
                     <h2>✍️ Ma méditation</h2>
-                    <p class="journal-hint">Qu'est-ce que ce verset t'inspire ? Note tes réflexions...</p>
+                    <p class="journal-hint">Qu'est-ce que ce verset t'inspire ? Note tes réflexions si tu le souhaites...</p>
                     <textarea id="journalTextarea" placeholder="Écris ici ce que ce verset t'inspire, ce qu'il te dit aujourd'hui..."></textarea>
                     <button class="btn-primary" id="saveJournalBtn">💾 Sauvegarder</button>
                     <div class="journal-saved-msg" id="journalSavedMsg"></div>
@@ -961,7 +964,7 @@
     <script src="js/app.js"></script>
 
     <!-- Analytics (GoatCounter - sans cookies, respectueux vie privée) -->
-	<script data-goatcounter="https://anamnesis.goatcounter.com/count"
-			async src="https://gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://anamnesis.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

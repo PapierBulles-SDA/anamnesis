@@ -324,12 +324,126 @@ const MeditateTab = {
     },
 
     /**
+     * Aller dans l'onglet Lire pour voir le contexte du verset
+     */
+    goToRead() {
+        if (!this.currentVerse || !this.currentVerse.reference) return;
+        
+        const ref = this.currentVerse.reference;
+        
+        // Regex pour extraire livre et chapitre
+        const match = ref.match(/^(.+?)\s+(\d+)(?::|\s|$)/);
+        
+        if (match) {
+            const livreName = match[1].trim();
+            const chapitre = match[2];
+
+            // Changer d'onglet
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('[data-tab="lire"]')?.classList.add('active');
+            document.getElementById('tabLire')?.classList.add('active');
+
+            // Mapping des livres vers les parties
+            const livresMapping = [
+                { livre: '1 Corinthiens', partie: 'Épîtres de Paul' },
+                { livre: '2 Corinthiens', partie: 'Épîtres de Paul' },
+                { livre: '1 Thessaloniciens', partie: 'Épîtres de Paul' },
+                { livre: '2 Thessaloniciens', partie: 'Épîtres de Paul' },
+                { livre: '1 Timothée', partie: 'Épîtres de Paul' },
+                { livre: '2 Timothée', partie: 'Épîtres de Paul' },
+                { livre: '1 Pierre', partie: 'Épîtres Générales' },
+                { livre: '2 Pierre', partie: 'Épîtres Générales' },
+                { livre: '1 Jean', partie: 'Épîtres Générales' },
+                { livre: '2 Jean', partie: 'Épîtres Générales' },
+                { livre: '3 Jean', partie: 'Épîtres Générales' },
+                { livre: 'Matthieu', partie: 'Évangiles' },
+                { livre: 'Marc', partie: 'Évangiles' },
+                { livre: 'Luc', partie: 'Évangiles' },
+                { livre: 'Jean', partie: 'Évangiles' },
+                { livre: 'Actes', partie: 'Actes' },
+                { livre: 'Romains', partie: 'Épîtres de Paul' },
+                { livre: 'Galates', partie: 'Épîtres de Paul' },
+                { livre: 'Éphésiens', partie: 'Épîtres de Paul' },
+                { livre: 'Ephésiens', partie: 'Épîtres de Paul' },
+                { livre: 'Philippiens', partie: 'Épîtres de Paul' },
+                { livre: 'Colossiens', partie: 'Épîtres de Paul' },
+                { livre: 'Tite', partie: 'Épîtres de Paul' },
+                { livre: 'Philémon', partie: 'Épîtres de Paul' },
+                { livre: 'Hébreux', partie: 'Épîtres Générales' },
+                { livre: 'Jacques', partie: 'Épîtres Générales' },
+                { livre: 'Jude', partie: 'Épîtres Générales' },
+                { livre: 'Apocalypse', partie: 'Apocalypse' }
+            ];
+
+            let partieValue = '';
+            for (const mapping of livresMapping) {
+                if (livreName === mapping.livre) {
+                    partieValue = mapping.partie;
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                const selectPartie = document.getElementById('lirePartie');
+                if (selectPartie && partieValue) {
+                    selectPartie.value = partieValue;
+                    if (window.ReadTab) {
+                        ReadTab.selectedPartie = partieValue;
+                        ReadTab.updateLivreDropdown();
+                    }
+                }
+
+                setTimeout(() => {
+                    const selectLivre = document.getElementById('lireLivre');
+                    if (selectLivre) {
+                        for (let option of selectLivre.options) {
+                            if (option.value === livreName || option.text === livreName) {
+                                selectLivre.value = option.value;
+                                if (window.ReadTab) {
+                                    ReadTab.selectedLivre = option.value;
+                                    ReadTab.updateChapitreDropdown();
+                                    const infoBtn = document.getElementById('bookInfoBtn');
+                                    if (infoBtn) infoBtn.disabled = false;
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    setTimeout(() => {
+                        const selectChapitre = document.getElementById('lireChapitre');
+                        if (selectChapitre) {
+                            selectChapitre.value = chapitre;
+                            if (window.ReadTab) {
+                                ReadTab.selectedChapitre = chapitre;
+                                ReadTab.displayChapter();
+                            }
+                        }
+
+                        const content = document.getElementById('lectureContent');
+                        if (content) {
+                            content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 100);
+                }, 100);
+            }, 150);
+        }
+    },
+
+    /**
      * Initialiser les événements
      */
     init() {
         // Bouton verset aléatoire
         document.getElementById('nouveauVersetBtn')?.addEventListener('click', () => {
             this.showRandomVerse();
+        });
+
+        // Bouton lire le contexte
+        document.getElementById('lireContexteBtn')?.addEventListener('click', () => {
+            this.goToRead();
         });
 
         // Bouton sauvegarder

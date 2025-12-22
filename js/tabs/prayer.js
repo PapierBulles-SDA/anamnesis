@@ -552,47 +552,160 @@ const PrayerTab = {
         });
         html += '</div>';
 
-        // Sélection du verset
+        // Info sur le verset
         html += '<div class="lectio-verse-selection">';
-        html += '<h3>Choisis ton verset</h3>';
-        html += '<div class="verse-options">';
-        html += '<button class="verse-option-btn active" data-type="random">🎲 Verset aléatoire</button>';
-        html += '<button class="verse-option-btn" data-type="liturgy">📅 Évangile du jour</button>';
+        html += '<h3>Choisis ton verset selon ce que tu vis</h3>';
+        
+        // Premier menu : Thème principal
+        html += '<div class="lectio-select-group">';
+        html += '<label for="lectioTheme">Thème</label>';
+        html += '<select id="lectioTheme" class="lectio-select">';
+        html += '<option value="">-- Choisis un thème --</option>';
+        html += '<option value="emotions">😊 Ce que je ressens</option>';
+        html += '<option value="besoins">🙏 Ce dont j\'ai besoin</option>';
+        html += '<option value="situations">📍 Ma situation</option>';
+        html += '</select>';
         html += '</div>';
+        
+        // Deuxième menu : Sous-thème (sera rempli dynamiquement)
+        html += '<div class="lectio-select-group">';
+        html += '<label for="lectioSousTheme">Précise</label>';
+        html += '<select id="lectioSousTheme" class="lectio-select" disabled>';
+        html += '<option value="">-- Choisis d\'abord un thème --</option>';
+        html += '</select>';
+        html += '</div>';
+        
         html += '</div>';
 
         // Bouton commencer
-        html += '<button class="btn-start-lectio" id="startLectioBtn">🕯️ Commencer la Lectio Divina</button>';
+        html += '<button class="btn-start-lectio" id="startLectioBtn" disabled>🕯️ Commencer la Lectio Divina</button>';
 
         html += '</div>';
         container.innerHTML = html;
 
-        // Events
-        container.querySelectorAll('.verse-option-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                container.querySelectorAll('.verse-option-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
+        // Définir les sous-thèmes (correspondant aux tags réels des versets)
+        const sousThemes = {
+            emotions: [
+                { value: 'joie', label: '☀️ Joie, gratitude' },
+                { value: 'tristesse', label: '💧 Tristesse, peine' },
+                { value: 'peur', label: '😰 Peur, anxiété' },
+                { value: 'colere', label: '😤 Colère, frustration' },
+                { value: 'confusion', label: '🌀 Confusion, doute' },
+                { value: 'lassitude', label: '😔 Fatigue, épuisement' },
+                { value: 'solitude', label: '🚶 Solitude' }
+            ],
+            besoins: [
+                { value: 'etre_rassure', label: '🤲 Être rassuré(e)' },
+                { value: 'etre_aime', label: '💗 Être aimé(e)' },
+                { value: 'etre_guide', label: '💡 Être guidé(e)' },
+                { value: 'trouver_force', label: '💪 Trouver la force' },
+                { value: 'lacher_prise', label: '🌙 Lâcher prise' },
+                { value: 'perseverer', label: '🏃 Persévérer' },
+                { value: 'pardonner', label: '🕊️ Pardonner' },
+                { value: 'etre_pardonne', label: '🙏 Être pardonné(e)' },
+                { value: 'comprendre', label: '🔍 Comprendre' }
+            ],
+            situations: [
+                { value: 'epreuve', label: '⛈️ Épreuve, difficulté' },
+                { value: 'deuil', label: '🖤 Deuil, perte' },
+                { value: 'attente', label: '⏳ Attente, incertitude' },
+                { value: 'decision', label: '🔀 Décision à prendre' },
+                { value: 'conflit', label: '⚡ Conflit, tension' },
+                { value: 'maladie', label: '🏥 Maladie' },
+                { value: 'doute', label: '❓ Doute spirituel' },
+                { value: 'conversion', label: '🔄 Conversion, changement' },
+                { value: 'quotidien', label: '📅 Vie quotidienne' }
+            ]
+        };
+
+        // Event: changement de thème
+        const themeSelect = document.getElementById('lectioTheme');
+        const sousThemeSelect = document.getElementById('lectioSousTheme');
+        const startBtn = document.getElementById('startLectioBtn');
+
+        themeSelect.addEventListener('change', () => {
+            const theme = themeSelect.value;
+            sousThemeSelect.innerHTML = '';
+            
+            if (theme && sousThemes[theme]) {
+                sousThemeSelect.disabled = false;
+                sousThemeSelect.innerHTML = '<option value="">-- Précise --</option>';
+                sousThemes[theme].forEach(st => {
+                    sousThemeSelect.innerHTML += '<option value="' + st.value + '">' + st.label + '</option>';
+                });
+            } else {
+                sousThemeSelect.disabled = true;
+                sousThemeSelect.innerHTML = '<option value="">-- Choisis d\'abord un thème --</option>';
+            }
+            startBtn.disabled = true;
         });
 
-        document.getElementById('startLectioBtn').addEventListener('click', () => {
-            const type = container.querySelector('.verse-option-btn.active').dataset.type;
-            this.startLectio(container, type);
+        // Event: changement de sous-thème
+        sousThemeSelect.addEventListener('change', () => {
+            startBtn.disabled = !sousThemeSelect.value;
+        });
+
+        // Event: commencer
+        startBtn.addEventListener('click', () => {
+            const theme = themeSelect.value;
+            const sousTheme = sousThemeSelect.value;
+            this.startLectio(container, theme, sousTheme);
         });
     },
 
-    startLectio(container, type) {
-        // Obtenir le verset
-        if (type === 'random') {
-            this.lectioVerse = Data.getRandomVerse();
-        } else {
-            // Pour l'instant, utiliser un verset aléatoire
-            // Plus tard, intégrer l'évangile du jour depuis l'API liturgique
-            this.lectioVerse = Data.getRandomVerse();
+    startLectio(container, theme, sousTheme) {
+        // Chercher un verset correspondant au thème/sous-thème
+        this.lectioVerse = this.findVersetByTag(theme, sousTheme);
+        
+        if (!this.lectioVerse) {
+            // Fallback sur VersetsMeditation
+            if (typeof VersetsMeditation !== 'undefined') {
+                this.lectioVerse = VersetsMeditation.getVersetDuJour();
+            } else {
+                this.lectioVerse = Data.getRandomVerse();
+            }
         }
 
         this.lectioCurrentStep = 0;
         this.renderLectioStep(container);
+    },
+
+    /**
+     * Trouver un verset par tag
+     */
+    findVersetByTag(theme, sousTheme) {
+        if (typeof VersetsSpeciaux === 'undefined' || !VersetsSpeciaux.versets) {
+            return null;
+        }
+
+        // Filtrer les versets qui correspondent
+        const versetsCorrespondants = VersetsSpeciaux.versets.filter(v => {
+            if (!v.tags) return false;
+            
+            // Vérifier selon le thème
+            if (theme === 'emotions') {
+                return v.tags.emotions && v.tags.emotions.includes(sousTheme);
+            } else if (theme === 'besoins') {
+                return v.tags.besoins && v.tags.besoins.includes(sousTheme);
+            } else if (theme === 'situations') {
+                return v.tags.situations && v.tags.situations.includes(sousTheme);
+            }
+            return false;
+        });
+
+        if (versetsCorrespondants.length === 0) {
+            return null;
+        }
+
+        // Prendre un verset au hasard parmi ceux qui correspondent
+        const index = Math.floor(Math.random() * versetsCorrespondants.length);
+        const verset = versetsCorrespondants[index];
+        
+        // Adapter le format (texte → text pour compatibilité)
+        return {
+            reference: verset.reference,
+            text: verset.texte
+        };
     },
 
     renderLectioStep(container) {
@@ -716,7 +829,10 @@ const PrayerTab = {
         html += '<p>« ' + this.lectioVerse.text.substring(0, 100) + '... »</p>';
         html += '<span>' + this.lectioVerse.reference + '</span>';
         html += '</div>';
-        html += '<button class="btn-primary" id="lectioFinishBtn">Amen</button>';
+        html += '<div class="lectio-complete-buttons">';
+        html += '<button class="btn-secondary" id="lectioContextBtn">📖 Lire le contexte</button>';
+        html += '<button class="btn-primary" id="lectioFinishBtn">Amen ✨</button>';
+        html += '</div>';
         html += '</div>';
         
         container.innerHTML = html;
@@ -724,6 +840,119 @@ const PrayerTab = {
         document.getElementById('lectioFinishBtn').addEventListener('click', () => {
             this.showLectio(container);
         });
+
+        document.getElementById('lectioContextBtn').addEventListener('click', () => {
+            this.goToReadFromLectio();
+        });
+    },
+
+    /**
+     * Aller dans l'onglet Lire pour voir le contexte du verset de la Lectio
+     */
+    goToReadFromLectio() {
+        if (!this.lectioVerse || !this.lectioVerse.reference) return;
+        
+        const ref = this.lectioVerse.reference;
+        
+        // Regex pour extraire livre et chapitre
+        const match = ref.match(/^(.+?)\s+(\d+)(?::|\s|$)/);
+        
+        if (match) {
+            const livreName = match[1].trim();
+            const chapitre = match[2];
+
+            // Changer d'onglet
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('[data-tab="lire"]')?.classList.add('active');
+            document.getElementById('tabLire')?.classList.add('active');
+
+            // Mapping des livres vers les parties
+            const livresMapping = [
+                { livre: '1 Corinthiens', partie: 'Épîtres de Paul' },
+                { livre: '2 Corinthiens', partie: 'Épîtres de Paul' },
+                { livre: '1 Thessaloniciens', partie: 'Épîtres de Paul' },
+                { livre: '2 Thessaloniciens', partie: 'Épîtres de Paul' },
+                { livre: '1 Timothée', partie: 'Épîtres de Paul' },
+                { livre: '2 Timothée', partie: 'Épîtres de Paul' },
+                { livre: '1 Pierre', partie: 'Épîtres Générales' },
+                { livre: '2 Pierre', partie: 'Épîtres Générales' },
+                { livre: '1 Jean', partie: 'Épîtres Générales' },
+                { livre: '2 Jean', partie: 'Épîtres Générales' },
+                { livre: '3 Jean', partie: 'Épîtres Générales' },
+                { livre: 'Matthieu', partie: 'Évangiles' },
+                { livre: 'Marc', partie: 'Évangiles' },
+                { livre: 'Luc', partie: 'Évangiles' },
+                { livre: 'Jean', partie: 'Évangiles' },
+                { livre: 'Actes', partie: 'Actes' },
+                { livre: 'Romains', partie: 'Épîtres de Paul' },
+                { livre: 'Galates', partie: 'Épîtres de Paul' },
+                { livre: 'Éphésiens', partie: 'Épîtres de Paul' },
+                { livre: 'Ephésiens', partie: 'Épîtres de Paul' },
+                { livre: 'Philippiens', partie: 'Épîtres de Paul' },
+                { livre: 'Colossiens', partie: 'Épîtres de Paul' },
+                { livre: 'Tite', partie: 'Épîtres de Paul' },
+                { livre: 'Philémon', partie: 'Épîtres de Paul' },
+                { livre: 'Hébreux', partie: 'Épîtres Générales' },
+                { livre: 'Jacques', partie: 'Épîtres Générales' },
+                { livre: 'Jude', partie: 'Épîtres Générales' },
+                { livre: 'Apocalypse', partie: 'Apocalypse' }
+            ];
+
+            let partieValue = '';
+            for (const mapping of livresMapping) {
+                if (livreName === mapping.livre) {
+                    partieValue = mapping.partie;
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                const selectPartie = document.getElementById('lirePartie');
+                if (selectPartie && partieValue) {
+                    selectPartie.value = partieValue;
+                    if (window.ReadTab) {
+                        ReadTab.selectedPartie = partieValue;
+                        ReadTab.updateLivreDropdown();
+                    }
+                }
+
+                setTimeout(() => {
+                    const selectLivre = document.getElementById('lireLivre');
+                    if (selectLivre) {
+                        for (let option of selectLivre.options) {
+                            if (option.value === livreName || option.text === livreName) {
+                                selectLivre.value = option.value;
+                                if (window.ReadTab) {
+                                    ReadTab.selectedLivre = option.value;
+                                    ReadTab.updateChapitreDropdown();
+                                    const infoBtn = document.getElementById('bookInfoBtn');
+                                    if (infoBtn) infoBtn.disabled = false;
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    setTimeout(() => {
+                        const selectChapitre = document.getElementById('lireChapitre');
+                        if (selectChapitre) {
+                            selectChapitre.value = chapitre;
+                            if (window.ReadTab) {
+                                ReadTab.selectedChapitre = chapitre;
+                                ReadTab.displayChapter();
+                            }
+                        }
+
+                        const content = document.getElementById('lectureContent');
+                        if (content) {
+                            content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 100);
+                }, 100);
+            }, 150);
+        }
     },
 
     formatTime(seconds) {

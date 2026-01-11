@@ -9,8 +9,15 @@ const App = {
     config: {
         mode: 'classique',
         difficulty: 'moyen',
-        seriesLength: 5,
+        seriesLength: 5, // ou 'all' pour tous les versets
         readingFirst: true,
+        
+        // Mode de sélection du contenu
+        contentMode: 'filters', // 'filters' | 'passage' | 'custom'
+        selectedPassageId: null,
+        selectedCustomGroupId: null,
+        
+        // Filtres classiques
         selectedPartie: 'toutes',
         selectedLivre: 'tous',
         selectedChapitre: 'tous'

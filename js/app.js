@@ -60,6 +60,59 @@ document.addEventListener('DOMContentLoaded', () => {
         
         UI.initNavigationButtons();
         
+        // ═══════════════════════════════════════════════════════════════
+        // ONGLETS DE CONTENU EXERCICE (NOUVEAUTÉ v2.1)
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Initialiser les onglets Filtres/Passages/Groupes pour EXERCICE
+        UI.initContentTabs();
+        
+        // Select passage célèbre EXERCICE
+        document.getElementById('selectPassage')?.addEventListener('change', (e) => {
+            App.config.selectedPassageId = e.target.value || null;
+            UI.displayPassageInfo(e.target.value);
+        });
+
+        // Initialiser CustomGroups
+        CustomGroups.init();
+        
+        // ═══════════════════════════════════════════════════════════════
+        // ONGLETS DE CONTENU LIRE (NOUVEAUTÉ v2.2)
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Initialiser les onglets Filtres/Passages/Groupes pour LIRE
+        UI.initLireContentTabs();
+        
+        // Select passage célèbre LIRE
+        document.getElementById('lireSelectPassage')?.addEventListener('change', (e) => {
+            const passageId = e.target.value;
+            UI.displayLirePassageInfo(passageId);
+            
+            // Charger le passage dans la zone de lecture
+            if (passageId) {
+                const passage = Data.getPassageById(passageId);
+                if (passage && typeof ReadTab !== 'undefined') {
+                    const verses = Data.extractVersesFromRanges(passage.ranges);
+                    ReadTab.displayVerses(verses, passage.nom);
+                }
+            }
+        });
+        
+        // Select groupe personnalisé LIRE
+        document.getElementById('lireSelectCustomGroup')?.addEventListener('change', (e) => {
+            const groupId = e.target.value;
+            UI.displayLireCustomGroupInfo(groupId);
+            
+            // Charger le groupe dans la zone de lecture
+            if (groupId) {
+                const group = CustomGroups.getById(groupId);
+                if (group && typeof ReadTab !== 'undefined') {
+                    const verses = Data.extractVersesFromRanges(group.ranges);
+                    ReadTab.displayVerses(verses, group.name);
+                }
+            }
+        });
+        
     } catch(e) {
         console.error('❌ Erreur UI:', e);
     }
@@ -141,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tabsContainer = document.querySelector('.tabs-container');
         if (tabsContainer && tabsContainer.scrollWidth > tabsContainer.clientWidth) {
             // Le menu dépasse, on fait l'animation hint
-            const scrollDistance = 350; // pixels à défiler
+            const scrollDistance = 80; // pixels à défiler
             const duration = 400; // durée en ms
             
             // Scroll vers la droite

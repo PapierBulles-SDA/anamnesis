@@ -1,10 +1,15 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * ANAMNÉSIS - Trouve ton Verset
+ * ANAMNÉSIS - Trouve ton Verset v2.0
  * ═══════════════════════════════════════════════════════════════════════════
  * 
  * Une expérience contemplative et personnalisée pour découvrir
- * le verset que Dieu a préparé pour toi aujourd'hui.
+ * le ou les verset(s) que Dieu a préparé(s) pour toi aujourd'hui.
+ * 
+ * 3 PARCOURS :
+ * - 🕊️ Trinité (3 questions) - Père, Fils, Esprit
+ * - ✝️ Les Plaies (5 questions) - L'amour rédempteur du Christ  
+ * - ✨ Plénitude (7 questions) - Perfection divine
  */
 
 const TrouveTonVerset = {
@@ -12,9 +17,21 @@ const TrouveTonVerset = {
     // État du quiz
     state: {
         currentQuestion: 0,
+        parcours: null, // 'trinite', 'plaies', 'plenitude'
+        nombreQuestions: 0,
         scores: {},
+        userProfile: {
+            emotion: null,
+            besoin: null,
+            posture: null,
+            situation: null,
+            intensite: null,
+            relation: null,
+            poids: null
+        },
+        tags: [],
         answers: [],
-        selectedVerset: null,
+        selectedVersets: [],
         dominantFamille: null,
         history: []
     },
@@ -50,18 +67,31 @@ const TrouveTonVerset = {
         // Réinitialiser l'état
         this.state = {
             currentQuestion: 0,
+            parcours: null,
+            nombreQuestions: 0,
             scores: {
                 paix: 0, force: 0, amour: 0, esperance: 0,
-                confiance: 0, joie: 0, sagesse: 0, reconfort: 0
+                confiance: 0, joie: 0, sagesse: 0, reconfort: 0,
+                pardon: 0, perseverance: 0
             },
+            userProfile: {
+                emotion: null,
+                besoin: null,
+                posture: null,
+                situation: null,
+                intensite: null,
+                relation: null,
+                poids: null
+            },
+            tags: [],
             answers: [],
-            selectedVerset: null,
+            selectedVersets: [],
             dominantFamille: null,
             history: this.state.history
         };
 
         this.showOverlay();
-        this.showAccueil();
+        this.showChoixParcours();
     },
 
     showOverlay() {
@@ -91,12 +121,106 @@ const TrouveTonVerset = {
     },
 
     // ═══════════════════════════════════════════════════════════════════════
+    // ÉCRAN DE CHOIX DU PARCOURS
+    // ═══════════════════════════════════════════════════════════════════════
+
+    showChoixParcours() {
+        const overlay = document.getElementById('versetQuizOverlay');
+        const parcours = VersetsSpeciaux.parcours;
+
+        overlay.innerHTML = `
+            <div class="verset-quiz-container choix-parcours">
+                <button class="quiz-close-btn" id="quizCloseBtn">✕</button>
+                
+                <div class="parcours-header">
+                    <div class="parcours-icon-main">✨</div>
+                    <h1 class="parcours-title">Trouve ton Verset</h1>
+                    <p class="parcours-subtitle">Quel chemin veux-tu emprunter ?</p>
+                </div>
+
+                <div class="parcours-grid">
+                    <button class="parcours-card" data-parcours="trinite">
+                        <div class="parcours-card-icon">${parcours.trinite.icone}</div>
+                        <div class="parcours-card-content">
+                            <h3 class="parcours-card-title">${parcours.trinite.nom}</h3>
+                            <p class="parcours-card-questions">${parcours.trinite.questions} questions</p>
+                            <p class="parcours-card-symbole">${parcours.trinite.symbolique}</p>
+                            <p class="parcours-card-desc">${parcours.trinite.description}</p>
+                        </div>
+                        <div class="parcours-card-time">~30s</div>
+                    </button>
+
+                    <button class="parcours-card" data-parcours="plaies">
+                        <div class="parcours-card-icon">${parcours.plaies.icone}</div>
+                        <div class="parcours-card-content">
+                            <h3 class="parcours-card-title">${parcours.plaies.nom}</h3>
+                            <p class="parcours-card-questions">${parcours.plaies.questions} questions</p>
+                            <p class="parcours-card-symbole">${parcours.plaies.symbolique}</p>
+                            <p class="parcours-card-desc">${parcours.plaies.description}</p>
+                        </div>
+                        <div class="parcours-card-time">~1 min</div>
+                    </button>
+
+                    <button class="parcours-card" data-parcours="plenitude">
+                        <div class="parcours-card-icon">${parcours.plenitude.icone}</div>
+                        <div class="parcours-card-content">
+                            <h3 class="parcours-card-title">${parcours.plenitude.nom}</h3>
+                            <p class="parcours-card-questions">${parcours.plenitude.questions} questions</p>
+                            <p class="parcours-card-symbole">${parcours.plenitude.symbolique}</p>
+                            <p class="parcours-card-desc">${parcours.plenitude.description}</p>
+                        </div>
+                        <div class="parcours-card-time">~1min30</div>
+                    </button>
+                </div>
+
+                <p class="parcours-footer">Plus le parcours est long, plus le verset sera personnalisé</p>
+            </div>
+        `;
+
+        // Ajouter les styles spécifiques
+        this.injectParcoursStyles();
+
+        // Events
+        document.getElementById('quizCloseBtn').addEventListener('click', () => this.hideOverlay());
+        
+        document.querySelectorAll('.parcours-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const parcoursId = card.dataset.parcours;
+                this.selectParcours(parcoursId);
+            });
+        });
+
+        // Scroller vers le haut
+        overlay.scrollTop = 0;
+    },
+
+    selectParcours(parcoursId) {
+        const parcours = VersetsSpeciaux.parcours[parcoursId];
+        this.state.parcours = parcoursId;
+        this.state.nombreQuestions = parcours.questions;
+        
+        // 📊 Analytics : tracker le choix du parcours
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackTrouveTonVerset(parcoursId);
+        }
+        
+        // Animation de sélection
+        const card = document.querySelector(`[data-parcours="${parcoursId}"]`);
+        card.classList.add('selected');
+        
+        setTimeout(() => {
+            this.showAccueil();
+        }, 300);
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
     // ÉCRAN D'ACCUEIL
     // ═══════════════════════════════════════════════════════════════════════
 
     showAccueil() {
         const overlay = document.getElementById('versetQuizOverlay');
         const messages = VersetsSpeciaux.messages;
+        const parcours = VersetsSpeciaux.parcours[this.state.parcours];
 
         overlay.innerHTML = `
             <div class="verset-quiz-container accueil">
@@ -105,11 +229,15 @@ const TrouveTonVerset = {
                 <div class="accueil-content">
                     <div class="accueil-icon">
                         <span class="icon-glow"></span>
-                        <span class="icon-main">✨</span>
+                        <span class="icon-main">${parcours.icone}</span>
                     </div>
                     
                     <h1 class="accueil-title">${messages.accueil.titre}</h1>
                     <p class="accueil-subtitle">${messages.accueil.sousTitre}</p>
+                    
+                    <div class="accueil-parcours-badge" style="background: ${parcours.couleur}20; color: ${parcours.couleur}; border: 1px solid ${parcours.couleur}40;">
+                        ${parcours.icone} Parcours ${parcours.nom} • ${parcours.questions} questions
+                    </div>
                     
                     <div class="accueil-text">
                         <p>${messages.accueil.texte}</p>
@@ -119,11 +247,9 @@ const TrouveTonVerset = {
                         <span class="dot"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
                     </div>
                     
-                    <button class="btn-start-quiz" id="startQuizBtn">
+                    <button class="btn-start-quiz" id="startQuizBtn" style="background: ${parcours.couleur};">
                         <span class="btn-text">${messages.accueil.bouton}</span>
                         <span class="btn-icon">→</span>
                     </button>
@@ -134,6 +260,9 @@ const TrouveTonVerset = {
         // Events
         document.getElementById('quizCloseBtn').addEventListener('click', () => this.hideOverlay());
         document.getElementById('startQuizBtn').addEventListener('click', () => this.showQuestion(0));
+
+        // Scroller vers le haut
+        overlay.scrollTop = 0;
     },
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -143,8 +272,9 @@ const TrouveTonVerset = {
     showQuestion(index) {
         this.state.currentQuestion = index;
         const question = VersetsSpeciaux.questions[index];
-        const total = VersetsSpeciaux.questions.length;
+        const total = this.state.nombreQuestions;
         const progress = ((index) / total) * 100;
+        const parcours = VersetsSpeciaux.parcours[this.state.parcours];
 
         const overlay = document.getElementById('versetQuizOverlay');
         
@@ -153,12 +283,13 @@ const TrouveTonVerset = {
                 <button class="quiz-close-btn" id="quizCloseBtn">✕</button>
                 
                 <div class="question-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    <div class="progress-bar" style="background: ${parcours.couleur}20;">
+                        <div class="progress-fill" style="width: ${progress}%; background: ${parcours.couleur};"></div>
                     </div>
                     <div class="progress-dots">
                         ${Array(total).fill(0).map((_, i) => `
-                            <span class="progress-dot ${i < index ? 'done' : ''} ${i === index ? 'current' : ''}"></span>
+                            <span class="progress-dot ${i < index ? 'done' : ''} ${i === index ? 'current' : ''}" 
+                                  style="${i <= index ? `background: ${parcours.couleur}; border-color: ${parcours.couleur};` : ''}"></span>
                         `).join('')}
                     </div>
                 </div>
@@ -189,6 +320,9 @@ const TrouveTonVerset = {
                 this.selectAnswer(answerIndex);
             });
         });
+
+        // Scroller vers le haut
+        overlay.scrollTop = 0;
     },
 
     selectAnswer(answerIndex) {
@@ -203,18 +337,59 @@ const TrouveTonVerset = {
         this.state.answers.push(answerIndex);
 
         // Ajouter les scores
-        Object.keys(answer.scores).forEach(famille => {
-            this.state.scores[famille] += answer.scores[famille];
-        });
+        if (answer.scores) {
+            Object.keys(answer.scores).forEach(famille => {
+                if (this.state.scores[famille] !== undefined) {
+                    this.state.scores[famille] += answer.scores[famille];
+                }
+            });
+        }
+
+        // Construire le profil utilisateur à partir des tags
+        if (answer.tags) {
+            this.updateUserProfile(answer.tags);
+        }
 
         // Transition vers la question suivante ou résultat
         setTimeout(() => {
-            if (this.state.currentQuestion < VersetsSpeciaux.questions.length - 1) {
+            if (this.state.currentQuestion < this.state.nombreQuestions - 1) {
                 this.showQuestion(this.state.currentQuestion + 1);
             } else {
                 this.showTransition();
             }
         }, 400);
+    },
+
+    /**
+     * Met à jour le profil utilisateur avec les tags de la réponse
+     */
+    updateUserProfile(tags) {
+        const profile = this.state.userProfile;
+        
+        if (tags.emotion && !profile.emotion) {
+            profile.emotion = tags.emotion;
+        }
+        if (tags.besoin && !profile.besoin) {
+            profile.besoin = tags.besoin;
+        }
+        if (tags.posture && !profile.posture) {
+            profile.posture = tags.posture;
+        }
+        if (tags.situation && !profile.situation) {
+            profile.situation = tags.situation;
+        }
+        if (tags.intensite) {
+            profile.intensite = tags.intensite; // Toujours mettre à jour l'intensité (dernière valeur)
+        }
+        if (tags.relation) {
+            profile.relation = tags.relation;
+        }
+        if (tags.poids) {
+            profile.poids = tags.poids;
+        }
+
+        // Collecter tous les tags pour affinage
+        this.state.tags.push(tags);
     },
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -223,20 +398,24 @@ const TrouveTonVerset = {
 
     showTransition() {
         const overlay = document.getElementById('versetQuizOverlay');
+        const parcours = VersetsSpeciaux.parcours[this.state.parcours];
 
         overlay.innerHTML = `
             <div class="verset-quiz-container transition">
                 <div class="transition-content">
                     <div class="transition-icon">
-                        <div class="pulse-ring"></div>
-                        <div class="pulse-ring delay-1"></div>
-                        <div class="pulse-ring delay-2"></div>
+                        <div class="pulse-ring" style="border-color: ${parcours.couleur};"></div>
+                        <div class="pulse-ring delay-1" style="border-color: ${parcours.couleur};"></div>
+                        <div class="pulse-ring delay-2" style="border-color: ${parcours.couleur};"></div>
                         <span class="icon-dove">🕊️</span>
                     </div>
                     <p class="transition-text">${VersetsSpeciaux.messages.transition}</p>
                 </div>
             </div>
         `;
+
+        // Scroller vers le haut
+        overlay.scrollTop = 0;
 
         // Calculer le résultat pendant la transition
         setTimeout(() => {
@@ -250,7 +429,7 @@ const TrouveTonVerset = {
     // ═══════════════════════════════════════════════════════════════════════
 
     calculateResult() {
-        // Trouver la famille dominante
+        // 1. Trouver la famille dominante (pour le message et la couleur)
         let maxScore = 0;
         let dominant = 'paix';
 
@@ -263,12 +442,33 @@ const TrouveTonVerset = {
 
         this.state.dominantFamille = dominant;
 
-        // Sélectionner un verset de cette famille
-        const versetsOfFamille = VersetsSpeciaux.versets.filter(v => v.famille === dominant);
-        const randomIndex = Math.floor(Math.random() * versetsOfFamille.length);
-        this.state.selectedVerset = versetsOfFamille[randomIndex];
+        // 2. Construire le profil final
+        const profile = this.state.userProfile;
         
-        // Ne pas sauvegarder automatiquement - l'utilisateur cliquera sur le bouton
+        // Compléter avec les valeurs par défaut si manquantes
+        if (!profile.intensite) {
+            profile.intensite = 'moderee';
+        }
+
+        // 3. Déterminer combien de versets afficher
+        // Parcours Plénitude (7 questions) = 2 versets
+        // Autres parcours = 1 verset
+        const nombreVersets = this.state.parcours === 'plenitude' ? 2 : 1;
+
+        // 4. Récupérer les références déjà reçues récemment
+        const recentRefs = this.state.history
+            .slice(0, 10)
+            .map(h => h.reference);
+
+        // 5. Trouver les meilleurs versets avec l'algorithme de matching
+        this.state.selectedVersets = VersetsSpeciaux.findBestVersets(
+            profile,
+            nombreVersets,
+            recentRefs
+        );
+
+        console.log('Profil utilisateur:', profile);
+        console.log('Versets sélectionnés:', this.state.selectedVersets);
     },
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -278,47 +478,68 @@ const TrouveTonVerset = {
     showResult() {
         const overlay = document.getElementById('versetQuizOverlay');
         const famille = VersetsSpeciaux.familles[this.state.dominantFamille];
-        const verset = this.state.selectedVerset;
-        const priere = PrieresData.collection.find(p => p.id === famille.priereRecommandee);
+        const versets = this.state.selectedVersets;
+        const parcours = VersetsSpeciaux.parcours[this.state.parcours];
+        const priere = typeof PrieresData !== 'undefined' 
+            ? PrieresData.collection.find(p => p.id === famille.priereRecommandee)
+            : null;
+        
+        // 📊 Analytics : tracker le résultat (famille spirituelle)
+        if (typeof Analytics !== 'undefined') {
+            Analytics.trackTrouveTonVersetResultat(this.state.dominantFamille);
+        }
         
         // Vérifier si déjà sauvegardé aujourd'hui
         const todayVerset = this.getTodaysVerset();
         const alreadySaved = todayVerset !== undefined;
 
+        const is2Versets = versets.length === 2;
+        const messageRevelation = is2Versets 
+            ? VersetsSpeciaux.messages.revelation2versets 
+            : VersetsSpeciaux.messages.revelation;
+
         overlay.innerHTML = `
-            <div class="verset-quiz-container result">
+            <div class="verset-quiz-container result ${is2Versets ? 'deux-versets' : ''}">
                 <button class="quiz-close-btn light" id="quizCloseBtn">✕</button>
                 
                 <div class="result-header" style="background: linear-gradient(135deg, ${famille.couleur} 0%, ${this.darkenColor(famille.couleur, 20)} 100%)">
+                    <div class="result-parcours-badge">
+                        ${parcours.icone} ${parcours.nom}
+                    </div>
                     <div class="result-famille">
                         <span class="famille-icon">${famille.icone}</span>
                         <span class="famille-name">${famille.nom}</span>
                     </div>
-                    <p class="result-intro">${VersetsSpeciaux.messages.revelation}</p>
+                    <p class="result-intro">${messageRevelation}</p>
                 </div>
 
                 <div class="result-body">
-                    <div class="verset-card">
-                        <div class="verset-text-container">
-                            <span class="quote-mark">"</span>
-                            <p class="verset-text" id="versetTextAnimated"></p>
-                            <span class="quote-mark end">"</span>
+                    ${versets.map((verset, index) => `
+                        <div class="verset-card ${is2Versets ? 'compact' : ''}" data-index="${index}">
+                            ${is2Versets ? `<div class="verset-card-label">${index === 0 ? '✨ Verset principal' : '🌿 Verset complémentaire'}</div>` : ''}
+                            <div class="verset-text-container">
+                                <span class="quote-mark">"</span>
+                                <p class="verset-text" id="versetTextAnimated${index}">${is2Versets ? verset.texte : ''}</p>
+                                <span class="quote-mark end">"</span>
+                            </div>
+                            <div class="verset-reference">${verset.reference}</div>
                         </div>
-                        <div class="verset-reference">${verset.reference}</div>
-                    </div>
+                    `).join('')}
 
                     <div class="message-personnel">
                         <p>${famille.message}</p>
                     </div>
 
+                    ${priere ? `
                     <div class="priere-suggestion">
                         <p class="priere-intro">${VersetsSpeciaux.messages.priereIntro}</p>
                         <button class="priere-card" id="openPriereBtn" style="border-color: ${famille.couleur}">
-                            <span class="priere-icon">${priere?.icone || '🙏'}</span>
-                            <span class="priere-name">${priere?.titre || 'Prière'}</span>
+                            <span class="priere-icon">${priere.icone || '🙏'}</span>
+                            <span class="priere-name">${priere.titre || 'Prière'}</span>
                             <span class="priere-arrow">→</span>
                         </button>
                     </div>
+                    ` : ''}
                 </div>
 
                 <div class="result-actions">
@@ -335,7 +556,7 @@ const TrouveTonVerset = {
                 <div class="result-actions-row2">
                     <button class="action-btn outline" id="meditateBtn">
                         <span class="action-icon">🙏</span>
-                        <span>Méditer ce verset</span>
+                        <span>Méditer</span>
                     </button>
                     <button class="action-btn outline" id="readContextBtn">
                         <span class="action-icon">📖</span>
@@ -344,7 +565,7 @@ const TrouveTonVerset = {
                 </div>
                 
                 <div class="result-actions-final">
-                    <button class="action-btn primary" id="finishBtn">
+                    <button class="action-btn primary" id="finishBtn" style="background: ${famille.couleur};">
                         <span>Amen</span>
                         <span class="action-icon">✨</span>
                     </button>
@@ -352,24 +573,24 @@ const TrouveTonVerset = {
             </div>
         `;
 
-        // Animation du texte du verset
-        this.animateVersetText(verset.texte);
+        // Animation du texte (seulement pour 1 verset)
+        if (!is2Versets && versets.length > 0) {
+            this.animateVersetText(versets[0].texte, 'versetTextAnimated0');
+        }
 
         // Events
         document.getElementById('quizCloseBtn').addEventListener('click', () => this.hideOverlay());
         document.getElementById('finishBtn').addEventListener('click', () => this.hideOverlay());
         
-        document.getElementById('openPriereBtn').addEventListener('click', () => {
-            // Ouvrir la prière SANS fermer l'overlay
-            if (priere) {
+        if (priere) {
+            document.getElementById('openPriereBtn').addEventListener('click', () => {
                 this.showPrayerInModal(priere);
-            }
-        });
+            });
+        }
 
         document.getElementById('saveVersetBtn')?.addEventListener('click', () => {
             if (!alreadySaved) {
                 this.saveCurrentVerset();
-                // Mettre à jour le bouton
                 const btn = document.getElementById('saveVersetBtn');
                 btn.disabled = true;
                 btn.innerHTML = '<span class="action-icon">✓</span><span>Sauvegardé !</span>';
@@ -389,6 +610,44 @@ const TrouveTonVerset = {
             this.hideOverlay();
             this.goToRead();
         });
+
+        // Scroller vers le haut pour voir le résultat complet
+        // Utiliser setTimeout pour s'assurer que le DOM est rendu
+        setTimeout(() => {
+            overlay.scrollTo({ top: 0, behavior: 'instant' });
+            // Alternative : scroller le container dans la vue
+            const container = overlay.querySelector('.verset-quiz-container');
+            if (container) {
+                container.scrollIntoView({ block: 'start', behavior: 'instant' });
+            }
+        }, 100);
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // SAUVEGARDE DU VERSET
+    // ═══════════════════════════════════════════════════════════════════════
+
+    saveCurrentVerset() {
+        const versets = this.state.selectedVersets;
+        if (versets.length === 0) return;
+
+        const entree = {
+            date: new Date().toISOString(),
+            parcours: this.state.parcours,
+            famille: this.state.dominantFamille,
+            reference: versets[0].reference,
+            texte: versets[0].texte,
+            versets: versets.map(v => ({ reference: v.reference, texte: v.texte }))
+        };
+
+        this.state.history.unshift(entree);
+        
+        // Garder seulement les 50 derniers
+        if (this.state.history.length > 50) {
+            this.state.history = this.state.history.slice(0, 50);
+        }
+        
+        this.saveHistory();
     },
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -396,7 +655,6 @@ const TrouveTonVerset = {
     // ═══════════════════════════════════════════════════════════════════════
 
     showPrayerInModal(priere) {
-        // Créer une modal par-dessus l'overlay existant
         let modal = document.getElementById('priereOverModal');
         if (!modal) {
             modal = document.createElement('div');
@@ -405,36 +663,26 @@ const TrouveTonVerset = {
             document.body.appendChild(modal);
         }
 
-        const cat = PrieresData.categories.find(c => c.id === priere.categorie);
-
         modal.innerHTML = `
-            <div class="priere-over-content">
-                <div class="priere-over-header" style="background: ${cat?.couleur || '#667eea'}">
-                    <span class="priere-over-icon">${priere.icone}</span>
+            <div class="priere-modal-content">
+                <button class="priere-modal-close" id="closePriereModal">✕</button>
+                <div class="priere-modal-header">
+                    <span class="priere-modal-icon">${priere.icone || '🙏'}</span>
                     <h2>${priere.titre}</h2>
-                    <button class="priere-over-close" id="closePriereOver">✕</button>
                 </div>
-                <div class="priere-over-body">
-                    <p class="priere-over-origine">${priere.origine}</p>
-                    <div class="priere-over-text">${priere.texte.replace(/\n/g, '<br>')}</div>
+                <div class="priere-modal-body">
+                    ${priere.texte.split('\n').map(line => `<p>${line}</p>`).join('')}
                 </div>
-                <div class="priere-over-footer">
-                    <button class="btn-priere-back" id="backToResultBtn">← Retour au verset</button>
-                </div>
+                ${priere.source ? `<div class="priere-modal-source">${priere.source}</div>` : ''}
             </div>
         `;
 
         modal.classList.add('visible');
 
-        document.getElementById('closePriereOver').addEventListener('click', () => {
+        document.getElementById('closePriereModal').addEventListener('click', () => {
             modal.classList.remove('visible');
         });
 
-        document.getElementById('backToResultBtn').addEventListener('click', () => {
-            modal.classList.remove('visible');
-        });
-
-        // Fermer en cliquant à l'extérieur
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('visible');
@@ -443,42 +691,7 @@ const TrouveTonVerset = {
     },
 
     // ═══════════════════════════════════════════════════════════════════════
-    // SAUVEGARDER LE VERSET
-    // ═══════════════════════════════════════════════════════════════════════
-
-    saveCurrentVerset() {
-        const now = new Date();
-        const entry = {
-            date: now.toISOString(),
-            dateFormatted: now.toLocaleDateString('fr-FR', { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-            }),
-            timeFormatted: now.toLocaleTimeString('fr-FR', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            }),
-            famille: this.state.dominantFamille,
-            familleNom: VersetsSpeciaux.familles[this.state.dominantFamille].nom,
-            familleIcone: VersetsSpeciaux.familles[this.state.dominantFamille].icone,
-            verset: this.state.selectedVerset
-        };
-
-        // Ajouter en premier dans l'historique
-        this.state.history.unshift(entry);
-
-        // Limiter à 50 entrées
-        if (this.state.history.length > 50) {
-            this.state.history = this.state.history.slice(0, 50);
-        }
-
-        this.saveHistory();
-    },
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // HISTORIQUE
+    // MODAL HISTORIQUE
     // ═══════════════════════════════════════════════════════════════════════
 
     showHistoryModal() {
@@ -486,43 +699,30 @@ const TrouveTonVerset = {
         if (!modal) {
             modal = document.createElement('div');
             modal.id = 'historyOverModal';
-            modal.className = 'priere-over-modal';
+            modal.className = 'history-over-modal';
             document.body.appendChild(modal);
         }
 
         const history = this.state.history;
 
-        let historyHtml = '';
-        if (history.length === 0) {
-            historyHtml = '<p class="history-empty">Aucun verset sauvegardé pour le moment.</p>';
-        } else {
-            historyHtml = history.map((entry, index) => `
-                <div class="history-item">
-                    <div class="history-item-header">
-                        <span class="history-famille">${entry.familleIcone || '✨'} ${entry.familleNom || entry.famille}</span>
-                        <span class="history-date">${entry.dateFormatted || new Date(entry.date).toLocaleDateString('fr-FR')}</span>
-                    </div>
-                    <div class="history-verset">
-                        <p class="history-text">"${entry.verset.texte.substring(0, 120)}${entry.verset.texte.length > 120 ? '...' : ''}"</p>
-                        <span class="history-ref">${entry.verset.reference}</span>
-                    </div>
-                    ${entry.timeFormatted ? `<span class="history-time">à ${entry.timeFormatted}</span>` : ''}
-                </div>
-            `).join('');
-        }
-
         modal.innerHTML = `
-            <div class="priere-over-content history-modal">
-                <div class="priere-over-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
-                    <span class="priere-over-icon">📚</span>
-                    <h2>Mes versets</h2>
-                    <button class="priere-over-close" id="closeHistoryModal">✕</button>
+            <div class="history-modal-content">
+                <button class="history-modal-close" id="closeHistoryModal">✕</button>
+                <div class="history-modal-header">
+                    <span class="history-modal-icon">📚</span>
+                    <h2>Mes versets reçus</h2>
                 </div>
-                <div class="priere-over-body history-body">
-                    ${historyHtml}
-                </div>
-                <div class="priere-over-footer">
-                    <button class="btn-priere-back" id="backFromHistory">← Retour</button>
+                <div class="history-modal-body">
+                    ${history.length === 0 ? `
+                        <p class="history-empty">Aucun verset sauvegardé pour l'instant.</p>
+                    ` : history.map(entry => `
+                        <div class="history-entry">
+                            <div class="history-entry-date">${this.formatDate(entry.date)}</div>
+                            <div class="history-entry-parcours">${this.getParcoursIcon(entry.parcours)} ${entry.parcours || 'Parcours'}</div>
+                            <div class="history-entry-ref">${entry.reference}</div>
+                            <div class="history-entry-text">"${this.truncateText(entry.texte, 100)}"</div>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         `;
@@ -533,10 +733,6 @@ const TrouveTonVerset = {
             modal.classList.remove('visible');
         });
 
-        document.getElementById('backFromHistory').addEventListener('click', () => {
-            modal.classList.remove('visible');
-        });
-
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('visible');
@@ -544,11 +740,34 @@ const TrouveTonVerset = {
         });
     },
 
-    animateVersetText(text) {
-        const container = document.getElementById('versetTextAnimated');
+    getParcoursIcon(parcours) {
+        const icons = {
+            'trinite': '🕊️',
+            'plaies': '✝️',
+            'plenitude': '✨'
+        };
+        return icons[parcours] || '📖';
+    },
+
+    formatDate(isoString) {
+        const date = new Date(isoString);
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return date.toLocaleDateString('fr-FR', options);
+    },
+
+    truncateText(text, maxLength) {
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ANIMATION DU TEXTE
+    // ═══════════════════════════════════════════════════════════════════════
+
+    animateVersetText(text, containerId = 'versetTextAnimated0') {
+        const container = document.getElementById(containerId);
         if (!container) return;
 
-        // Afficher le texte mot par mot
         const words = text.split(' ');
         let currentIndex = 0;
 
@@ -562,6 +781,10 @@ const TrouveTonVerset = {
         }, 80);
     },
 
+    // ═══════════════════════════════════════════════════════════════════════
+    // NAVIGATION VERS AUTRES ONGLETS
+    // ═══════════════════════════════════════════════════════════════════════
+
     goToMeditate() {
         // Changer d'onglet
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -570,21 +793,23 @@ const TrouveTonVerset = {
         document.querySelector('[data-tab="mediter"]')?.classList.add('active');
         document.getElementById('tabMediter')?.classList.add('active');
 
-        // Définir le verset dans MeditateTab
-        if (window.MeditateTab && this.state.selectedVerset) {
+        // Définir le verset dans MeditateTab (le premier si plusieurs)
+        if (window.MeditateTab && this.state.selectedVersets.length > 0) {
+            const verset = this.state.selectedVersets[0];
             MeditateTab.currentVerse = {
-                reference: this.state.selectedVerset.reference,
-                text: this.state.selectedVerset.texte
+                reference: verset.reference,
+                text: verset.texte
             };
             MeditateTab.displayVerse();
         }
     },
 
     goToRead() {
-        // Parser la référence pour trouver le livre et chapitre
-        const ref = this.state.selectedVerset.reference;
+        if (this.state.selectedVersets.length === 0) return;
         
-        // Regex pour extraire livre et chapitre (ex: "Jean 14:27", "1 Jean 4:16", "Psaume 23:2-3")
+        const ref = this.state.selectedVersets[0].reference;
+        
+        // Regex pour extraire livre et chapitre
         const match = ref.match(/^(.+?)\s+(\d+)(?::|\s|$)/);
         
         if (match) {
@@ -598,10 +823,8 @@ const TrouveTonVerset = {
             document.querySelector('[data-tab="lire"]')?.classList.add('active');
             document.getElementById('tabLire')?.classList.add('active');
 
-            // Mapping des noms de livres vers les parties (valeurs exactes des options HTML)
-            // Important: Les livres avec numéros doivent être vérifiés en premier
+            // Mapping des livres vers les parties
             const livresMapping = [
-                // Épîtres avec numéros (vérifier en premier pour éviter confusion avec version sans numéro)
                 { livre: '1 Corinthiens', partie: 'Épîtres de Paul' },
                 { livre: '2 Corinthiens', partie: 'Épîtres de Paul' },
                 { livre: '1 Thessaloniciens', partie: 'Épîtres de Paul' },
@@ -613,14 +836,11 @@ const TrouveTonVerset = {
                 { livre: '1 Jean', partie: 'Épîtres Générales' },
                 { livre: '2 Jean', partie: 'Épîtres Générales' },
                 { livre: '3 Jean', partie: 'Épîtres Générales' },
-                // Évangiles
                 { livre: 'Matthieu', partie: 'Évangiles' },
                 { livre: 'Marc', partie: 'Évangiles' },
                 { livre: 'Luc', partie: 'Évangiles' },
                 { livre: 'Jean', partie: 'Évangiles' },
-                // Actes
                 { livre: 'Actes', partie: 'Actes' },
-                // Épîtres de Paul (sans numéro)
                 { livre: 'Romains', partie: 'Épîtres de Paul' },
                 { livre: 'Galates', partie: 'Épîtres de Paul' },
                 { livre: 'Éphésiens', partie: 'Épîtres de Paul' },
@@ -629,15 +849,12 @@ const TrouveTonVerset = {
                 { livre: 'Colossiens', partie: 'Épîtres de Paul' },
                 { livre: 'Tite', partie: 'Épîtres de Paul' },
                 { livre: 'Philémon', partie: 'Épîtres de Paul' },
-                // Épîtres Générales
                 { livre: 'Hébreux', partie: 'Épîtres Générales' },
                 { livre: 'Jacques', partie: 'Épîtres Générales' },
                 { livre: 'Jude', partie: 'Épîtres Générales' },
-                // Apocalypse
                 { livre: 'Apocalypse', partie: 'Apocalypse' }
             ];
 
-            // Trouver la partie (correspondance exacte)
             let partieValue = '';
             for (const mapping of livresMapping) {
                 if (livreName === mapping.livre) {
@@ -646,31 +863,25 @@ const TrouveTonVerset = {
                 }
             }
 
-            // Attendre un peu que l'onglet soit affiché
             setTimeout(() => {
-                // 1. Sélectionner la partie
                 const selectPartie = document.getElementById('lirePartie');
                 if (selectPartie && partieValue) {
                     selectPartie.value = partieValue;
-                    // Mettre à jour ReadTab
                     if (window.ReadTab) {
                         ReadTab.selectedPartie = partieValue;
                         ReadTab.updateLivreDropdown();
                     }
                 }
 
-                // 2. Attendre la mise à jour des livres puis sélectionner
                 setTimeout(() => {
                     const selectLivre = document.getElementById('lireLivre');
                     if (selectLivre) {
-                        // Chercher le livre
                         for (let option of selectLivre.options) {
                             if (option.value === livreName || option.text === livreName) {
                                 selectLivre.value = option.value;
                                 if (window.ReadTab) {
                                     ReadTab.selectedLivre = option.value;
                                     ReadTab.updateChapitreDropdown();
-                                    // Activer le bouton info
                                     const infoBtn = document.getElementById('bookInfoBtn');
                                     if (infoBtn) infoBtn.disabled = false;
                                 }
@@ -679,7 +890,6 @@ const TrouveTonVerset = {
                         }
                     }
 
-                    // 3. Attendre la mise à jour des chapitres puis sélectionner
                     setTimeout(() => {
                         const selectChapitre = document.getElementById('lireChapitre');
                         if (selectChapitre) {
@@ -690,7 +900,6 @@ const TrouveTonVerset = {
                             }
                         }
 
-                        // Scroll vers le contenu
                         const content = document.getElementById('lectureContent');
                         if (content) {
                             content.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -712,6 +921,399 @@ const TrouveTonVerset = {
     getTodaysVerset() {
         const today = new Date().toISOString().split('T')[0];
         return this.state.history.find(h => h.date && h.date.startsWith(today));
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // INJECTION DES STYLES SUPPLÉMENTAIRES
+    // ═══════════════════════════════════════════════════════════════════════
+
+    injectParcoursStyles() {
+        if (document.getElementById('parcours-styles')) return;
+
+        const styles = document.createElement('style');
+        styles.id = 'parcours-styles';
+        styles.textContent = `
+            /* ═══════════════════════════════════════════════════════════════ */
+            /* FIX CRITICAL: Forcer l'affichage depuis le HAUT                 */
+            /* Override du align-items: center de styles.css                   */
+            /* ═══════════════════════════════════════════════════════════════ */
+            
+            .verset-quiz-overlay {
+                align-items: flex-start !important;
+                padding-top: 10px !important;
+            }
+            
+            .verset-quiz-container {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            /* Fix bouton fermeture - centrer la croix */
+            .quiz-close-btn {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                line-height: 1 !important;
+                padding: 0 !important;
+            }
+
+            /* ═══════════════════════════════════════════════════════════════ */
+            /* ÉCRAN CHOIX PARCOURS (NOUVEAU)                                  */
+            /* Adapté au thème sombre existant                                 */
+            /* ═══════════════════════════════════════════════════════════════ */
+            
+            .verset-quiz-container.choix-parcours {
+                padding: 20px 20px 25px;
+            }
+
+            .parcours-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .parcours-icon-main {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+
+            .parcours-title {
+                font-size: 1.6em;
+                color: white;
+                margin-bottom: 5px;
+                font-weight: 300;
+            }
+
+            .parcours-subtitle {
+                color: rgba(255,255,255,0.6);
+                font-size: 0.95em;
+            }
+
+            .parcours-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .parcours-card {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 18px;
+                background: rgba(255,255,255,0.05);
+                border: 2px solid rgba(255,255,255,0.1);
+                border-radius: 16px;
+                cursor: pointer;
+                transition: all 0.3s;
+                text-align: left;
+                color: white;
+            }
+
+            .parcours-card:hover {
+                background: rgba(255,255,255,0.1);
+                border-color: rgba(255,255,255,0.3);
+                transform: translateX(5px);
+            }
+
+            .parcours-card.selected {
+                background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,165,0,0.2) 100%);
+                border-color: #FFD700;
+            }
+
+            .parcours-card-icon {
+                font-size: 2.2em;
+                min-width: 50px;
+                text-align: center;
+            }
+
+            .parcours-card-content {
+                flex: 1;
+            }
+
+            .parcours-card-title {
+                font-size: 1.15em;
+                font-weight: 600;
+                color: white;
+                margin-bottom: 2px;
+            }
+
+            .parcours-card-questions {
+                font-size: 0.85em;
+                color: #FFD700;
+                font-weight: 500;
+            }
+
+            .parcours-card-symbole {
+                font-size: 0.8em;
+                color: rgba(255,255,255,0.5);
+                font-style: italic;
+                margin: 3px 0;
+            }
+
+            .parcours-card-desc {
+                font-size: 0.85em;
+                color: rgba(255,255,255,0.7);
+            }
+
+            .parcours-card-time {
+                font-size: 0.8em;
+                color: rgba(255,255,255,0.6);
+                padding: 4px 10px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 12px;
+            }
+
+            .parcours-footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 0.85em;
+                color: rgba(255,255,255,0.5);
+                font-style: italic;
+            }
+
+            /* ═══════════════════════════════════════════════════════════════ */
+            /* BADGE PARCOURS (dans accueil et résultat)                       */
+            /* ═══════════════════════════════════════════════════════════════ */
+
+            .accueil-parcours-badge {
+                display: inline-block;
+                padding: 8px 16px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 20px;
+                font-size: 0.9em;
+                color: rgba(255,255,255,0.8);
+                margin: 15px 0;
+            }
+
+            .result-parcours-badge {
+                display: inline-block;
+                padding: 6px 14px;
+                background: rgba(255,255,255,0.2);
+                border-radius: 15px;
+                font-size: 0.85em;
+                color: white;
+                margin-bottom: 12px;
+            }
+
+            /* ═══════════════════════════════════════════════════════════════ */
+            /* RÉSULTAT AVEC 2 VERSETS (parcours Plénitude)                    */
+            /* ═══════════════════════════════════════════════════════════════ */
+
+            .result.deux-versets .verset-card {
+                margin-bottom: 15px;
+            }
+
+            .verset-card.compact {
+                padding: 20px;
+            }
+
+            .verset-card.compact .verset-text {
+                font-size: 1.1em;
+            }
+
+            .verset-card-label {
+                font-size: 0.85em;
+                color: #FFD700;
+                margin-bottom: 10px;
+                font-weight: 500;
+            }
+
+            /* ═══════════════════════════════════════════════════════════════ */
+            /* MODAL HISTORIQUE (superposition)                                */
+            /* ═══════════════════════════════════════════════════════════════ */
+
+            .history-over-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10001;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+            }
+
+            .history-over-modal.visible {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .history-modal-content {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                border-radius: 20px;
+                max-width: 450px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                position: relative;
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .history-modal-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(255,255,255,0.1);
+                border: none;
+                font-size: 1.2em;
+                cursor: pointer;
+                color: rgba(255,255,255,0.7);
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+            }
+
+            .history-modal-header {
+                padding: 25px;
+                text-align: center;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .history-modal-icon {
+                font-size: 2em;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .history-modal-header h2 {
+                font-size: 1.3em;
+                color: white;
+                font-weight: 300;
+            }
+
+            .history-modal-body {
+                padding: 20px;
+            }
+
+            .history-empty {
+                text-align: center;
+                color: rgba(255,255,255,0.5);
+                padding: 30px;
+            }
+
+            .history-entry {
+                padding: 15px;
+                background: rgba(255,255,255,0.05);
+                border-radius: 12px;
+                margin-bottom: 12px;
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .history-entry-date {
+                font-size: 0.8em;
+                color: rgba(255,255,255,0.5);
+            }
+
+            .history-entry-parcours {
+                font-size: 0.75em;
+                color: #FFD700;
+                margin-top: 2px;
+            }
+
+            .history-entry-ref {
+                font-weight: 600;
+                color: white;
+                margin: 5px 0;
+            }
+
+            .history-entry-text {
+                font-size: 0.9em;
+                color: rgba(255,255,255,0.7);
+                font-style: italic;
+            }
+
+            /* ═══════════════════════════════════════════════════════════════ */
+            /* MODAL PRIÈRE (superposition)                                    */
+            /* ═══════════════════════════════════════════════════════════════ */
+
+            .priere-over-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10001;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+            }
+
+            .priere-over-modal.visible {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .priere-modal-content {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                border-radius: 20px;
+                max-width: 450px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                position: relative;
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .priere-modal-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(255,255,255,0.1);
+                border: none;
+                font-size: 1.2em;
+                cursor: pointer;
+                color: rgba(255,255,255,0.7);
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+            }
+
+            .priere-modal-header {
+                padding: 25px;
+                text-align: center;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .priere-modal-icon {
+                font-size: 2em;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .priere-modal-header h2 {
+                font-size: 1.3em;
+                color: white;
+                font-weight: 300;
+            }
+
+            .priere-modal-body {
+                padding: 25px;
+                line-height: 1.8;
+                color: rgba(255,255,255,0.9);
+            }
+
+            .priere-modal-body p {
+                margin-bottom: 10px;
+            }
+
+            .priere-modal-source {
+                padding: 15px 25px;
+                font-size: 0.85em;
+                color: rgba(255,255,255,0.5);
+                text-align: right;
+                font-style: italic;
+            }
+        `;
+
+        document.head.appendChild(styles);
     },
 
     // ═══════════════════════════════════════════════════════════════════════

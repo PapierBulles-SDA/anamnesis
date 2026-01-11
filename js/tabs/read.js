@@ -61,6 +61,51 @@ const ReadTab = {
     },
 
     /**
+     * Afficher une liste de versets (pour passages/groupes)
+     * @param {Array} verses - Liste de versets
+     * @param {string} title - Titre du passage
+     */
+    displayVerses(verses, title) {
+        const container = document.getElementById('lectureContent');
+        const header = document.getElementById('lectureHeader');
+        const nav = document.getElementById('lectureNav');
+        
+        if (!container || !header || verses.length === 0) return;
+        
+        // Afficher le titre
+        header.innerHTML = `
+            <h2 class="lecture-title">${title}</h2>
+            <p class="lecture-subtitle">${verses.length} verset${verses.length > 1 ? 's' : ''}</p>
+        `;
+        
+        // Afficher les versets
+        let html = '';
+        verses.forEach(verse => {
+            html += `
+                <div class="lecture-verset" data-ref="${verse.reference}">
+                    <span class="verset-num">${verse.livre} ${verse.chapitre}:${verse.verset}</span>
+                    <span class="verset-text">${verse.text}</span>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+        
+        // Ajouter les événements de clic pour copier
+        container.querySelectorAll('.lecture-verset').forEach(el => {
+            el.addEventListener('click', () => {
+                const ref = el.dataset.ref;
+                navigator.clipboard.writeText(ref).then(() => {
+                    this.showCopiedMessage(el);
+                });
+            });
+        });
+        
+        // Cacher la navigation (pas de chapitre suivant/précédent)
+        if (nav) nav.innerHTML = '';
+    },
+
+    /**
      * Mettre à jour la navigation entre chapitres
      */
     updateNavigation() {

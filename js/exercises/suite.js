@@ -30,6 +30,22 @@ const SuiteMode = {
             return;
         }
         
+        // VALIDATION CONSÉCUTIVITÉ pour passages/groupes
+        if (App.config.contentMode === 'passage' || App.config.contentMode === 'custom') {
+            if (!this.validateConsecutive(App.state.currentSeries)) {
+                document.getElementById('chaineReading').style.display = 'none';
+                document.getElementById('chaineExercise').style.display = 'block';
+                document.getElementById('suiteOptions').innerHTML = '';
+                document.getElementById('suiteCurrentRef').textContent = '';
+                document.getElementById('suiteCurrentText').textContent = '';
+                document.getElementById('chaineProgress').textContent = '';
+                document.getElementById('chaineMessage').innerHTML = 
+                    `<div class="message error">⚠️ Le mode "Suite" nécessite des versets consécutifs.<br>Ce passage/groupe contient des versets non-consécutifs.<br>Utilise un autre mode d'exercice.</div>`;
+                document.getElementById('chaineNextBtn').style.display = 'none';
+                return;
+            }
+        }
+        
         if (App.config.readingFirst) {
             this.showReading();
         } else {
@@ -63,6 +79,36 @@ const SuiteMode = {
         
         document.getElementById('chaineReading').style.display = 'block';
         document.getElementById('chaineExercise').style.display = 'none';
+    },
+
+    /**
+     * Valider que les versets sont consécutifs
+     * @param {Array} verses - Tableau de versets
+     * @returns {boolean}
+     */
+    validateConsecutive(verses) {
+        if (verses.length < 2) return true;
+        
+        for (let i = 1; i < verses.length; i++) {
+            const prev = verses[i - 1];
+            const curr = verses[i];
+            
+            // Même livre et chapitre
+            if (prev.livre === curr.livre && prev.chapitre === curr.chapitre) {
+                if (curr.verset !== prev.verset + 1) return false;
+            }
+            // Chapitres consécutifs du même livre
+            else if (prev.livre === curr.livre && curr.chapitre === prev.chapitre + 1) {
+                // curr devrait être le verset 1
+                if (curr.verset !== 1) return false;
+            }
+            // Sinon non consécutif
+            else {
+                return false;
+            }
+        }
+        
+        return true;
     },
 
     /**

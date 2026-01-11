@@ -2,7 +2,7 @@
 <!--
 ╔═══════════════════════════════════════════════════════════════════════════════╗
 ║                              🙏 ANAMNÉSIS                                     ║
-║              Application de mémorisation du Nouveau Testament                 ║
+║              Application de mémorisation de la Bible (Ancien et Nouveau Testament)                 ║
 ║                                                                               ║
 ║  Créateur : Bienvenu d'Audiffret                                             ║
 ║  Version : 2.0 (Refactorisé)                                                  ║
@@ -17,19 +17,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="author" content="Bienvenu d'Audiffret">
-    <meta name="description" content="Anamnésis - Application de mémorisation du Nouveau Testament avec 5 modes d'exercice">
-    <meta name="keywords" content="Bible, mémorisation, Nouveau Testament, Louis Segond, exercices bibliques">
-    <title>🙏 Anamnésis</title>
+    <meta name="description" content="Bible Explorer - Anamnésis - Lis, médite et mémorise la Bible (AT + NT, Louis Segond 1910) avec 5 modes d'exercice">
+    <meta name="keywords" content="Bible, lecture biblique, mémorisation, Nouveau Testament, Ancien Testament, Louis Segond, exercices bibliques">
+    <title>📖 Bible Explorer - Anamnésis</title>
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/testament-filter.css">
+    <link rel="stylesheet" href="css/custom-groups.css">
 </head>
 <body>
     <div class="container">
         <!-- Header (visible uniquement sur accueil) -->
         <div class="header" id="header">
-            <h1>🙏 Anamnésis</h1>
-            <p class="subtitle">Nouveau Testament (Louis Segond 1910) • Mémorise la Parole</p>
+            <h1>📖 Bible Explorer</h1>
+            <p class="subtitle">Anamnésis • Bible LSG 1910 (AT + NT)</p>
         </div>
 
         <!-- Page d'accueil avec onglets -->
@@ -37,8 +39,8 @@
             
             <!-- Onglets -->
             <div class="tabs-container">
-                <button class="tab-btn active" data-tab="exercice">📝 Exercice</button>
-                <button class="tab-btn" data-tab="lire">📖 Lire</button>
+                <button class="tab-btn active" data-tab="lire">📖 Lire</button>
+                <button class="tab-btn" data-tab="exercice">📝 Exercice</button>
                 <button class="tab-btn" data-tab="mediter">✍️ Méditer</button>
                 <button class="tab-btn" data-tab="priere">🙏 Prière</button>
                 <button class="tab-btn" data-tab="explorer">🔍 Explorer</button>
@@ -48,45 +50,99 @@
 			</div>
 
             <!-- Onglet Exercice -->
-            <div class="tab-content active" id="tabExercice">
+            <div class="tab-content" id="tabExercice">
                 <div class="welcome-text">
-                    Apprends les versets du Nouveau Testament à ton rythme.<br>
+                    Apprends les versets de la Bible à ton rythme.<br>
                     Configure ton exercice selon tes préférences.
                 </div>
 
             <!-- Sélection Partie et Livre -->
+            <!-- Sélection du mode de contenu -->
             <div class="config-section">
                 <h2>📚 Choix du contenu</h2>
                 
-                <div class="dropdown-group">
-                    <label class="dropdown-label" for="selectPartie">Partie du Nouveau Testament</label>
-                    <select id="selectPartie">
-                        <option value="toutes">Toutes les parties</option>
-                        <option value="Évangiles">Évangiles</option>
-                        <option value="Actes">Actes des Apôtres</option>
-                        <option value="Épîtres de Paul">Épîtres de Paul</option>
-                        <option value="Épîtres Générales">Épîtres Générales</option>
-                        <option value="Apocalypse">Apocalypse</option>
-                    </select>
+                <!-- Onglets de contenu (comme les onglets principaux) -->
+                <div class="content-tabs-container">
+                    <button class="content-tab active" data-content-tab="filters">📋 Filtres</button>
+                    <button class="content-tab" data-content-tab="passage">📖 Passages</button>
+                    <button class="content-tab" data-content-tab="custom">📚 Groupes</button>
                 </div>
+                
+                <!-- Contenu Onglet Filtres -->
+                <div class="content-tab-content active" id="contentFilters">
+                    <div class="dropdown-group">
+                        <label class="dropdown-label" for="selectTestament">Testament</label>
+                        <select id="selectTestament" class="testament-select">
+                            <option value="all">📖 Bible complète</option>
+                            <option value="NT" selected>✝️ Nouveau Testament</option>
+                            <option value="AT">📜 Ancien Testament</option>
+                        </select>
+                    </div>
 
-				<div class="dropdown-group">
-					<label class="dropdown-label" for="selectLivre">Livre biblique</label>
-					<div class="select-with-info">
-						<select id="selectLivre">
-							<option value="tous">Tous les livres</option>
-						</select>
-						<button class="book-info-btn" id="exerciseBookInfoBtn" disabled title="À propos de ce livre">
-							ℹ️
-						</button>
-					</div>
-				</div>
+                    <div class="dropdown-group">
+                        <label class="dropdown-label" for="selectPartie">Partie de la Bible</label>
+                        <select id="selectPartie">
+                            <option value="toutes">Toutes les parties</option>
+                            <option value="Évangiles">Évangiles</option>
+                            <option value="Actes">Actes des Apôtres</option>
+                            <option value="Épîtres de Paul">Épîtres de Paul</option>
+                            <option value="Épîtres Générales">Épîtres Générales</option>
+                            <option value="Apocalypse">Apocalypse</option>
+                        </select>
+                    </div>
 
-                <div class="dropdown-group">
-                    <label class="dropdown-label" for="selectChapitre">Chapitre</label>
-                    <select id="selectChapitre">
-                        <option value="tous">Tous les chapitres</option>
-                    </select>
+                    <div class="dropdown-group">
+                        <label class="dropdown-label" for="selectLivre">Livre biblique</label>
+                        <div class="select-with-info">
+                            <select id="selectLivre">
+                                <option value="tous">Tous les livres</option>
+                            </select>
+                            <button class="book-info-btn" id="exerciseBookInfoBtn" disabled title="À propos de ce livre">
+                                ℹ️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-group">
+                        <label class="dropdown-label" for="selectChapitre">Chapitre</label>
+                        <select id="selectChapitre">
+                            <option value="tous">Tous les chapitres</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Contenu Onglet Passages célèbres -->
+                <div class="content-tab-content" id="contentPassage">
+                    <div class="dropdown-group">
+                        <label class="dropdown-label" for="selectPassage">Passage biblique</label>
+                        <select id="selectPassage">
+                            <option value="">-- Sélectionne un passage --</option>
+                        </select>
+                    </div>
+                    
+                    <div id="passageInfo" class="passage-info" style="display: none;">
+                        <!-- Rempli dynamiquement -->
+                    </div>
+                </div>
+                
+                <!-- Contenu Onglet Groupes personnalisés -->
+                <div class="content-tab-content" id="contentCustom">
+                    <div class="dropdown-group">
+                        <label class="dropdown-label" for="selectCustomGroup">Groupe enregistré</label>
+                        <select id="selectCustomGroup">
+                            <option value="">-- Sélectionne un groupe --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="custom-group-actions">
+                        <button class="btn-secondary btn-small" id="createGroupBtn">➕ Créer</button>
+                        <button class="btn-secondary btn-small" id="editGroupBtn" disabled>✏️ Modifier</button>
+                        <button class="btn-danger btn-small" id="deleteGroupBtn" disabled>🗑️ Supprimer</button>
+                    </div>
+                    
+                    <div id="customGroupInfo" class="group-info" style="display: none;">
+                        <!-- Rempli dynamiquement -->
+                    </div>
                 </div>
             </div>
 
@@ -138,6 +194,7 @@
                 </div>
             </div>
 
+
             <!-- Configuration 2: Longueur de série -->
             <div class="config-section" id="configSeries">
                 <h2>📊 Nombre de versets</h2>
@@ -150,6 +207,9 @@
                     </button>
                     <button class="option-btn" data-series="10">
                         10 versets<br><small>Intense</small>
+                    </button>
+                    <button class="option-btn" data-series="all">
+                        Tous<br><small>Max 50</small>
                     </button>
                 </div>
             </div>
@@ -173,45 +233,92 @@
             <!-- Fin onglet Exercice -->
 
             <!-- Onglet Lire -->
-            <div class="tab-content" id="tabLire">
+            <div class="tab-content active" id="tabLire">
                 <div class="welcome-text">
                     Lis la Parole de Dieu à ton rythme.<br>
                     Choisis un passage et laisse-toi inspirer.
                 </div>
 
-                <!-- Sélection pour lecture -->
+                <!-- Sélection pour lecture avec sous-onglets -->
                 <div class="config-section">
                     <h2>📚 Choix du passage</h2>
                     
-                    <div class="dropdown-group">
-                        <label class="dropdown-label" for="lirePartie">Partie du Nouveau Testament</label>
-                        <select id="lirePartie">
-                            <option value="">-- Choisir une partie --</option>
-                            <option value="Évangiles">Évangiles</option>
-                            <option value="Actes">Actes</option>
-                            <option value="Épîtres de Paul">Épîtres de Paul</option>
-                            <option value="Épîtres Générales">Épîtres Générales</option>
-                            <option value="Apocalypse">Apocalypse</option>
-                        </select>
+                    <!-- Onglets de contenu (comme dans Exercice) -->
+                    <div class="content-tabs-container">
+                        <button class="content-tab active" data-content-tab="lire-filters">📋 Filtres</button>
+                        <button class="content-tab" data-content-tab="lire-passage">📖 Passages</button>
+                        <button class="content-tab" data-content-tab="lire-custom">📚 Groupes</button>
                     </div>
-
-                    <div class="dropdown-group">
-                        <label class="dropdown-label" for="lireLivre">Livre biblique</label>
-                        <div class="select-with-info">
-                            <select id="lireLivre" disabled>
-                                <option value="">-- Choisir un livre --</option>
+                    
+                    <!-- Contenu Onglet Filtres -->
+                    <div class="content-tab-content active" id="contentLireFilters">
+                        <div class="dropdown-group">
+                            <label class="dropdown-label" for="lireTestament">Testament</label>
+                            <select id="lireTestament" class="testament-select">
+                                <option value="all">📖 Bible complète</option>
+                                <option value="NT" selected>✝️ Nouveau Testament</option>
+                                <option value="AT">📜 Ancien Testament</option>
                             </select>
-                            <button class="book-info-btn" id="bookInfoBtn" disabled title="À propos de ce livre">
-                                ℹ️
-                            </button>
+                        </div>
+
+                        <div class="dropdown-group">
+                            <label class="dropdown-label" for="lirePartie">Partie de la Bible</label>
+                            <select id="lirePartie">
+                                <option value="">-- Choisir une partie --</option>
+                                <option value="Évangiles">Évangiles</option>
+                                <option value="Actes">Actes</option>
+                                <option value="Épîtres de Paul">Épîtres de Paul</option>
+                                <option value="Épîtres Générales">Épîtres Générales</option>
+                                <option value="Apocalypse">Apocalypse</option>
+                            </select>
+                        </div>
+
+                        <div class="dropdown-group">
+                            <label class="dropdown-label" for="lireLivre">Livre biblique</label>
+                            <div class="select-with-info">
+                                <select id="lireLivre" disabled>
+                                    <option value="">-- Choisir un livre --</option>
+                                </select>
+                                <button class="book-info-btn" id="bookInfoBtn" disabled title="À propos de ce livre">
+                                    ℹ️
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-group">
+                            <label class="dropdown-label" for="lireChapitre">Chapitre</label>
+                            <select id="lireChapitre" disabled>
+                                <option value="">-- Choisir un chapitre --</option>
+                            </select>
                         </div>
                     </div>
-
-                    <div class="dropdown-group">
-                        <label class="dropdown-label" for="lireChapitre">Chapitre</label>
-                        <select id="lireChapitre" disabled>
-                            <option value="">-- Choisir un chapitre --</option>
-                        </select>
+                    
+                    <!-- Contenu Onglet Passages célèbres -->
+                    <div class="content-tab-content" id="contentLirePassage">
+                        <div class="dropdown-group">
+                            <label class="dropdown-label" for="lireSelectPassage">Passage biblique</label>
+                            <select id="lireSelectPassage">
+                                <option value="">-- Sélectionne un passage --</option>
+                            </select>
+                        </div>
+                        
+                        <div id="lirePassageInfo" class="passage-info" style="display: none;">
+                            <!-- Rempli dynamiquement -->
+                        </div>
+                    </div>
+                    
+                    <!-- Contenu Onglet Groupes personnalisés -->
+                    <div class="content-tab-content" id="contentLireCustom">
+                        <div class="dropdown-group">
+                            <label class="dropdown-label" for="lireSelectCustomGroup">Groupe enregistré</label>
+                            <select id="lireSelectCustomGroup">
+                                <option value="">-- Sélectionne un groupe --</option>
+                            </select>
+                        </div>
+                        
+                        <div id="lireCustomGroupInfo" class="group-info" style="display: none;">
+                            <!-- Rempli dynamiquement -->
+                        </div>
                     </div>
                 </div>
 
@@ -222,7 +329,7 @@
                     </div>
                     <div class="lecture-content" id="lectureContent">
                         <div class="lecture-placeholder">
-                            📖 Sélectionne une partie, un livre et un chapitre pour commencer la lecture.
+                            📖 Sélectionne un passage pour commencer la lecture.
                         </div>
                     </div>
                     <div class="lecture-nav" id="lectureNav">
@@ -412,7 +519,7 @@
             <!-- Onglet Explorer -->
             <div class="tab-content" id="tabExplorer">
                 <div class="welcome-text">
-                    Explore les 7957 versets du Nouveau Testament (Louis Segond 1910).<br>
+                    Explore les 31 102 versets de la Bible (Louis Segond 1910).<br>
                     Recherche, analyse et découvre la Parole.
                 </div>
 
@@ -439,6 +546,13 @@
                 <div class="search-box">
                     <h2>📚 Filtrer par</h2>
                     <div class="filter-row">
+                        <select id="exploreTestament" class="testament-select">
+                            <option value="all">📖 Bible complète</option>
+                            <option value="NT" selected>✝️ Nouveau Testament</option>
+                            <option value="AT">📜 Ancien Testament</option>
+                        </select>
+                    </div>
+                                        <div class="filter-row">
                         <select id="explorePartie">
                             <option value="toutes">Toutes les parties</option>
                             <option value="Évangiles">Évangiles</option>
@@ -925,14 +1039,91 @@
     </div>
     </div>
 
+        <!-- Modal Création/Modification Groupe Personnalisé -->
+        <div id="customGroupModal" class="modal-overlay" style="display: none;">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Créer un groupe personnalisé</h3>
+                    <button class="modal-close" id="closeModal">×</button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Nom du groupe -->
+                    <div class="form-group">
+                        <label for="groupName">Nom du groupe</label>
+                        <input type="text" id="groupName" class="form-input" placeholder="Ex: Mes versets préférés" maxlength="50">
+                    </div>
+                    
+                    <div class="form-divider"></div>
+                    
+                    <h4>Ajouter des versets</h4>
+                    
+                    <!-- Testament -->
+                    <div class="form-group">
+                        <label for="modalTestament">Testament</label>
+                        <select id="modalTestament" class="form-select">
+                            <option value="NT">Nouveau Testament</option>
+                            <option value="AT">Ancien Testament</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Livre -->
+                    <div class="form-group">
+                        <label for="modalLivre">Livre</label>
+                        <select id="modalLivre" class="form-select">
+                            <option value="">-- Sélectionne un livre --</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Chapitre -->
+                    <div class="form-group">
+                        <label for="modalChapitre">Chapitre</label>
+                        <select id="modalChapitre" class="form-select">
+                            <option value="">-- Sélectionne d'abord un livre --</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Versets -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalVersetDebut">Verset début</label>
+                            <input type="number" id="modalVersetDebut" class="form-input" min="1" placeholder="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="modalVersetFin">Verset fin</label>
+                            <input type="number" id="modalVersetFin" class="form-input" min="1" placeholder="10">
+                        </div>
+                    </div>
+                    
+                    <button class="btn-add-range" id="addRangeBtn">➕ Ajouter ce passage</button>
+                    
+                    <!-- Liste des ranges ajoutés -->
+                    <div id="rangesList" class="ranges-list">
+                        <!-- Rempli dynamiquement -->
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn-secondary" id="cancelModalBtn">Annuler</button>
+                    <button class="btn-primary" id="saveGroupBtn" disabled>💾 Enregistrer</button>
+                </div>
+            </div>
+        </div>
     <!-- Données bibliques -->
-    <script src="data/versets-nt-lsg.js"></script>
+    <!-- Bible complète (AT + NT) - 31 102 versets -->
+
+    <!-- Données bibliques -->
+    <!-- Bible complète (AT + NT) - 31 102 versets -->
+    <script src="data/versets-bible-lsg.js"></script>
     <script src="data/livres-info.js"></script>
     <script src="data/prieres.js"></script>
     <script src="data/versets-speciaux.js"></script>
     <script src="data/versets-meditation.js"></script>
+    <script src="data/passages-celebres.js"></script>
     
     <!-- Configuration et état global -->
+    <!-- Filtre Testament (AT/NT/Bible complète) -->
+    <script src="js/testament-filter.js"></script>
     <script src="js/config.js"></script>
     <script src="js/analytics.js"></script>
     
@@ -943,6 +1134,7 @@
     <script src="js/stats.js"></script>
     <script src="js/data.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/custom-groups.js"></script>
     
     <!-- Modes d'exercice -->
     <script src="js/exercises/classic.js"></script>

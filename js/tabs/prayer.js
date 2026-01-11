@@ -170,6 +170,11 @@ const PrayerTab = {
         
         html += '</div>';
 
+        // Note explicative
+        html += '<div class="chapelet-note">';
+        html += '<p>📖 <em>Cette répartition suit la tradition catholique établie par le Pape Jean-Paul II (2002). Les Mystères Lumineux, ajoutés au Rosaire traditionnel, sont récités le jeudi, jour de l\'institution de l\'Eucharistie.</em></p>';
+        html += '</div>';
+
         // Stats
         html += '<div class="chapelet-stats-bar">';
         html += '<div class="stat-item">';

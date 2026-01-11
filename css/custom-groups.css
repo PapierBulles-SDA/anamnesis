@@ -1,0 +1,398 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * ANAMNÉSIS - Styles pour Groupes et Passages
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+/* Onglets de contenu (style similaire aux onglets principaux) */
+.content-tabs-container {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.content-tabs-container::-webkit-scrollbar {
+    display: none;
+}
+
+.content-tab {
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #333; /* Texte foncé au lieu de blanc */
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.content-tab:hover {
+    color: #000; /* Encore plus foncé au survol */
+    background: rgba(74, 144, 226, 0.1);
+}
+
+.content-tab.active {
+    color: #4a90e2; /* Bleu quand actif */
+    border-bottom-color: #4a90e2;
+    font-weight: 600;
+}
+
+/* Contenus des onglets */
+.content-tab-content {
+    display: none;
+    padding-top: 15px;
+}
+
+.content-tab-content.active {
+    display: block;
+}
+
+/* Info passages/groupes */
+.passage-info,
+.group-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(74, 144, 226, 0.1);
+    border-left: 4px solid #4a90e2;
+    border-radius: 8px;
+    color: #333; /* Texte foncé pour contraste */
+}
+
+.passage-info-header,
+.group-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #222; /* Encore plus foncé pour les titres */
+}
+
+.passage-count,
+.group-count {
+    font-size: 13px;
+    color: #555; /* Gris foncé */
+    background: rgba(255, 255, 255, 0.8);
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.passage-description {
+    font-size: 14px;
+    color: #555; /* Gris foncé */
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.passage-ranges,
+.group-ranges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.range-item {
+    font-size: 13px;
+    color: #444; /* Gris foncé */
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+}
+
+/* Actions groupes personnalisés */
+.custom-group-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn-small {
+    padding: 8px 14px;
+    font-size: 13px;
+    flex: 1;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .custom-group-actions {
+        flex-direction: column;
+    }
+    
+    .btn-small {
+        width: 100%;
+    }
+}
+
+/* ============================================================================
+   MODAL CRÉATION/MODIFICATION GROUPE
+   ============================================================================ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.modal-container {
+    background: #fff;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #222;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #e0e0e0;
+    justify-content: flex-end;
+}
+
+/* Formulaire */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 24px 0;
+}
+
+.modal-body h4 {
+    margin: 0 0 16px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Bouton ajouter range */
+.btn-add-range {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #5cb85c, #4cae4c);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.btn-add-range:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92, 184, 92, 0.3);
+}
+
+.btn-add-range:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Liste des ranges */
+.ranges-list {
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.ranges-list:empty::before {
+    content: "Aucun passage ajouté. Commence par sélectionner un livre et un chapitre.";
+    display: block;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 20px;
+}
+
+.range-item-modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.range-item-modal .range-text {
+    color: #333;
+    font-size: 14px;
+}
+
+.range-item-modal .range-remove {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.range-item-modal .range-remove:hover {
+    background: #c0392b;
+}
+
+/* Boutons footer */
+.btn-primary,
+.btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+/* Responsive modal */
+@media (max-width: 768px) {
+    .modal-container {
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

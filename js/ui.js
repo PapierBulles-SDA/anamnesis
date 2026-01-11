@@ -112,6 +112,298 @@ const UI = {
         if (App.elements.header) App.elements.header.classList.remove('hidden');
         if (App.elements.homePage) App.elements.homePage.classList.remove('hidden');
     },
+    /**
+     * Initialiser les onglets de contenu
+     */
+    initContentTabs() {
+        const tabs = document.querySelectorAll('.content-tab');
+        const contents = document.querySelectorAll('.content-tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.contentTab;
+                
+                // Désactiver tous les onglets
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Activer l'onglet cliqué
+                tab.classList.add('active');
+                
+                // Activer le contenu correspondant
+                let targetContent = null;
+                switch(targetTab) {
+                    case 'filters':
+                        targetContent = document.getElementById('contentFilters');
+                        App.config.contentMode = 'filters';
+                        break;
+                    case 'passage':
+                        targetContent = document.getElementById('contentPassage');
+                        App.config.contentMode = 'passage';
+                        this.populatePassagesSelect();
+                        break;
+                    case 'custom':
+                        targetContent = document.getElementById('contentCustom');
+                        App.config.contentMode = 'custom';
+                        CustomGroups.populateSelect();
+                        break;
+                }
+                
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+                
+                // Réinitialiser les sélections
+                App.config.selectedPassageId = null;
+                App.config.selectedCustomGroupId = null;
+            });
+        });
+    },
+
+    /**
+     * Peupler le select des passages célèbres
+     */
+    populatePassagesSelect() {
+        const select = document.getElementById('selectPassage');
+        if (!select || !window.PASSAGES_CELEBRES) return;
+        
+        select.innerHTML = '<option value="">-- Sélectionne un passage --</option>';
+        
+        // Ancien Testament
+        const optgroupAT = document.createElement('optgroup');
+        optgroupAT.label = '📜 Ancien Testament';
+        PASSAGES_CELEBRES.at.forEach(passage => {
+            const option = document.createElement('option');
+            option.value = passage.id;
+            option.textContent = passage.nom;
+            optgroupAT.appendChild(option);
+        });
+        select.appendChild(optgroupAT);
+        
+        // Nouveau Testament
+        const optgroupNT = document.createElement('optgroup');
+        optgroupNT.label = '✝️ Nouveau Testament';
+        PASSAGES_CELEBRES.nt.forEach(passage => {
+            const option = document.createElement('option');
+            option.value = passage.id;
+            option.textContent = passage.nom;
+            optgroupNT.appendChild(option);
+        });
+        select.appendChild(optgroupNT);
+    },
+
+    /**
+     * Afficher les infos d'un passage célèbre
+     */
+    displayPassageInfo(passageId) {
+        const infoDiv = document.getElementById('passageInfo');
+        if (!infoDiv) return;
+        
+        if (!passageId) {
+            infoDiv.style.display = 'none';
+            return;
+        }
+        
+        const passage = Data.getPassageById(passageId);
+        if (!passage) {
+            infoDiv.style.display = 'none';
+            return;
+        }
+        
+        const verses = Data.extractVersesFromRanges(passage.ranges);
+        
+        let html = `
+            <div class="passage-info-header">
+                <strong>${passage.icone} ${passage.nom}</strong>
+                <span class="passage-count">${verses.length} versets</span>
+            </div>
+            <div class="passage-description">${passage.description}</div>
+            <div class="passage-ranges">
+        `;
+        
+        passage.ranges.forEach(range => {
+            html += `<div class="range-item">
+                📖 ${range.livre} ${range.chapitre}, ${range.debut}-${range.fin}
+            </div>`;
+        });
+        
+        html += '</div>';
+        infoDiv.innerHTML = html;
+        infoDiv.style.display = 'block';
+    },
+
+    /**
+     * Initialiser les onglets de contenu pour LIRE
+     */
+    initLireContentTabs() {
+        const tabs = document.querySelectorAll('[data-content-tab^="lire-"]');
+        const contents = [
+            document.getElementById('contentLireFilters'),
+            document.getElementById('contentLirePassage'),
+            document.getElementById('contentLireCustom')
+        ];
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.contentTab;
+                
+                // Désactiver tous les onglets
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Activer l'onglet cliqué
+                tab.classList.add('active');
+                
+                // Activer le contenu correspondant
+                let targetContent = null;
+                switch(targetTab) {
+                    case 'lire-filters':
+                        targetContent = document.getElementById('contentLireFilters');
+                        break;
+                    case 'lire-passage':
+                        targetContent = document.getElementById('contentLirePassage');
+                        this.populateLirePassagesSelect();
+                        break;
+                    case 'lire-custom':
+                        targetContent = document.getElementById('contentLireCustom');
+                        this.populateLireCustomGroupsSelect();
+                        break;
+                }
+                
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+    },
+
+    /**
+     * Peupler le select des passages célèbres pour LIRE
+     */
+    populateLirePassagesSelect() {
+        const select = document.getElementById('lireSelectPassage');
+        if (!select || !window.PASSAGES_CELEBRES) return;
+        
+        select.innerHTML = '<option value="">-- Sélectionne un passage --</option>';
+        
+        // Ancien Testament
+        const optgroupAT = document.createElement('optgroup');
+        optgroupAT.label = '📜 Ancien Testament';
+        PASSAGES_CELEBRES.at.forEach(passage => {
+            const option = document.createElement('option');
+            option.value = passage.id;
+            option.textContent = passage.nom;
+            optgroupAT.appendChild(option);
+        });
+        select.appendChild(optgroupAT);
+        
+        // Nouveau Testament
+        const optgroupNT = document.createElement('optgroup');
+        optgroupNT.label = '✝️ Nouveau Testament';
+        PASSAGES_CELEBRES.nt.forEach(passage => {
+            const option = document.createElement('option');
+            option.value = passage.id;
+            option.textContent = passage.nom;
+            optgroupNT.appendChild(option);
+        });
+        select.appendChild(optgroupNT);
+    },
+
+    /**
+     * Peupler le select des groupes personnalisés pour LIRE
+     */
+    populateLireCustomGroupsSelect() {
+        const select = document.getElementById('lireSelectCustomGroup');
+        if (!select) return;
+        
+        const groups = CustomGroups.load();
+        
+        select.innerHTML = '<option value="">-- Sélectionne un groupe --</option>';
+        
+        groups.forEach(group => {
+            const option = document.createElement('option');
+            option.value = group.id;
+            option.textContent = `${group.name} (${group.count} versets)`;
+            select.appendChild(option);
+        });
+    },
+
+    /**
+     * Afficher les infos d'un passage pour LIRE
+     */
+    displayLirePassageInfo(passageId) {
+        const infoDiv = document.getElementById('lirePassageInfo');
+        if (!infoDiv) return;
+        
+        if (!passageId) {
+            infoDiv.style.display = 'none';
+            return;
+        }
+        
+        const passage = Data.getPassageById(passageId);
+        if (!passage) {
+            infoDiv.style.display = 'none';
+            return;
+        }
+        
+        const verses = Data.extractVersesFromRanges(passage.ranges);
+        
+        let html = `
+            <div class="passage-info-header">
+                <strong>${passage.icone} ${passage.nom}</strong>
+                <span class="passage-count">${verses.length} versets</span>
+            </div>
+            <div class="passage-description">${passage.description}</div>
+            <div class="passage-ranges">
+        `;
+        
+        passage.ranges.forEach(range => {
+            html += `<div class="range-item">
+                📖 ${range.livre} ${range.chapitre}, ${range.debut}-${range.fin}
+            </div>`;
+        });
+        
+        html += '</div>';
+        infoDiv.innerHTML = html;
+        infoDiv.style.display = 'block';
+    },
+
+    /**
+     * Afficher les infos d'un groupe pour LIRE
+     */
+    displayLireCustomGroupInfo(groupId) {
+        const infoDiv = document.getElementById('lireCustomGroupInfo');
+        if (!infoDiv) return;
+        
+        if (!groupId) {
+            infoDiv.style.display = 'none';
+            return;
+        }
+        
+        const group = CustomGroups.getById(groupId);
+        if (!group) {
+            infoDiv.style.display = 'none';
+            return;
+        }
+        
+        let html = `
+            <div class="group-info-header">
+                <strong>${group.name}</strong>
+                <span class="group-count">${group.count} versets</span>
+            </div>
+            <div class="group-ranges">
+        `;
+        
+        group.ranges.forEach(range => {
+            html += `<div class="range-item">
+                📖 ${range.livre} ${range.chapitre}, ${range.debut}-${range.fin}
+            </div>`;
+        });
+        
+        html += '</div>';
+        infoDiv.innerHTML = html;
+        infoDiv.style.display = 'block';
+    },
 
     /**
      * Mettre à jour la visibilité des options selon le mode
@@ -453,7 +745,8 @@ const UI = {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.option-btn[data-series]').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                App.config.seriesLength = parseInt(btn.dataset.series);
+                const value = btn.dataset.series;
+                App.config.seriesLength = value === 'all' ? 'all' : parseInt(value);
             });
         });
     },

@@ -1,12 +1,967 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * ANAMNÉSIS - Informations sur les livres du Nouveau Testament
+ * ANAMNÉSIS - Informations sur les livres de la Bible (AT + NT)
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
 const LivresInfo = {
     // ═══════════════════════════════════════════════════════════════════════
-    // ÉVANGILES
+    // ANCIEN TESTAMENT - TORAH (5 livres)
+    // ═══════════════════════════════════════════════════════════════════════
+    "Genèse": {
+        partie: "Torah",
+        couleur: "#8B4513",
+        auteur: "Moïse (tradition)",
+        profession: "Législateur et prophète",
+        date: "XVe-Ve siècles av. J.-C.",
+        lieu: "Désert du Sinaï",
+        destinataires: "Le peuple d'Israël",
+        genre: "Récit des origines",
+        chapitres: 50,
+        versets: 1533,
+        resume: "Création du monde, chute, déluge, patriarches (Abraham, Isaac, Jacob), Joseph en Égypte.",
+        themes: ["Création divine", "Chute et péché", "Alliance avec Abraham", "Providence de Dieu"],
+        structure: [
+            { section: "Création et origines", chapitres: "1-11" },
+            { section: "Abraham et l'alliance", chapitres: "12-25" },
+            { section: "Isaac et Jacob", chapitres: "26-36" },
+            { section: "Joseph en Égypte", chapitres: "37-50" }
+        ],
+        versetsCles: [
+            { ref: "1:1", titre: "Au commencement Dieu créa" },
+            { ref: "12:1-3", titre: "Appel d'Abraham" }
+        ]
+    },
+
+    "Exode": {
+        partie: "Torah",
+        couleur: "#8B4513",
+        auteur: "Moïse",
+        profession: "Législateur et prophète",
+        date: "XVe-Ve siècles av. J.-C.",
+        lieu: "Égypte et désert du Sinaï",
+        destinataires: "Le peuple d'Israël",
+        genre: "Récit de libération",
+        chapitres: 40,
+        versets: 1213,
+        resume: "Esclavage en Égypte, 10 plaies, Pâque, traversée de la mer Rouge, Sinaï, Décalogue, Tabernacle.",
+        themes: ["Délivrance", "Alliance au Sinaï", "Les Dix Commandements", "Présence de Dieu"],
+        structure: [
+            { section: "Oppression et délivrance", chapitres: "1-15" },
+            { section: "De la mer au Sinaï", chapitres: "16-18" },
+            { section: "Alliance et Loi", chapitres: "19-24" },
+            { section: "Le Tabernacle", chapitres: "25-40" }
+        ],
+        versetsCles: [
+            { ref: "3:14", titre: "Je suis celui qui suis" },
+            { ref: "20:1-17", titre: "Les Dix Commandements" }
+        ]
+    },
+
+    "Lévitique": {
+        partie: "Torah",
+        couleur: "#8B4513",
+        auteur: "Moïse",
+        profession: "Législateur et prophète",
+        date: "XVe-Ve siècles av. J.-C.",
+        lieu: "Désert du Sinaï",
+        destinataires: "Le peuple d'Israël",
+        genre: "Code législatif",
+        chapitres: 27,
+        versets: 859,
+        resume: "Lois sur les sacrifices, la pureté rituelle, le sacerdoce, la sainteté, les fêtes.",
+        themes: ["Sainteté de Dieu", "Sacrifices", "Pureté", "Sacerdoce"],
+        structure: [
+            { section: "Les sacrifices", chapitres: "1-7" },
+            { section: "Les prêtres", chapitres: "8-10" },
+            { section: "Pureté et impureté", chapitres: "11-16" },
+            { section: "Lois de sainteté", chapitres: "17-27" }
+        ],
+        versetsCles: [
+            { ref: "19:2", titre: "Soyez saints car je suis saint" },
+            { ref: "17:11", titre: "La vie est dans le sang" }
+        ]
+    },
+
+    "Nombres": {
+        partie: "Torah",
+        couleur: "#8B4513",
+        auteur: "Moïse",
+        profession: "Législateur et prophète",
+        date: "XVe-Ve siècles av. J.-C.",
+        lieu: "Désert du Sinaï à Moab",
+        destinataires: "Le peuple d'Israël",
+        genre: "Récit historique",
+        chapitres: 36,
+        versets: 1288,
+        resume: "Recensements, 40 ans au désert, rébellions, mort de la génération incrédule.",
+        themes: ["Fidélité de Dieu", "Conséquences de la rébellion", "Nouvelle génération"],
+        structure: [
+            { section: "Au Sinaï", chapitres: "1-10" },
+            { section: "Au désert", chapitres: "11-21" },
+            { section: "Vers Canaan", chapitres: "22-36" }
+        ],
+        versetsCles: [
+            { ref: "6:24-26", titre: "Bénédiction sacerdotale" },
+            { ref: "14:18", titre: "Patience de Dieu" }
+        ]
+    },
+
+    "Deutéronome": {
+        partie: "Torah",
+        couleur: "#8B4513",
+        auteur: "Moïse",
+        profession: "Législateur et prophète",
+        date: "XVe-Ve siècles av. J.-C.",
+        lieu: "Plaines de Moab",
+        destinataires: "Le peuple d'Israël",
+        genre: "Discours de Moïse",
+        chapitres: 34,
+        versets: 959,
+        resume: "Trois discours de Moïse rappelant la Loi, bénédictions et malédictions, mort de Moïse.",
+        themes: ["Shema Israël", "Amour de Dieu", "Choix entre vie et mort"],
+        structure: [
+            { section: "Premier discours", chapitres: "1-4" },
+            { section: "Deuxième discours", chapitres: "5-26" },
+            { section: "Troisième discours", chapitres: "27-30" },
+            { section: "Fin de Moïse", chapitres: "31-34" }
+        ],
+        versetsCles: [
+            { ref: "6:4-5", titre: "Shema Israël" },
+            { ref: "30:19", titre: "Choisis la vie" }
+        ]
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ANCIEN TESTAMENT - LIVRES HISTORIQUES (12 livres)
+    // ═══════════════════════════════════════════════════════════════════════
+    "Josué": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme (tradition: Josué)",
+        profession: "Chef militaire",
+        date: "VIIe-VIe av. J.-C.",
+        lieu: "Canaan",
+        destinataires: "Le peuple d'Israël",
+        genre: "Récit de conquête",
+        chapitres: 24,
+        versets: 658,
+        resume: "Conquête de Canaan sous Josué, traversée du Jourdain, Jéricho, partage du territoire.",
+        themes: ["Fidélité de Dieu", "Conquête divine", "Obéissance", "Héritage"],
+        structure: [
+            { section: "Entrée en Canaan", chapitres: "1-5" },
+            { section: "Conquête du pays", chapitres: "6-12" },
+            { section: "Partage du territoire", chapitres: "13-21" },
+            { section: "Alliance à Sichem", chapitres: "22-24" }
+        ],
+        versetsCles: [
+            { ref: "1:8", titre: "Médite la Loi jour et nuit" },
+            { ref: "24:15", titre: "Moi et ma maison servirons l'Éternel" }
+        ]
+    },
+
+    "Juges": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme",
+        profession: "Compilateur historique",
+        date: "VIIe-VIe av. J.-C.",
+        lieu: "Canaan",
+        destinataires: "Le peuple d'Israël",
+        genre: "Cycles de délivrance",
+        chapitres: 21,
+        versets: 618,
+        resume: "Période sombre: cycles d'apostasie-oppression-cri-juge-paix. 12 juges dont Débora, Gédéon, Samson.",
+        themes: ["Cycle de l'apostasie", "Fidélité de Dieu", "Conséquences du péché"],
+        structure: [
+            { section: "Introduction", chapitres: "1-3" },
+            { section: "Les douze juges", chapitres: "3-16" },
+            { section: "Chaos moral", chapitres: "17-21" }
+        ],
+        versetsCles: [
+            { ref: "2:18-19", titre: "Le cycle répétitif" },
+            { ref: "21:25", titre: "Chacun faisait ce qui lui semblait bon" }
+        ]
+    },
+
+    "Ruth": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme",
+        profession: "Narrateur",
+        date: "Xe-VIe av. J.-C.",
+        lieu: "Bethléem",
+        destinataires: "Le peuple d'Israël",
+        genre: "Nouvelle historique",
+        chapitres: 4,
+        versets: 85,
+        resume: "Ruth la Moabite fidèle suit Naomi, épouse Boaz. Ancêtre de David et du Messie.",
+        themes: ["Providence divine", "Fidélité", "Rédemption", "Inclusion des étrangers"],
+        structure: [
+            { section: "Retour à Bethléem", chapitres: "1" },
+            { section: "Glanage chez Boaz", chapitres: "2" },
+            { section: "Demande de rachat", chapitres: "3" },
+            { section: "Mariage et généalogie", chapitres: "4" }
+        ],
+        versetsCles: [
+            { ref: "1:16", titre: "Ton peuple sera mon peuple" },
+            { ref: "4:14", titre: "Béni soit l'Éternel" }
+        ]
+    },
+
+    "1 Samuel": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme (sources prophétiques)",
+        profession: "Chroniqueur",
+        date: "Xe-VIe av. J.-C.",
+        lieu: "Israël",
+        destinataires: "Le peuple d'Israël",
+        genre: "Historiographie",
+        chapitres: 31,
+        versets: 810,
+        resume: "Samuel dernier juge, Saül premier roi rejeté, David oint, Goliath, fuite devant Saül.",
+        themes: ["Monarchie vs théocratie", "Obéissance vaut mieux que sacrifices", "Dieu regarde au cœur"],
+        structure: [
+            { section: "Samuel prophète", chapitres: "1-7" },
+            { section: "Saül premier roi", chapitres: "8-15" },
+            { section: "David et Saül", chapitres: "16-31" }
+        ],
+        versetsCles: [
+            { ref: "15:22", titre: "L'obéissance vaut mieux" },
+            { ref: "16:7", titre: "L'Éternel regarde au cœur" }
+        ]
+    },
+
+    "2 Samuel": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme",
+        profession: "Chroniqueur royal",
+        date: "Xe-VIe av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Le peuple d'Israël",
+        genre: "Chroniques davidiques",
+        chapitres: 24,
+        versets: 695,
+        resume: "Règne de David: Jérusalem capitale, Arche, alliance éternelle (2 S 7), péché Bath-Shéba, Absalom.",
+        themes: ["Alliance davidique", "Miséricorde divine", "Conséquences du péché"],
+        structure: [
+            { section: "David roi de Juda", chapitres: "1-4" },
+            { section: "David roi d'Israël", chapitres: "5-10" },
+            { section: "Péché et conséquences", chapitres: "11-20" },
+            { section: "Appendices", chapitres: "21-24" }
+        ],
+        versetsCles: [
+            { ref: "7:16", titre: "Ta maison subsistera à jamais" },
+            { ref: "12:13", titre: "J'ai péché contre l'Éternel" }
+        ]
+    },
+
+    "1 Rois": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme (école deutéronomiste)",
+        profession: "Historien prophétique",
+        date: "VIIe-VIe av. J.-C.",
+        lieu: "Royaume divisé",
+        destinataires: "Israël en exil",
+        genre: "Annales royales",
+        chapitres: 22,
+        versets: 816,
+        resume: "Salomon et le Temple, schisme (931 av. J.-C.), Élie contre Achab et Jézabel, Baal vs YHWH au Carmel.",
+        themes: ["Sagesse de Salomon", "Schisme jugement", "Élie vs Baal", "Rétribution"],
+        structure: [
+            { section: "Salomon roi sage", chapitres: "1-11" },
+            { section: "Schisme du royaume", chapitres: "12-16" },
+            { section: "Élie prophète", chapitres: "17-22" }
+        ],
+        versetsCles: [
+            { ref: "8:27", titre: "Les cieux ne peuvent te contenir" },
+            { ref: "18:39", titre: "L'Éternel est Dieu!" }
+        ]
+    },
+
+    "2 Rois": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme (école deutéronomiste)",
+        profession: "Chroniqueur prophétique",
+        date: "VIe av. J.-C.",
+        lieu: "Royaumes jusqu'à l'exil",
+        destinataires: "Israël en exil",
+        genre: "Historiographie théologique",
+        chapitres: 25,
+        versets: 719,
+        resume: "Élisée miracles, chute d'Israël 722 av. J.-C. (Assyrie), réformes Ézéchias/Josias, chute Juda 586 (Babylone).",
+        themes: ["Jugement inexorable", "Patience de Dieu", "Réformes temporaires", "Exil"],
+        structure: [
+            { section: "Élisée prophète", chapitres: "1-8" },
+            { section: "Chute d'Israël 722", chapitres: "9-17" },
+            { section: "Juda seul jusqu'à 586", chapitres: "18-25" }
+        ],
+        versetsCles: [
+            { ref: "17:7-23", titre: "Explication chute Israël" },
+            { ref: "25:9", titre: "Le Temple brûlé" }
+        ]
+    },
+
+    "1 Chroniques": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Le Chroniste (Esdras?)",
+        profession: "Scribe sacerdotal",
+        date: "IVe av. J.-C.",
+        lieu: "Jérusalem post-exilique",
+        destinataires: "Communauté restaurée",
+        genre: "Historiographie sacerdotale",
+        chapitres: 29,
+        versets: 942,
+        resume: "Généalogies d'Adam à l'exil, David idéalisé organisateur du culte, préparatifs du Temple.",
+        themes: ["Continuité du peuple", "David et le culte", "Temple central", "Lévites"],
+        structure: [
+            { section: "Généalogies", chapitres: "1-9" },
+            { section: "David roi", chapitres: "10-22" },
+            { section: "Organisation du Temple", chapitres: "23-29" }
+        ],
+        versetsCles: [
+            { ref: "17:11-14", titre: "Alliance davidique" },
+            { ref: "29:14", titre: "Tout vient de toi" }
+        ]
+    },
+
+    "2 Chroniques": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Le Chroniste",
+        profession: "Scribe sacerdotal",
+        date: "IVe av. J.-C.",
+        lieu: "Jérusalem post-exilique",
+        destinataires: "Communauté restaurée",
+        genre: "Historiographie sacerdotale",
+        chapitres: 36,
+        versets: 822,
+        resume: "Salomon Temple, rois de Juda seuls, rétribution immédiate, réformes Ézéchias/Josias, édit Cyrus.",
+        themes: ["Rétribution immédiate", "Temple central", "Chercher YHWH", "Réformes"],
+        structure: [
+            { section: "Salomon et Temple", chapitres: "1-9" },
+            { section: "Rois de Juda", chapitres: "10-28" },
+            { section: "Réformes et exil", chapitres: "29-36" }
+        ],
+        versetsCles: [
+            { ref: "7:14", titre: "Si mon peuple s'humilie" },
+            { ref: "36:23", titre: "Que chacun monte" }
+        ]
+    },
+
+    "Esdras": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Esdras",
+        profession: "Prêtre-scribe",
+        date: "Ve av. J.-C.",
+        lieu: "De Babylone à Jérusalem",
+        destinataires: "Communauté restaurée",
+        genre: "Mémoires de restauration",
+        chapitres: 10,
+        versets: 280,
+        resume: "Retours d'exil: Zorobabel 538 av. J.-C. Temple 515, Esdras 458 Loi et réforme mariages mixtes.",
+        themes: ["Fidélité de Dieu", "Reconstruction Temple", "Loi centrale", "Sainteté"],
+        structure: [
+            { section: "Premier retour Temple", chapitres: "1-6" },
+            { section: "Esdras et réforme", chapitres: "7-10" }
+        ],
+        versetsCles: [
+            { ref: "1:1", titre: "Esprit de Cyrus réveillé" },
+            { ref: "7:10", titre: "Esdras étudia la Loi" }
+        ]
+    },
+
+    "Néhémie": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Néhémie",
+        profession: "Échanson puis gouverneur",
+        date: "Ve av. J.-C.",
+        lieu: "De Suse à Jérusalem",
+        destinataires: "Communauté de Jérusalem",
+        genre: "Mémoires personnelles",
+        chapitres: 13,
+        versets: 406,
+        resume: "Néhémie 445 av. J.-C.: murailles en 52 jours malgré opposition, réveil spirituel avec Esdras, réformes.",
+        themes: ["Prière fondement", "Vigilance", "Justice sociale", "Sainteté sabbat"],
+        structure: [
+            { section: "Murailles 52 jours", chapitres: "1-7" },
+            { section: "Réveil et réformes", chapitres: "8-13" }
+        ],
+        versetsCles: [
+            { ref: "2:20", titre: "Dieu nous fera réussir" },
+            { ref: "8:10", titre: "Joie de l'Éternel" }
+        ]
+    },
+
+    "Esther": {
+        partie: "Livres Historiques",
+        couleur: "#2E8B57",
+        auteur: "Anonyme (Mardochée?)",
+        profession: "Chroniqueur de cour",
+        date: "Ve-IVe av. J.-C.",
+        lieu: "Suse (Perse)",
+        destinataires: "Juifs de la diaspora",
+        genre: "Nouvelle historique",
+        chapitres: 10,
+        versets: 167,
+        resume: "Esther reine en Perse, complot Haman exterminer Juifs, Esther intercède, Haman pendu, fête Purim.",
+        themes: ["Providence cachée", "Courage d'Esther", "Renversement", "Identité juive"],
+        structure: [
+            { section: "Esther devient reine", chapitres: "1-2" },
+            { section: "Complot et délivrance", chapitres: "3-7" },
+            { section: "Victoire et Purim", chapitres: "8-10" }
+        ],
+        versetsCles: [
+            { ref: "4:14", titre: "Pour un temps comme celui-ci" },
+            { ref: "4:16", titre: "Si je péris, je péris" }
+        ]
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ANCIEN TESTAMENT - LIVRES POÉTIQUES (5 livres)
+    // ═══════════════════════════════════════════════════════════════════════
+"Job": {
+    partie: "Ancien Testament – Livres poétiques et sapientiaux",
+    couleur: "#9370DB",
+    auteur: "Anonyme (sage d’Israël)",
+    profession: "Grand propriétaire terrien, chef de clan",
+    date: "VIIe–Ve siècle av. J.-C. (cadre patriarcal ancien)",
+    lieu: "Pays d’Ous (probablement Édom / Transjordanie)",
+    destinataires: "Croyants confrontés à la souffrance du juste",
+    genre: "Sagesse poétique (récit + dialogues + théophanie)",
+    chapitres: 42,
+    versets: 1070,
+    resume: "Job, homme juste, est frappé par des épreuves extrêmes. Ses amis expliquent sa souffrance par une faute supposée. Job conteste cette théologie simpliste et interpelle Dieu. Dieu se révèle dans sa souveraineté sans donner d’explication rationnelle. Job est réhabilité et restauré.",
+    themes: [
+        "Souffrance du juste",
+        "Limites de la sagesse humaine",
+        "Souveraineté de Dieu",
+        "Relation entre justice et foi",
+        "Théologie de la rétribution remise en question"
+    ],
+    structure: [
+        { section: "Prologue narratif : épreuves de Job", chapitres: "1–2" },
+        { section: "Lamentation et premier cycle de dialogues", chapitres: "3–14" },
+        { section: "Deuxième cycle de dialogues", chapitres: "15–21" },
+        { section: "Troisième cycle et impasse du dialogue", chapitres: "22–27" },
+        { section: "Hymne à la sagesse", chapitres: "28" },
+        { section: "Discours final de Job", chapitres: "29–31" },
+        { section: "Discours d’Élihou", chapitres: "32–37" },
+        { section: "Réponse de Dieu du sein de la tempête", chapitres: "38–42:6" },
+        { section: "Épilogue : réhabilitation et restauration", chapitres: "42:7–17" }
+    ],
+    versetsCles: [
+        { ref: "1:1", titre: "Job, homme intègre et droit" },
+        { ref: "1:21", titre: "Le Seigneur a donné, le Seigneur a repris" },
+        { ref: "19:25", titre: "Mon rédempteur est vivant" },
+        { ref: "28:28", titre: "La crainte du Seigneur, voilà la sagesse" },
+        { ref: "38:4", titre: "Où étais-tu quand je fondais la terre ?" },
+        { ref: "42:5-6", titre: "Mon œil t’a vu" }
+    ]
+},
+
+    "Psaumes": {
+        partie: "Livres Poétiques",
+        couleur: "#9370DB",
+        auteur: "David et autres",
+        profession: "Roi, musiciens",
+        date: "Xe-IIIe av. J.-C.",
+        lieu: "Israël",
+        destinataires: "Adorateurs",
+        genre: "Poésie liturgique",
+        chapitres: 150,
+        versets: 2461,
+        resume: "150 prières et louanges: lamentations, actions de grâces, psaumes royaux, de pèlerinage.",
+        themes: ["Louange", "Lamentation", "Confiance", "Messie", "Torah"],
+        structure: [
+            { section: "Livre I", chapitres: "1-41" },
+            { section: "Livre II", chapitres: "42-72" },
+            { section: "Livre III", chapitres: "73-89" },
+            { section: "Livre IV", chapitres: "90-106" },
+            { section: "Livre V", chapitres: "107-150" }
+        ],
+        versetsCles: [
+            { ref: "1:1-2", titre: "Heureux l'homme" },
+            { ref: "23:1", titre: "L'Éternel est mon berger" },
+            { ref: "119:105", titre: "Ta parole, lampe" }
+        ]
+    },
+
+    "Proverbes": {
+        partie: "Livres Poétiques",
+        couleur: "#9370DB",
+        auteur: "Salomon principalement",
+        profession: "Roi sage",
+        date: "Xe-Ve av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Chercheurs de sagesse",
+        genre: "Littérature de sagesse",
+        chapitres: 31,
+        versets: 915,
+        resume: "Sagesse pratique: crainte de l'Éternel, paroles, famille, travail, femme vertueuse.",
+        themes: ["Crainte de l'Éternel", "Sagesse vs folie", "Paroles", "Famille"],
+        structure: [
+            { section: "Appels de la Sagesse", chapitres: "1-9" },
+            { section: "Proverbes de Salomon", chapitres: "10-29" },
+            { section: "Agur et Lemuel", chapitres: "30-31" }
+        ],
+        versetsCles: [
+            { ref: "1:7", titre: "Crainte de l'Éternel" },
+            { ref: "31:10", titre: "Femme vertueuse" }
+        ]
+    },
+
+    "Ecclésiaste": {
+        partie: "Livres Poétiques",
+        couleur: "#9370DB",
+        auteur: "Salomon (Qohélet)",
+        profession: "Roi sage",
+        date: "Xe-IIIe av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Chercheurs de sens",
+        genre: "Réflexion philosophique",
+        chapitres: 12,
+        versets: 222,
+        resume: "Vanité des vanités, recherche du sens, un temps pour tout, crains Dieu garde ses commandements.",
+        themes: ["Vanité", "Sagesse limitée", "Temps", "Crainte de Dieu"],
+        structure: [
+            { section: "Vanité de tout", chapitres: "1-6" },
+            { section: "Sagesse et temps", chapitres: "7-11" },
+            { section: "Conclusion", chapitres: "12" }
+        ],
+        versetsCles: [
+            { ref: "1:2", titre: "Vanité des vanités" },
+            { ref: "3:1", titre: "Un temps pour tout" },
+            { ref: "12:13", titre: "Crains Dieu" }
+        ]
+    },
+
+    "Cantique des Cantiques": {
+        partie: "Livres Poétiques",
+        couleur: "#9370DB",
+        auteur: "Salomon",
+        profession: "Roi",
+        date: "Xe av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Peuple d'Israël",
+        genre: "Poème d'amour",
+        chapitres: 8,
+        versets: 117,
+        resume: "Poème célébrant l'amour conjugal, allégorie de l'amour entre Dieu et son peuple.",
+        themes: ["Amour conjugal", "Beauté", "Désir", "Union", "Allégorie"],
+        structure: [
+            { section: "Recherche de l'aimé", chapitres: "1-3" },
+            { section: "Louanges mutuelles", chapitres: "4-5" },
+            { section: "Union consommée", chapitres: "6-8" }
+        ],
+        versetsCles: [
+            { ref: "2:4", titre: "Sa bannière: l'amour" },
+            { ref: "8:6", titre: "L'amour fort comme la mort" }
+        ]
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ANCIEN TESTAMENT - PROPHÈTES (17 livres)
+    // ═══════════════════════════════════════════════════════════════════════
+    "Ésaïe": {
+        partie: "Prophètes",
+        couleur: "#DC143C",
+        auteur: "Ésaïe",
+        profession: "Prophète",
+        date: "VIIIe av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Juda et Jérusalem",
+        genre: "Prophétie",
+        chapitres: 66,
+        versets: 1292,
+        resume: "Jugement, Serviteur souffrant, consolation, nouvelle création.",
+        themes: ["Sainteté YHWH", "Messie", "Serviteur", "Salut"],
+        structure: [
+            { section: "Jugement", chapitres: "1-39" },
+            { section: "Consolation", chapitres: "40-55" },
+            { section: "Gloire future", chapitres: "56-66" }
+        ],
+        versetsCles: [
+            { ref: "6:3", titre: "Saint saint saint" },
+            { ref: "53:5", titre: "Blessé pour nos péchés" }
+        ]
+    },
+
+    "Jérémie": {
+        partie: "Prophètes",
+        couleur: "#DC143C",
+        auteur: "Jérémie",
+        profession: "Prophète",
+        date: "VIIe-VIe av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Juda",
+        genre: "Prophétie",
+        chapitres: 52,
+        versets: 1364,
+        resume: "Chute Jérusalem annoncée, nouvelle alliance, espoir restauration.",
+        themes: ["Nouvelle alliance", "Jugement", "Restauration"],
+        structure: [
+            { section: "Oracles", chapitres: "1-25" },
+            { section: "Biographie", chapitres: "26-45" },
+            { section: "Nations", chapitres: "46-52" }
+        ],
+        versetsCles: [
+            { ref: "1:5", titre: "Je t'ai connu" },
+            { ref: "31:31", titre: "Nouvelle alliance" }
+        ]
+    },
+
+    "Lamentations": {
+        partie: "Prophètes",
+        couleur: "#DC143C",
+        auteur: "Jérémie (tradition)",
+        profession: "Prophète",
+        date: "586 av. J.-C.",
+        lieu: "Jérusalem détruite",
+        destinataires: "Exilés",
+        genre: "Poésie élégiaque",
+        chapitres: 5,
+        versets: 154,
+        resume: "Cinq poèmes pleurant destruction Jérusalem, espoir miséricorde.",
+        themes: ["Deuil", "Péché", "Miséricorde", "Espoir"],
+        structure: [
+            { section: "Désolation", chapitres: "1-2" },
+            { section: "Espoir", chapitres: "3" },
+            { section: "Repentance", chapitres: "4-5" }
+        ],
+        versetsCles: [
+            { ref: "3:22-23", titre: "Bontés de l'Éternel" }
+        ]
+    },
+
+    "Ézéchiel": {
+        partie: "Prophètes",
+        couleur: "#DC143C",
+        auteur: "Ézéchiel",
+        profession: "Prêtre-prophète",
+        date: "VIe av. J.-C.",
+        lieu: "Exil babylonien",
+        destinataires: "Exilés",
+        genre: "Prophétie apocalyptique",
+        chapitres: 48,
+        versets: 1273,
+        resume: "Visions gloire YHWH, jugements, vallée ossements, Temple nouveau.",
+        themes: ["Gloire YHWH", "Responsabilité", "Cœur nouveau", "Temple"],
+        structure: [
+            { section: "Jugement Jérusalem", chapitres: "1-24" },
+            { section: "Jugement nations", chapitres: "25-32" },
+            { section: "Restauration", chapitres: "33-48" }
+        ],
+        versetsCles: [
+            { ref: "36:26", titre: "Cœur nouveau" },
+            { ref: "37:1-14", titre: "Vallée ossements" }
+        ]
+    },
+
+    "Daniel": {
+        partie: "Prophètes",
+        couleur: "#DC143C",
+        auteur: "Daniel",
+        profession: "Haut fonctionnaire",
+        date: "VIe av. J.-C.",
+        lieu: "Babylone et Perse",
+        destinataires: "Exilés",
+        genre: "Apocalypse",
+        chapitres: 12,
+        versets: 357,
+        resume: "Fidélité en exil, visions 4 empires, 70 semaines, Fils de l'homme.",
+        themes: ["Fidélité", "Souveraineté", "Royaumes", "Fils d'homme"],
+        structure: [
+            { section: "Récits historiques", chapitres: "1-6" },
+            { section: "Visions apocalyptiques", chapitres: "7-12" }
+        ],
+        versetsCles: [
+            { ref: "2:44", titre: "Royaume éternel" },
+            { ref: "7:13", titre: "Fils de l'homme" }
+        ]
+    },
+
+    "Osée": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Osée",
+        profession: "Prophète",
+        date: "VIIIe av. J.-C.",
+        lieu: "Royaume du Nord",
+        destinataires: "Israël",
+        genre: "Prophétie symbolique",
+        chapitres: 14,
+        versets: 197,
+        resume: "Mariage symbolique: amour fidèle YHWH malgré infidélité Israël.",
+        themes: ["Amour fidèle", "Idolâtrie", "Connaissance Dieu"],
+        structure: [
+            { section: "Mariage symbolique", chapitres: "1-3" },
+            { section: "Oracles", chapitres: "4-14" }
+        ],
+        versetsCles: [
+            { ref: "6:6", titre: "Miséricorde non sacrifices" }
+        ]
+    },
+
+    "Joël": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Joël",
+        profession: "Prophète",
+        date: "IXe-Ve av. J.-C.",
+        lieu: "Juda",
+        destinataires: "Juda",
+        genre: "Prophétie",
+        chapitres: 3,
+        versets: 73,
+        resume: "Sauterelles, jour YHWH, effusion Esprit, jugement nations.",
+        themes: ["Jour YHWH", "Repentance", "Esprit", "Jugement"],
+        structure: [
+            { section: "Sauterelles", chapitres: "1-2" },
+            { section: "Esprit et jugement", chapitres: "2-3" }
+        ],
+        versetsCles: [
+            { ref: "2:28", titre: "Effusion Esprit" }
+        ]
+    },
+
+    "Amos": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Amos",
+        profession: "Berger",
+        date: "VIIIe av. J.-C.",
+        lieu: "Royaume du Nord",
+        destinataires: "Israël",
+        genre: "Prophétie sociale",
+        chapitres: 9,
+        versets: 146,
+        resume: "Justice sociale, jugements nations, privilège = responsabilité.",
+        themes: ["Justice", "Jugement", "Faux culte", "Restauration"],
+        structure: [
+            { section: "Jugements", chapitres: "1-2" },
+            { section: "Oracles Israël", chapitres: "3-6" },
+            { section: "Visions", chapitres: "7-9" }
+        ],
+        versetsCles: [
+            { ref: "5:24", titre: "Justice comme torrent" }
+        ]
+    },
+
+    "Abdias": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Abdias",
+        profession: "Prophète",
+        date: "VIe av. J.-C.",
+        lieu: "Juda",
+        destinataires: "Juda",
+        genre: "Oracle",
+        chapitres: 1,
+        versets: 21,
+        resume: "Oracle contre Édom, jour YHWH, royaume à YHWH.",
+        themes: ["Jugement Édom", "Orgueil", "Jour YHWH"],
+        structure: [
+            { section: "Jugement Édom", chapitres: "1" }
+        ],
+        versetsCles: [
+            { ref: "1:15", titre: "Jour YHWH proche" }
+        ]
+    },
+
+    "Jonas": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Anonyme",
+        profession: "Narrateur",
+        date: "VIIIe av. J.-C.",
+        lieu: "Israël et Ninive",
+        destinataires: "Israël",
+        genre: "Récit prophétique",
+        chapitres: 4,
+        versets: 48,
+        resume: "Fuite, poisson 3 jours, Ninive repent, leçon compassion universelle.",
+        themes: ["Miséricorde", "Repentance", "Mission", "Colère"],
+        structure: [
+            { section: "Fuite et poisson", chapitres: "1-2" },
+            { section: "Ninive et leçon", chapitres: "3-4" }
+        ],
+        versetsCles: [
+            { ref: "1:17", titre: "3 jours dans poisson" },
+            { ref: "4:2", titre: "Dieu compatissant" }
+        ]
+    },
+
+    "Michée": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Michée",
+        profession: "Prophète",
+        date: "VIIIe av. J.-C.",
+        lieu: "Juda",
+        destinataires: "Juda et Samarie",
+        genre: "Prophétie",
+        chapitres: 7,
+        versets: 105,
+        resume: "Justice sociale, Bethléem Messie, pratique vs culte.",
+        themes: ["Justice", "Messie Bethléem", "Pardon"],
+        structure: [
+            { section: "Jugement", chapitres: "1-3" },
+            { section: "Messie", chapitres: "4-5" },
+            { section: "Plaidoyer", chapitres: "6-7" }
+        ],
+        versetsCles: [
+            { ref: "5:2", titre: "Bethléem Messie" },
+            { ref: "6:8", titre: "Justice et miséricorde" }
+        ]
+    },
+
+    "Nahum": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Nahum",
+        profession: "Prophète",
+        date: "VIIe av. J.-C.",
+        lieu: "Juda",
+        destinataires: "Juda",
+        genre: "Oracle",
+        chapitres: 3,
+        versets: 47,
+        resume: "Chute Ninive 612 av. J.-C., YHWH venge opprimés.",
+        themes: ["Jugement Ninive", "Vengeance divine", "Justice"],
+        structure: [
+            { section: "YHWH vengeur", chapitres: "1" },
+            { section: "Chute Ninive", chapitres: "2-3" }
+        ],
+        versetsCles: [
+            { ref: "1:7", titre: "Bon refuge" }
+        ]
+    },
+
+    "Habacuc": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Habacuc",
+        profession: "Prophète",
+        date: "VIIe av. J.-C.",
+        lieu: "Juda",
+        destinataires: "Juda",
+        genre: "Dialogue prophétique",
+        chapitres: 3,
+        versets: 56,
+        resume: "Pourquoi méchants prospèrent? Juste vit par foi, cantique confiance.",
+        themes: ["Théodicée", "Foi", "Juste vit par foi", "Confiance"],
+        structure: [
+            { section: "Dialogue foi", chapitres: "1-2" },
+            { section: "Cantique", chapitres: "3" }
+        ],
+        versetsCles: [
+            { ref: "2:4", titre: "Juste vit par foi" },
+            { ref: "3:17-18", titre: "Je me réjouirai" }
+        ]
+    },
+
+    "Sophonie": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Sophonie",
+        profession: "Prophète",
+        date: "VIIe av. J.-C.",
+        lieu: "Juda",
+        destinataires: "Juda",
+        genre: "Prophétie",
+        chapitres: 3,
+        versets: 53,
+        resume: "Jour YHWH proche, jugement universel, reste purifié, joie.",
+        themes: ["Jour YHWH", "Jugement", "Reste", "Joie"],
+        structure: [
+            { section: "Jour YHWH", chapitres: "1-2" },
+            { section: "Reste et joie", chapitres: "3" }
+        ],
+        versetsCles: [
+            { ref: "3:17", titre: "YHWH se réjouit" }
+        ]
+    },
+
+    "Aggée": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Aggée",
+        profession: "Prophète",
+        date: "520 av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Retour exil",
+        genre: "Prophétie",
+        chapitres: 2,
+        versets: 38,
+        resume: "520 av. J.-C., encouragement rebâtir Temple, priorités, gloire future.",
+        themes: ["Temple", "Priorités", "Gloire", "YHWH avec nous"],
+        structure: [
+            { section: "Appel rebâtir", chapitres: "1" },
+            { section: "Gloire promesses", chapitres: "2" }
+        ],
+        versetsCles: [
+            { ref: "2:9", titre: "Gloire future" }
+        ]
+    },
+
+    "Zacharie": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Zacharie",
+        profession: "Prophète",
+        date: "520 av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Retour exil",
+        genre: "Prophétie apocalyptique",
+        chapitres: 14,
+        versets: 211,
+        resume: "8 visions, Messie roi-prêtre, deux venues, royaume universel.",
+        themes: ["Visions", "Messie", "Deux venues", "Royaume"],
+        structure: [
+            { section: "8 visions", chapitres: "1-6" },
+            { section: "Jeûnes", chapitres: "7-8" },
+            { section: "Oracles messianiques", chapitres: "9-14" }
+        ],
+        versetsCles: [
+            { ref: "9:9", titre: "Roi humble" },
+            { ref: "12:10", titre: "Ils ont percé" }
+        ]
+    },
+
+    "Malachie": {
+        partie: "Prophètes",
+        couleur: "#FF6347",
+        auteur: "Malachie",
+        profession: "Prophète",
+        date: "Ve av. J.-C.",
+        lieu: "Jérusalem",
+        destinataires: "Retour exil",
+        genre: "Prophétie",
+        chapitres: 4,
+        versets: 55,
+        resume: "Dernier prophète AT, culte corrompu, dîmes, soleil justice, Élie précurseur.",
+        themes: ["Amour YHWH", "Culte pur", "Dîmes", "Élie précurseur"],
+        structure: [
+            { section: "Culte mariages", chapitres: "1-2" },
+            { section: "Dîmes Élie", chapitres: "3-4" }
+        ],
+        versetsCles: [
+            { ref: "3:10", titre: "Éprouvez-moi" },
+            { ref: "4:5", titre: "J'enverrai Élie" }
+        ]
+    },
+
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // NOUVEAU TESTAMENT
     // ═══════════════════════════════════════════════════════════════════════
     "Matthieu": {
         partie: "Évangiles",

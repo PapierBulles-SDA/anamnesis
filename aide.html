@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anamnésis - Guide d'utilisation</title>
+    <title>📖 Bible Explorer - Guide d'utilisation</title>
     <style>
         :root {
             --primary: #8B7355;
@@ -378,9 +378,9 @@
 
     <!-- Header -->
     <header class="header">
-        <h1>🙏 Anamnésis</h1>
-        <p class="subtitle">Guide d'utilisation</p>
-        <span class="version">Version 2.0 • Nouveau Testament (Louis Segond 1910)</span>
+        <h1>📖 Bible Explorer</h1>
+        <p class="subtitle">Anamnésis • Guide d'utilisation</p>
+        <span class="version">Version 2.2 • Bible complète (Louis Segond 1910)</span>
     </header>
 
     <!-- Sommaire -->
@@ -404,12 +404,12 @@
     <!-- Présentation -->
     <section id="presentation">
         <h2>🌟 Présentation</h2>
-        <p><strong>Anamnésis</strong> (du grec ἀνάμνησις, « mémoire », « souvenir ») est une application web de mémorisation du Nouveau Testament. Elle propose différentes approches pour apprendre, méditer et explorer les 7 957 versets de la Bible Louis Segond 1910.</p>
+        <p><strong>Bible Explorer</strong> (anciennement Anamnésis) est une application web complète pour lire, méditer et mémoriser la Bible. Elle propose différentes approches pour apprendre, méditer et explorer les <strong>31 102 versets</strong> de la Bible Louis Segond 1910 (Ancien + Nouveau Testament).</p>
         
-        <p>L'application combine exercices interactifs, lecture contemplative, outils de prière et calendrier liturgique pour accompagner votre cheminement spirituel au quotidien.</p>
+        <p>L'application combine exercices interactifs, lecture contemplative, passages célèbres, outils de prière et calendrier liturgique pour accompagner ton cheminement spirituel au quotidien.</p>
 
         <div class="info-box tip">
-            <strong>💡 Conseil :</strong> Anamnésis fonctionne entièrement hors-ligne une fois chargée. Vos données (statistiques, méditations, intentions) sont sauvegardées localement dans votre navigateur.
+            <strong>💡 Conseil :</strong> Bible Explorer fonctionne entièrement hors-ligne une fois chargée. Tes données (statistiques, méditations, intentions, groupes personnalisés) sont sauvegardées localement dans ton navigateur.
         </div>
     </section>
 
@@ -419,8 +419,8 @@
         <p>L'application s'organise autour de <strong>7 onglets principaux</strong> accessibles depuis l'écran d'accueil :</p>
         
         <div class="tabs-visual">
-            <span class="tab-badge">📝 Exercice</span>
             <span class="tab-badge">📖 Lire</span>
+            <span class="tab-badge">📝 Exercice</span>
             <span class="tab-badge">✍️ Méditer</span>
             <span class="tab-badge">🙏 Prière</span>
             <span class="tab-badge">🔍 Explorer</span>
@@ -437,16 +437,16 @@
             </thead>
             <tbody>
                 <tr>
+                    <td><strong>📖 Lire</strong></td>
+                    <td>Lecture complète (AT+NT) avec filtres, passages célèbres et groupes</td>
+                </tr>
+                <tr>
                     <td><strong>📝 Exercice</strong></td>
                     <td>5 modes d'exercice pour mémoriser les versets</td>
                 </tr>
                 <tr>
-                    <td><strong>📖 Lire</strong></td>
-                    <td>Lecture continue du Nouveau Testament par chapitre</td>
-                </tr>
-                <tr>
                     <td><strong>✍️ Méditer</strong></td>
-                    <td>Verset aléatoire + journal de méditation personnel</td>
+                    <td>Verset adapté à la période liturgique + journal de méditation</td>
                 </tr>
                 <tr>
                     <td><strong>🙏 Prière</strong></td>
@@ -471,19 +471,34 @@
     <!-- Onglet Exercice -->
     <section id="exercice">
         <h2>📝 Onglet Exercice</h2>
-        <p>C'est le cœur de l'application. Configurez votre session d'exercice en 4 étapes :</p>
+        <p>Mémorise les versets bibliques avec 5 modes d'exercice interactifs.</p>
 
-        <h3>1. Choix du contenu</h3>
-        <p>Sélectionnez les versets sur lesquels vous souhaitez travailler :</p>
-        <ul class="styled-list">
-            <li><strong>Partie</strong> : Évangiles, Actes, Épîtres de Paul, Épîtres Générales, Apocalypse (ou toutes)</li>
-            <li><strong>Livre</strong> : Choisissez un livre spécifique (ex: Matthieu, Romains...)</li>
-            <li><strong>Chapitre</strong> : Affinez par chapitre si souhaité</li>
-        </ul>
-        <p>Le bouton <strong>ℹ️</strong> à côté du livre affiche une fiche descriptive (auteur, date, thèmes, structure).</p>
+        <h3>🎯 3 modes de sélection</h3>
+        <p>L'onglet Exercice propose <strong>3 sous-onglets</strong> pour choisir le contenu :</p>
+
+        <div class="feature-card">
+            <h4><span class="icon">📋</span> Filtres classiques</h4>
+            <p>Sélection traditionnelle : Testament → Partie → Livre → Chapitre</p>
+        </div>
+
+        <div class="feature-card">
+            <h4><span class="icon">📖</span> Passages célèbres</h4>
+            <p>Mémorise directement un passage célèbre (Béatitudes, Psaume 23, etc.)</p>
+        </div>
+
+        <div class="feature-card">
+            <h4><span class="icon">📚</span> Groupes personnalisés</h4>
+            <p>Crée et gère tes propres sélections de versets :</p>
+            <ul>
+                <li><strong>➕ Créer</strong> : Interface complète pour créer un groupe</li>
+                <li><strong>✏️ Modifier</strong> : Édite un groupe existant</li>
+                <li><strong>🗑️ Supprimer</strong> : Supprime un groupe</li>
+            </ul>
+            <p>Les groupes sont stockés localement et accessibles dans Lire et Exercice.</p>
+        </div>
 
         <h3>2. Mode d'exercice</h3>
-        <p>5 modes sont disponibles, chacun sollicitant différemment votre mémoire. Voir la section <a href="#modes">Les 5 modes d'exercice</a> pour le détail.</p>
+        <p>5 modes sont disponibles, chacun sollicitant différemment ta mémoire. Voir la section <a href="#modes">Les 5 modes d'exercice</a> pour le détail.</p>
 
         <h3>3. Niveau de difficulté</h3>
         <table>
@@ -640,27 +655,49 @@
     <!-- Onglet Lire -->
     <section id="lire">
         <h2>📖 Onglet Lire</h2>
-        <p>Lisez le Nouveau Testament chapitre par chapitre, dans une interface épurée.</p>
+        <p>Lis la Bible complète (AT + NT) dans une interface agréable et épurée.</p>
 
-        <h3>Navigation</h3>
-        <ul class="styled-list">
-            <li>Sélectionnez une <strong>Partie</strong> (Évangiles, Actes...)</li>
-            <li>Choisissez un <strong>Livre</strong></li>
-            <li>Sélectionnez un <strong>Chapitre</strong></li>
-        </ul>
+        <h3>🎯 3 modes de sélection</h3>
+        <p>L'onglet Lire propose <strong>3 sous-onglets</strong> pour choisir ce que tu veux lire :</p>
 
-        <h3>Fiche livre</h3>
-        <p>Cliquez sur le bouton <strong>ℹ️</strong> pour afficher une fiche détaillée du livre sélectionné :</p>
+        <div class="feature-card">
+            <h4><span class="icon">📋</span> Filtres classiques</h4>
+            <p>Navigation traditionnelle :</p>
+            <ul>
+                <li>Sélectionne un <strong>Testament</strong> (AT/NT/Bible complète)</li>
+                <li>Choisis une <strong>Partie</strong> (Évangiles, Épîtres, Torah, Prophètes...)</li>
+                <li>Sélectionne un <strong>Livre</strong></li>
+                <li>Choisis un <strong>Chapitre</strong></li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h4><span class="icon">📖</span> Passages célèbres</h4>
+            <p>Accède directement à 30+ passages bibliques célèbres prédéfinis :</p>
+            <ul>
+                <li><strong>Ancien Testament</strong> : Décalogue, Psaume 23, Serviteur souffrant, etc.</li>
+                <li><strong>Nouveau Testament</strong> : Béatitudes, Sermon sur la montagne, Prologue de Jean, etc.</li>
+            </ul>
+            <p>Sélectionne un passage et il s'affiche automatiquement dans la zone de lecture.</p>
+        </div>
+
+        <div class="feature-card">
+            <h4><span class="icon">📚</span> Groupes personnalisés</h4>
+            <p>Lis tes groupes de versets créés dans l'onglet Exercice. Tous tes groupes enregistrés sont disponibles ici.</p>
+        </div>
+
+        <h3>📖 Fiche livre</h3>
+        <p>Clique sur le bouton <strong>ℹ️</strong> (mode Filtres) pour afficher une fiche détaillée du livre :</p>
         <ul class="styled-list">
-            <li>Auteur traditionnel et date de rédaction</li>
-            <li>Destinataires et contexte</li>
+            <li>Auteur et date</li>
             <li>Thèmes principaux</li>
-            <li>Structure du livre</li>
+            <li>Structure</li>
             <li>Versets célèbres</li>
         </ul>
 
-        <h3>Navigation entre chapitres</h3>
-        <p>Utilisez les boutons de navigation en bas de page pour passer au chapitre précédent ou suivant.</p>
+        <h3>🔄 Navigation</h3>
+        <p>En mode Filtres : boutons ◀ Chapitre précédent / Chapitre suivant ▶</p>
+        <p>En mode Passages/Groupes : lecture continue sans navigation</p>
     </section>
 
     <!-- Onglet Méditer -->
@@ -828,22 +865,27 @@
         
         <h3>Contenu biblique</h3>
         <ul class="styled-list">
-            <li><strong>7 957 versets</strong> du Nouveau Testament</li>
+            <li><strong>31 102 versets</strong> — Bible complète (23 145 AT + 7 957 NT)</li>
             <li>Traduction <strong>Louis Segond 1910</strong> (domaine public)</li>
-            <li>27 livres répartis en 5 parties</li>
+            <li>66 livres répartis en plusieurs parties</li>
+            <li><strong>30+ passages célèbres</strong> prédéfinis</li>
         </ul>
 
         <h3>Stockage local</h3>
-        <p>Toutes vos données sont stockées localement dans le navigateur (localStorage) :</p>
+        <p>Toutes tes données sont stockées localement dans le navigateur (localStorage) :</p>
         <ul class="styled-list">
-            <li>Statistiques et progression</li>
-            <li>Journal de méditation</li>
-            <li>Intentions de prière</li>
-            <li>Préférences d'exercice</li>
+            <li><strong>Statistiques et progression</strong> — Tous tes résultats d'exercices</li>
+            <li><strong>Groupes personnalisés</strong> — Tes sélections de versets</li>
+            <li><strong>Journal de méditation</strong> — Tes réflexions</li>
+            <li><strong>Intentions de prière</strong> — Ton carnet d'intentions</li>
+            <li><strong>Compteur de chapelets</strong> — Ton historique de prière</li>
+            <li><strong>Historique "Trouve ton verset"</strong> — Tes découvertes</li>
         </ul>
 
         <div class="info-box">
-            <strong>⚠️ Important :</strong> Les données sont liées à votre navigateur. Si vous changez de navigateur ou effacez les données de navigation, vos statistiques et méditations seront perdues.
+            <strong>⚠️ Important :</strong> Les données sont liées à ton navigateur. Si tu changes de navigateur ou effaces les données de navigation, tes statistiques et méditations seront perdues.
+            <br><br>
+            <strong>💡 Conseil :</strong> Une fonction de sauvegarde/import sera bientôt disponible pour sauvegarder toutes tes données !
         </div>
 
         <h3>Compatibilité</h3>
@@ -861,9 +903,9 @@
 
 <!-- Footer -->
 <footer>
-    Anamnésis v2.0 — Application de mémorisation du Nouveau Testament<br>
+    Bible Explorer v2.2 (Anamnésis) — Lis, médite et mémorise la Bible<br>
     Texte biblique : Louis Segond 1910 (Domaine public)<br>
-    <small style="opacity: 0.7;">Créé par Bienvenu d'Audiffret • © 2025-2026</small>
+    <small style="opacity: 0.7;">Créé par Sébastien d'Audiffret • © 2025-2026</small>
 </footer>
 
 </body>

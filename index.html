@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bible Explorer - Anamnesis</title>
+    <title>Bible Explorer</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -18,86 +18,40 @@
         .container {
             text-align: center;
             padding: 2rem;
-            max-width: 500px;
         }
-        h1 { margin-bottom: 1rem; }
-        .status {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
         }
-        .done { color: #4ade80; }
-        .loader {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 1rem auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        p {
+            font-size: 1.5rem;
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Bible Explorer - Anamnesis</h1>
-        <div class="status" id="status">
-            <div class="loader"></div>
-            <p>Merci de me contacter pour un accès sécurisé.</p>
-        </div>
+        <h1>Bible Explorer</h1>
+        <p>revient très bientôt</p>
     </div>
 
     <script>
-        (async function cleanup() {
-            const results = [];
-            
-            // 1. Désinstaller Service Workers
+        (async function() {
             if ('serviceWorker' in navigator) {
-                const registrations = await navigator.serviceWorker.getRegistrations();
-                for (const reg of registrations) {
-                    await reg.unregister();
-                    results.push('Service Worker désinstallé');
-                }
+                const regs = await navigator.serviceWorker.getRegistrations();
+                for (const reg of regs) await reg.unregister();
             }
-            
-            // 2. Supprimer tous les caches
             if ('caches' in window) {
-                const cacheNames = await caches.keys();
-                for (const name of cacheNames) {
-                    await caches.delete(name);
-                    results.push(`Cache supprimé: ${name}`);
-                }
+                const names = await caches.keys();
+                for (const name of names) await caches.delete(name);
             }
-            
-            // 3. Vider localStorage/sessionStorage
             localStorage.clear();
             sessionStorage.clear();
-            results.push('Storage local vidé');
-            
-            // 4. Vider IndexedDB
             if ('indexedDB' in window) {
                 const dbs = await indexedDB.databases();
-                for (const db of dbs) {
-                    indexedDB.deleteDatabase(db.name);
-                    results.push(`Base de données supprimée: ${db.name}`);
-                }
+                for (const db of dbs) indexedDB.deleteDatabase(db.name);
             }
-            
-            // Affichage
-            document.getElementById('status').innerHTML = `
-                <p class="done">✓ Nettoyage terminé</p>
-                <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
-                    ${results.length || 'Aucun'} élément(s) supprimé(s)
-                </p>
-                <p style="font-size: 0.85rem; margin-top: 2rem;">
-                    Vous pouvez fermer cette page.
-                </p>
-            `;
         })();
     </script>
 </body>
